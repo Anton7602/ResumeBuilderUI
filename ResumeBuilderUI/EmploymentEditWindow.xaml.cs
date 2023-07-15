@@ -119,19 +119,16 @@ namespace ResumeBuilderUI
         }
         private void ExperienceEditButton_Click(object sender, RoutedEventArgs e)
         {
-            ExperienceTagEditWindow experienceTagEditWindow = new ExperienceTagEditWindow((sender as Button).DataContext as string);
+            ExperienceTagEditWindow experienceTagEditWindow = new ExperienceTagEditWindow((sender as Button).DataContext as Experience);
             experienceTagEditWindow.ShowDialog();
             if (experienceTagEditWindow.DialogResult == true)
             {
-                foreach(StackPanel experience in stckpnlExperience.Children)
+                foreach(Experience experience in editedEmployment.ExperiencesList)
                 {
-                    if (((experience.Children[0] as Grid).Children[2] as Button).Equals(sender))
+                    if (experience.Equals((sender as Button).DataContext as Experience))
                     {
-                        ((experience.Children[0] as Grid).Children[0] as TextBlock).Text = experienceTagEditWindow.editedExperienceTag;
-                        ((experience.Children[0] as Grid).Children[1] as Button).DataContext = experienceTagEditWindow.editedExperienceTag;
-                        ((experience.Children[0] as Grid).Children[2] as Button).DataContext = experienceTagEditWindow.editedExperienceTag;
+                        experience.Tag = experienceTagEditWindow.editedExperienceTag;
                         break;
-                    
                     }
                 }
                 SaveExperienceChanges();
