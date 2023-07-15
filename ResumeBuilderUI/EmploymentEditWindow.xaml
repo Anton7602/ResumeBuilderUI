@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ResumeBuilderUI"
         mc:Ignorable="d"
-        Title="Employment Edit" Height="450" Width="800">
-    <Grid>
-        <ScrollViewer>
+        Title="Employment Edit" Height="550" Width="800">
+    <StackPanel>
             <StackPanel Name="stckpnlEmploymentEdit" Margin="10">
             <Label Content="Employer:" Target="{Binding ElementName=txtEmployerEdit}" />
             <TextBox Name="txtEmployerEdit" />
@@ -20,8 +19,26 @@
                 <Label Name="DatesTo" Content="To"></Label>
                 <DatePicker Name="dateTo" Width="330"/>
             </StackPanel>
-                <Label Name="Experience" Content="Experience:"></Label>
+                <Grid Margin="5" Name="grdExperience">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Name="lblExperience" Content="Experience:" Grid.Row="0" Grid.Column="0"></Label>
+                    <Button Name="btnNewExperience" Content=" " Grid.Row="0" Grid.Column="1" Background="Transparent"
+                            Width="25" HorizontalAlignment="Right" BorderThickness="0" Click="btnNewExperience_Click"/>
+                </Grid>
+            <ScrollViewer Height="275">
+                <StackPanel Name="stckpnlExperience">
+                </StackPanel>
+            </ScrollViewer>
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Name ="btnCancel" Content="Cancel" Width="100" Click="CancelButton_Click" Margin="10"/>
+                <Button Name ="btnAccept" Content="Accept" Width="100" Click="AcceptButton_Click" Margin="10"/>
+            </WrapPanel>
         </StackPanel>
-        </ScrollViewer>
-    </Grid>
+    </StackPanel>
 </Window>

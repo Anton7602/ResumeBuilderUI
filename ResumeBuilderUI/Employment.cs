@@ -7,21 +7,32 @@ using System.Threading.Tasks;
 
 namespace ResumeBuilderUI
 {
+    [Serializable]
     public class Employment
     {
-        public string Employer { get; private set; }
-        public string Title { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public string Employer { get; set; }
+        public string Title { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         //Item 1 is SkillTag, Item 2 is Experience Description
-        public List<(string, string)> Experience { get; set; }
+        public List<Experience> ExperiencesList { get; set; }
         //ResumeBuilder writes here experiences to be printed in application
         public List<string> RelevantExperience { get; set; }
+
+        public Employment()
+        {
+            Employer = string.Empty;
+            Title = string.Empty;
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now;
+            ExperiencesList = new List<Experience>();
+            RelevantExperience = new List<string>();
+        }
 
         public Employment(string EmploymentInfo)
         {
             RelevantExperience = new List<string>();
-            Experience = new List<(string, string)>();
+            ExperiencesList = new List<Experience>();
             string[] parts = EmploymentInfo.Split(" | ");
             Employer = parts[0];
             Title = parts[1];
@@ -45,6 +56,11 @@ namespace ResumeBuilderUI
         {
             CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(format);
             return (Employer + " | " + Title + " | " + StartDate.ToString("Y") + " | " + EndDate.ToString("Y"));
+        }
+
+        public Employment Clone()
+        {
+            return this.MemberwiseClone() as Employment;
         }
     }
 }

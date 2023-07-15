@@ -9,9 +9,10 @@
     <ScrollViewer>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
+                <MenuItem Header="_Profile">
+                    <MenuItem Header="_New"/>
                     <MenuItem Header="_Open"/>
-                    <MenuItem Header="_Close"/>
+                    <MenuItem Header="_Save" Click="SaveProfileChangesMenuItem_Click"/>
                 </MenuItem>
                 <MenuItem Name="menuLanguage" Header="_Language">
                     <MenuItem Name="menuEnglish"  IsCheckable="True" IsChecked="True" Click="ChangeLanguageMenuButton_Click" Header="_English"/>
@@ -19,9 +20,7 @@
                 </MenuItem>
             </Menu>
             <StackPanel Name="stckpnlMain" Margin="10">
-                <Label Content="_Title:" Target="{Binding ElementName=txtTitle}" />
-        <TextBox Name="txtTitle"/>
-    </StackPanel>
+            </StackPanel>
     </DockPanel>
     </ScrollViewer>
 </Window>

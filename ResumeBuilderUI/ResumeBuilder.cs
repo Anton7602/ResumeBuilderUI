@@ -22,14 +22,14 @@ namespace ResumeBuilderUI
         public string Name { get; set; }
         public string Title { get; set; }
         public List<string> LanguagesList { get; private set; }
-        public List<string> AffiliationsList { get; set; }
+        public List<ProffessionalAffiliation> AffiliationsList { get; set; }
         public List<string> RelevantSkills { get; set; }
         public List<Employment> EmploymentsList { get; set; }
         public Dictionary<string, string> ContactsList { get; set; }
 
         public ResumeBuilder(string name,
             string title, List<string> languagesList,
-            List<string> affiliationsList, List<string> relevantskills,
+            List<ProffessionalAffiliation> affiliationsList, List<string> relevantskills,
             List<Employment> employmentsList, Dictionary<string, string> contactsList)
         {
             Name = name;
@@ -43,7 +43,7 @@ namespace ResumeBuilderUI
 
         public ResumeBuilder(string pathToResumeResourceFile)
         {
-            AffiliationsList = new List<string>();
+            AffiliationsList = new List<ProffessionalAffiliation>();
             LanguagesList = new List<string>();
             EmploymentsList = new List<Employment>();
             try
@@ -67,7 +67,7 @@ namespace ResumeBuilderUI
                             if ((line != null) && (!line.StartsWith('[')) && (!line.Equals("")))
                                 do
                                 {
-                                    AffiliationsList.Add(line);
+                                    AffiliationsList.Add(ProffessionalAffiliation.Parse(line));
                                     line = resourceReader.ReadLine();
                                 } while ((line != null) && (!line.StartsWith('[')) && (!line.Equals("")));
                             break;
@@ -89,7 +89,8 @@ namespace ResumeBuilderUI
                                     line = resourceReader.ReadLine();
                                     while (line != null && line.StartsWith('-'))
                                     {
-                                        EmploymentsList.Last().Experience.Add((line.Substring(1), resourceReader.ReadLine() ?? " "));
+                                        EmploymentsList.Last().ExperiencesList.Add(new Experience(
+                                            line.Substring(1), resourceReader.ReadLine() ?? " "));
                                         line = resourceReader.ReadLine();
                                     }
                                 } while ((line != null) && (!line.StartsWith('[')) && (!line.Equals("")));
@@ -173,18 +174,18 @@ namespace ResumeBuilderUI
             bool isUniqueExperience = false;
             foreach (Employment employment in EmploymentsList)
             {
-                foreach ((string, string) experience in employment.Experience)
+                foreach (Experience experience in employment.ExperiencesList)
                 {
-                    if (RelevantSkills.Contains(experience.Item1))
+                    if (RelevantSkills.Contains(experience.Tag))
                     {
                         isUniqueExperience= true;
                         foreach (Employment otherEmployment in EmploymentsList)
                         {
                             if (!employment.Equals(otherEmployment))
                             {
-                                foreach ((string, string) otherExperience in otherEmployment.Experience)
+                                foreach (Experience otherExperience in otherEmployment.ExperiencesList)
                                 {
-                                    if (experience.Item1.Equals(otherExperience.Item1))
+                                    if (experience.Tag.Equals(otherExperience.Tag))
                                     {
                                         isUniqueExperience = false;
                                     }
@@ -194,7 +195,7 @@ namespace ResumeBuilderUI
                     }
                     if (isUniqueExperience)
                     {
-                        uniqueRelevantExperience.Add(experience.Item2);
+                        uniqueRelevantExperience.Add(experience.Description);
                         isUniqueExperience= false;
                     }
                 }
@@ -454,9 +455,9 @@ namespace ResumeBuilderUI
                                 table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Professional Affiliations").FontColor(textCVAccentColor).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(20).LineHorizontal(1).LineColor(textCVAccentColor);
                             });
-                            foreach (string line in AffiliationsList)
+                            foreach (ProffessionalAffiliation affiliation in AffiliationsList)
                             {
-                                column.Item().PaddingHorizontal(5).Text(line).FontSize(10).FontColor("000000");
+                                column.Item().PaddingHorizontal(5).Text(affiliation.ToString()).FontSize(10).FontColor("000000");
                             }
                         });
                     });

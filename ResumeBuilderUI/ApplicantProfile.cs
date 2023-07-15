@@ -10,38 +10,40 @@ namespace ResumeBuilderUI
     public class ApplicantProfile
     {
         public enum Language {English, Russian}
-        public int ID { get; set; }
+        public long ID { get; set; }
         public string? Name { get; set; }
-        public string? Surname { get; set; }
         public Language DefaultLanguage { get; set; }
-        public List<string> affiliationsList { get; set; }
+        public List<string> TitlesList { get; set; }
+        public List<ProffessionalAffiliation> affiliationsList { get; set; }
         public List<string> languagesList { get; set; }
         public List<Employment> employmentsList { get; set; }
         public Dictionary<string, string> skillsList { get; set; }
         public Dictionary<string, string> contactsList { get; set; }
+        public List<bool> expanderStates { get; set; }
 
         public ApplicantProfile()
         {
             Name = "Placeholder";
-            Surname = "Placeholder";
+            InitializeDefaultParameters();
+        }
+
+        public ApplicantProfile(string name)
+        {
+            Name = name;
+            InitializeDefaultParameters();
+        }
+
+        private void InitializeDefaultParameters()
+        {
+            ID = Int64.Parse(DateTime.Now.ToString("ddyyMMHHmmss"));
             DefaultLanguage = Language.English;
-            affiliationsList = new List<string>();
+            TitlesList = new List<string>();
+            affiliationsList = new List<ProffessionalAffiliation>();
             languagesList = new List<string>();
             employmentsList = new List<Employment>();
             skillsList = new Dictionary<string, string>();
             contactsList = new Dictionary<string, string>();
-        }
-
-        public ApplicantProfile(string name, string surname)
-        {
-            Name = name;
-            Surname = surname;
-            DefaultLanguage = Language.English;
-            affiliationsList= new List<string>();
-            languagesList= new List<string>();
-            employmentsList= new List<Employment>();
-            skillsList= new Dictionary<string, string>();
-            contactsList= new Dictionary<string, string>();
+            expanderStates = new List<bool> { true, false, false, false };
         }
 
     }
