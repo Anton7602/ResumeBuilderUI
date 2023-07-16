@@ -14,24 +14,24 @@ using System.Windows.Shapes;
 
 namespace ResumeBuilderUI
 {
-    public partial class ExperienceTagEditWindow : Window
+    public partial class SkillEditWindow : Window
     {
-        public string editedExperienceTag;
-        public ExperienceTagEditWindow()
+        public string editedSkill;
+        public SkillEditWindow()
         {
             InitializeComponent();
         }
 
-        public ExperienceTagEditWindow(Experience experience)
+        public SkillEditWindow(string skill)
         {
             InitializeComponent();
-            this.editedExperienceTag = experience.Tag;
-            txtExperienceTag.Text = editedExperienceTag;
+            editedSkill = skill;
+            txtSkillName.Text = editedSkill;
         }
 
-        private void btnAccept_Click(object sender, RoutedEventArgs e)
+        private void btnSkillNameAccept_Click(object sender, RoutedEventArgs e)
         {
-            editedExperienceTag = txtExperienceTag.Text;
+            editedSkill = txtSkillName.Text;
             this.DialogResult = true;
             this.Close();
         }

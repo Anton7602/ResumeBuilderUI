@@ -17,7 +17,6 @@ namespace ResumeBuilderUI
         //Item 1 is SkillTag, Item 2 is Experience Description
         public List<Experience> ExperiencesList { get; set; }
         //ResumeBuilder writes here experiences to be printed in application
-        public List<string> RelevantExperience { get; set; }
 
         public Employment()
         {
@@ -26,12 +25,10 @@ namespace ResumeBuilderUI
             StartDate = DateTime.Now;
             EndDate = DateTime.Now;
             ExperiencesList = new List<Experience>();
-            RelevantExperience = new List<string>();
         }
 
         public Employment(string EmploymentInfo)
         {
-            RelevantExperience = new List<string>();
             ExperiencesList = new List<Experience>();
             string[] parts = EmploymentInfo.Split(" | ");
             Employer = parts[0];
@@ -40,7 +37,16 @@ namespace ResumeBuilderUI
             EndDate = DateTime.Parse(parts[3]);
         }
 
-        public static List<Employment> SortListOfEmployments(List<Employment> employments)
+        public Employment(Employment employment)
+        {
+            Employer = employment.Employer;
+            Title = employment.Title;
+            StartDate = employment.StartDate;
+            EndDate = employment.EndDate;
+            ExperiencesList = new List<Experience>(employment.ExperiencesList);
+        }
+
+        public static List<Employment> Sort(List<Employment> employments)
         {
             employments.Sort((p, q) => p.EndDate.CompareTo(q.EndDate));
             employments.Reverse();
@@ -56,11 +62,6 @@ namespace ResumeBuilderUI
         {
             CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(format);
             return (Employer + " | " + Title + " | " + StartDate.ToString("Y") + " | " + EndDate.ToString("Y"));
-        }
-
-        public Employment Clone()
-        {
-            return this.MemberwiseClone() as Employment;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace ResumeBuilderUI
         public ContactEditWindow((string, string) contact)
         {
             InitializeComponent();
-            editedContact= contact;
+            editedContact = contact;
             FillRecievedContactDataInFields();
         }
 
@@ -39,6 +39,12 @@ namespace ResumeBuilderUI
             editedContact.Item1= txtTypeOfContact.Text;
             editedContact.Item2= txtContactInfo.Text;
             this.DialogResult = true;
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
             this.Close();
         }
     }

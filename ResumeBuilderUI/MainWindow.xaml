@@ -20,6 +20,9 @@
                 </MenuItem>
             </Menu>
             <StackPanel Name="stckpnlMain" Margin="10">
+                <WrapPanel>
+                    <Image Height="75" Width="75" Stretch="Fill"/>
+                </WrapPanel>
             </StackPanel>
     </DockPanel>
     </ScrollViewer>

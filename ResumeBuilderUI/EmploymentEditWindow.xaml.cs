@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ResumeBuilderUI
 {
@@ -30,7 +22,8 @@ namespace ResumeBuilderUI
         public EmploymentEditWindow(Employment employment)
         {
             InitializeComponent();
-            editedEmployment= employment.Clone();
+            editedEmployment= new Employment(employment);
+            editedEmployment.ExperiencesList = Experience.Sort(editedEmployment.ExperiencesList);
             btnNewExperience.Content = new Image() { Source = addButtonImage };
             FillRecievedEmploymentsDataInFields();
         }
@@ -48,10 +41,12 @@ namespace ResumeBuilderUI
         {
             stckpnlExperience.Children.Clear();
             int ID = 0;
+            StackPanel innerStack;
+            Grid innerGrid;
             foreach (Experience experience in editedEmployment.ExperiencesList)
             {
-                StackPanel innerStack = new StackPanel();
-                Grid innerGrid = new Grid();
+                innerStack = new StackPanel();
+                innerGrid = new Grid();
                 innerGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width=GridLength.Auto});
                 innerGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 innerGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width=GridLength.Auto});
@@ -96,13 +91,19 @@ namespace ResumeBuilderUI
             }
         }
 
-        private void SaveExperienceChanges()
+        private void SaveExperienceTextboxes()
         {
-            editedEmployment.ExperiencesList.Clear();
-            foreach(StackPanel experience in stckpnlExperience.Children)
+            foreach(StackPanel experienceView in stckpnlExperience.Children)
             {
-                editedEmployment.ExperiencesList.Add(new Experience(((experience.Children[0] as Grid).Children[0] as TextBlock).Text,
-                    (experience.Children[1] as TextBox).Text));
+                foreach(Experience experience in editedEmployment.ExperiencesList)
+                {
+                    if (experience.Equals(((experienceView.Children[0] as Grid).Children[1] as Button).DataContext as Experience))
+                    {
+                        experience.Description = (experienceView.Children[1] as TextBox).Text;
+                        ((experienceView.Children[0] as Grid).Children[1] as Button).DataContext = experience;
+                        ((experienceView.Children[0] as Grid).Children[2] as Button).DataContext = experience;
+                    }
+                }
             }
         }
 
@@ -112,7 +113,7 @@ namespace ResumeBuilderUI
             experienceTagEditWindow.ShowDialog();
             if (experienceTagEditWindow.DialogResult == true)
             {
-                SaveExperienceChanges();
+                SaveExperienceTextboxes();
                 editedEmployment.ExperiencesList.Add(new Experience(experienceTagEditWindow.editedExperienceTag, " "));
                 GenerateExperienceView();
             }
@@ -127,30 +128,19 @@ namespace ResumeBuilderUI
                 {
                     if (experience.Equals((sender as Button).DataContext as Experience))
                     {
+                        SaveExperienceTextboxes();
                         experience.Tag = experienceTagEditWindow.editedExperienceTag;
+                        GenerateExperienceView();
                         break;
                     }
                 }
-                SaveExperienceChanges();
             }
         }
 
         private void ExperienceRemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            StackPanel panelToRemove = new StackPanel();
-            foreach (StackPanel experience in stckpnlExperience.Children)
-            {
-                if (((experience.Children[0] as Grid).Children[1] as Button).Equals(sender))
-                {
-                    panelToRemove = experience;
-                    break;
-                }
-            }
-            if (panelToRemove != null)
-            {
-                stckpnlExperience.Children.Remove(panelToRemove);
-            }
-            SaveExperienceChanges();
+            SaveExperienceTextboxes();
+            editedEmployment.ExperiencesList.Remove((sender as Button).DataContext as Experience);
             GenerateExperienceView();
         }
 
@@ -161,7 +151,7 @@ namespace ResumeBuilderUI
             editedEmployment.Title= txtTitleEdit.Text;
             editedEmployment.StartDate=(DateTime)dateFrom.SelectedDate;
             editedEmployment.EndDate=(DateTime)dateTo.SelectedDate;
-            SaveExperienceChanges();
+            SaveExperienceTextboxes();
             this.DialogResult = true;
             this.Close();
         }

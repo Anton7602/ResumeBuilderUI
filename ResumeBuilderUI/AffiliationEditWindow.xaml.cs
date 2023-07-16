@@ -26,7 +26,7 @@ namespace ResumeBuilderUI
         public AffiliationEditWindow(ProffessionalAffiliation affiliation)
         {
             InitializeComponent();
-            editedAffiliation= affiliation;
+            editedAffiliation= new ProffessionalAffiliation(affiliation);
             FillRecievedAffiliationDataInFields();
 
         }
@@ -34,15 +34,15 @@ namespace ResumeBuilderUI
         private void FillRecievedAffiliationDataInFields()
         {
             txtAffiliantCompany.Text = editedAffiliation.Company;
-            txtAffiliation.Text = editedAffiliation.Affiliation;
-            dpckrDateOfAffiliation.SelectedDate = editedAffiliation.DateOfAffiliation;
+            txtAffiliation.Text = editedAffiliation.Description;
+            dpckrDateOfAffiliation.SelectedDate = editedAffiliation.Date;
         }
 
         private void btnAffiliationAccept_Click(object sender, RoutedEventArgs e)
         {
             editedAffiliation.Company = txtAffiliantCompany.Text;
-            editedAffiliation.Affiliation= txtAffiliation.Text;
-            editedAffiliation.DateOfAffiliation = (DateTime)dpckrDateOfAffiliation.SelectedDate;
+            editedAffiliation.Description= txtAffiliation.Text;
+            editedAffiliation.Date = (DateTime)dpckrDateOfAffiliation.SelectedDate;
             this.DialogResult = true;
             this.Close();
         }

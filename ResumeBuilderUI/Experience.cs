@@ -34,5 +34,19 @@ namespace ResumeBuilderUI
             Description = experienceDescription;
             Priority = Priorities.low;
         }
+
+        public Experience(Experience experience)
+        {
+            Tag = experience.Tag;
+            Description = experience.Description;
+            Priority= experience.Priority;
+        }
+
+        public static List<Experience> Sort(List<Experience> experiences)
+        {
+            experiences.Sort((p, q) => p.Priority.CompareTo(q.Priority));
+            experiences.Reverse();
+            return experiences;
+        }
     }
 }

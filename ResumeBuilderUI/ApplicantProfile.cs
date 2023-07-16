@@ -17,7 +17,7 @@ namespace ResumeBuilderUI
         public List<ProffessionalAffiliation> affiliationsList { get; set; }
         public List<string> languagesList { get; set; }
         public List<Employment> employmentsList { get; set; }
-        public Dictionary<string, string> skillsList { get; set; }
+        public List<Skillset> skillsetsList { get; set; }
         public Dictionary<string, string> contactsList { get; set; }
         public List<bool> expanderStates { get; set; }
 
@@ -41,7 +41,7 @@ namespace ResumeBuilderUI
             affiliationsList = new List<ProffessionalAffiliation>();
             languagesList = new List<string>();
             employmentsList = new List<Employment>();
-            skillsList = new Dictionary<string, string>();
+            skillsetsList = new List<Skillset>();
             contactsList = new Dictionary<string, string>();
             expanderStates = new List<bool> { true, false, false, false };
         }

@@ -8,10 +8,12 @@
         Title="Edit Contact" Height="250" Width="200">
     <StackPanel>
         <Label Name="lblTypeOfContact" Content="Type of Contact"/>
-        <TextBox Name="txtTypeOfContact" Text=""/>
+        <TextBox Name="txtTypeOfContact" Text="" Margin="5" />
         <Label Name="lblContactInfo" Content="Contact Info"/>
-        <TextBox Name="txtContactInfo" Text=""/>
-        <Button Name="btnAccept" Click="btnAccept_Click" Content="Accept" Width="100" Margin="0,100,0,0"/>
-
+        <TextBox Name="txtContactInfo" Text="" Margin="5"/>
+        <WrapPanel Name="wrpButtons" HorizontalAlignment="Center">
+            <Button Name="btnCancel" Click="btnCancel_Click" Content="Cancel" Width="80" Margin="0,80,5,0"/>
+            <Button Name="btnAccept" Click="btnAccept_Click" Content="Accept" Width="80" Margin="5,80,0,0"/>
+        </WrapPanel>
     </StackPanel>
 </Window>

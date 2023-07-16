@@ -124,7 +124,7 @@ namespace ResumeBuilderUI
 
         private List<string> GetEmployersList(List<Employment> employments)
         {
-            employments = Employment.SortListOfEmployments(employments);
+            employments = Employment.Sort(employments);
             List<string> employersList = new List<string>();
             foreach (Employment element in employments)
             {
@@ -161,54 +161,49 @@ namespace ResumeBuilderUI
             }
             return endDate;
         }
-        //Analyses all work experiences and finds most relevant.
-        private void GenerateRelevantExperience()
-        {
-            FindUniqueRelevantExperience();
-        }
 
         //Adds to a RelevantExperience of each employment Experiences that are unique to theese employments
-        private void FindUniqueRelevantExperience()
+        private List<Experience> FindUniqueRelevantExperience(Employment employment)
         {
-            List<string> uniqueRelevantExperience = new List<string>();
-            bool isUniqueExperience = false;
-            foreach (Employment employment in EmploymentsList)
-            {
-                foreach (Experience experience in employment.ExperiencesList)
-                {
-                    if (RelevantSkills.Contains(experience.Tag))
-                    {
-                        isUniqueExperience= true;
-                        foreach (Employment otherEmployment in EmploymentsList)
-                        {
-                            if (!employment.Equals(otherEmployment))
-                            {
-                                foreach (Experience otherExperience in otherEmployment.ExperiencesList)
-                                {
-                                    if (experience.Tag.Equals(otherExperience.Tag))
-                                    {
-                                        isUniqueExperience = false;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (isUniqueExperience)
-                    {
-                        uniqueRelevantExperience.Add(experience.Description);
-                        isUniqueExperience= false;
-                    }
-                }
-                employment.RelevantExperience = new List<string>(uniqueRelevantExperience);
-                uniqueRelevantExperience.Clear();
-            }
+            List<Experience> uniqueRelevantExperience = new List<Experience>();
+            //bool isUniqueExperience = false;
+            //foreach (Employment employment in EmploymentsList)
+            //{
+            //    foreach (Experience experience in employment.ExperiencesList)
+            //    {
+            //        if (RelevantSkills.Contains(experience.Tag))
+            //        {
+            //            isUniqueExperience= true;
+            //            foreach (Employment otherEmployment in EmploymentsList)
+            //            {
+            //                if (!employment.Equals(otherEmployment))
+            //                {
+            //                    foreach (Experience otherExperience in otherEmployment.ExperiencesList)
+            //                    {
+            //                        if (experience.Tag.Equals(otherExperience.Tag))
+            //                        {
+            //                            isUniqueExperience = false;
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        if (isUniqueExperience)
+            //        {
+            //            uniqueRelevantExperience.Add(experience.Description);
+            //            isUniqueExperience= false;
+            //        }
+            //    }
+            //    employment.RelevantExperience = new List<string>(uniqueRelevantExperience);
+            //    uniqueRelevantExperience.Clear();
+            //}
+            return uniqueRelevantExperience;
         }
 
         public void BuildResume(string pathToOutputGeneratedResume)
         {
             QuestPDF.Settings.License = LicenseType.Community;
             CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-            GenerateRelevantExperience();
             var resume = Document.Create(container =>
             {
                 _ = container.Page(page =>
@@ -398,9 +393,9 @@ namespace ResumeBuilderUI
                                         column.Item().AlignLeft().PaddingHorizontal(5)
                                         .Text(position.StartDate.ToString("Y") + " - " + position.EndDate.ToString("Y"))
                                         .FontColor("282828").FontSize(9);
-                                        foreach (string experience in position.RelevantExperience)
+                                        foreach (Experience experience in FindUniqueRelevantExperience(position))
                                         {
-                                            column.Item().AlignLeft().PaddingHorizontal(15).Text("• " + experience).FontSize(10).FontColor("000000");
+                                            column.Item().AlignLeft().PaddingHorizontal(15).Text("• " + experience.Description).FontSize(10).FontColor("000000");
                                         }
                                     }
                                 }

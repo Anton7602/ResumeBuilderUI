@@ -30,9 +30,9 @@ namespace ResumeBuilderUI
         private StackPanel experienceStack;
         private StackPanel contactsStack;
         private StackPanel affiliationsStack;
-        private BitmapImage addButtonImage = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + @"\resources\addButton.png"));
-        private BitmapImage editButtonImage = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + @"\resources\editButton.png"));
-        private BitmapImage removeButtonImage = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + @"\resources\removeButton.png"));
+        private BitmapImage addButtonImage = new BitmapImage(new Uri("resourcesTest/addButton.png", UriKind.Relative));
+        private BitmapImage editButtonImage = new BitmapImage(new Uri("resources/editButton.png", UriKind.Relative));
+        private BitmapImage removeButtonImage = new BitmapImage(new Uri("resources/removeButton.png", UriKind.Relative));
 
         public MainWindow()
         {
@@ -110,16 +110,17 @@ namespace ResumeBuilderUI
 
         private void InitializeUIElements()
         {
-            stckpnlMain.Children.Clear();
+            //stckpnlMain.Children.Clear();
             GenerateTextboxForName(activeProfile.Name);
             if (activeProfile.TitlesList.Count > 0) {
                 GenerateTextboxForTitle(activeProfile.TitlesList.Last());
             }
             else { GenerateTextboxForTitle(""); }
-            GenerateCheckboxesForSkills(activeProfile.skillsList);
+            GenerateCheckboxesForSkills(activeProfile.skillsetsList);
+            GenerateTextboxForSummary();
             GenerateCheckboxesForEmployment(activeProfile.employmentsList);
-            GenerateCheckboxesForContacts(activeProfile.contactsList);
             GenerateCheckboxesForAffiliations(activeProfile.affiliationsList);
+            GenerateCheckboxesForContacts(activeProfile.contactsList);
             GenerateTooltipsForSkillsCheckBoxes(activeProfile.employmentsList);
             GenerateApplicationBuilderButton();
         }
@@ -144,42 +145,60 @@ namespace ResumeBuilderUI
             stckpnlMain.Children.Add(titleTextBox);
         }
 
-        private void GenerateCheckboxesForSkills(Dictionary<string, string> skills)
+        private void GenerateTextboxForSummary()
+        {
+
+        }
+
+        private void GenerateCheckboxesForSkills(List<Skillset> skills)
         {
             Expander skillsExpander = new Expander();
             Grid headerGrid = GenerateExpanderHeaderWithAddButton("Skills:", "skills");
             skillsExpander.Header = headerGrid;
-            (headerGrid.Children[1] as Button).Click += AddNewSkillButton_Click;
+            (headerGrid.Children[1] as Button).Click += AddNewSkillsetButton_Click;
+            activeProfile.skillsetsList = Skillset.Sort(activeProfile.skillsetsList);
             StackPanel innerStack = new StackPanel();
-            List<string> skillCategories = skills.Values.ToList();
-            skillCategories = skillCategories.Distinct().ToList();
             skillWrapPanel = new WrapPanel();
             int categoryCounter = 0;
             int skillCounter = 0;
-            foreach (string skillCategory in skillCategories)
+            foreach (Skillset skillCategory in activeProfile.skillsetsList)
             {
                 categoryCounter++;
+                Grid innerGrid = new Grid();
+                innerGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                innerGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                innerGrid.RowDefinitions.Add(new RowDefinition());
+                TextBlock categotyTitle= new TextBlock();
+                categotyTitle.Text = skillCategory.MainSkill;
+                Grid.SetColumn(categotyTitle, 0);
+                Grid.SetRow(categotyTitle, 0);
+                Button editCategotyButton = new Button();
+                editCategotyButton.Margin = new Thickness() {Left=5 };
+                editCategotyButton.Content = "+";
+                editCategotyButton.Background = Brushes.Transparent;
+                editCategotyButton.BorderThickness = new Thickness(0);
+                editCategotyButton.DataContext = skillCategory;
+                editCategotyButton.Click += EditSkillsetButton_Click;
+                Grid.SetColumn(editCategotyButton, 1);
+                Grid.SetRow(editCategotyButton, 0);
+                innerGrid.Children.Add(categotyTitle);
+                innerGrid.Children.Add(editCategotyButton);
                 CheckBox categoryCheckbox = new CheckBox();
                 categoryCheckbox.Name = "Checkbox" + categoryCounter.ToString();
-                categoryCheckbox.Content = skillCategory.Substring(1);
+                categoryCheckbox.Content = innerGrid;
+                categoryCheckbox.DataContext = skillCategory.MainSkill;
                 categoryCheckbox.Margin = new Thickness { Left = 10 , Top = 5};
                 innerStack = new StackPanel{Orientation = Orientation.Vertical};
                 innerStack.Children.Add(categoryCheckbox);
-                foreach (var skill in skills)
+                foreach (string skill in skillCategory.SkillsList)
                 {
                     skillCounter++;
-                    if (skill.Value.Equals(skillCategory))
-                    {
-                        CheckBox skillCheckbox = new CheckBox();
-                        skillCheckbox.Name = "Checkbox"+categoryCounter.ToString()+"_"+skillCounter.ToString();
-                        skillCheckbox.Content = skill.Key.Substring(1);
-                        skillCheckbox.Margin = new Thickness {Left = 20 };
-                        if (skill.Key.StartsWith('+'))
-                        {
-                            skillCheckbox.IsChecked = true;
-                        }
-                        innerStack.Children.Add(skillCheckbox);
-                    }
+                    CheckBox skillCheckbox = new CheckBox();
+                    skillCheckbox.Name = "Checkbox"+categoryCounter.ToString()+"_"+skillCounter.ToString();
+                    skillCheckbox.Content = skill;
+                    skillCheckbox.DataContext = skill;
+                    skillCheckbox.Margin = new Thickness {Left = 20 };
+                    innerStack.Children.Add(skillCheckbox);
                 }
                 skillWrapPanel.Children.Add(innerStack);
                 skillCounter = 0;
@@ -199,30 +218,36 @@ namespace ResumeBuilderUI
 
         private void GenerateTooltipsForSkillsCheckBoxes(List<Employment> employmentList)
         {
+            string tooltipBody;
             int counterOfEmploymentsWIthTag;
             foreach(StackPanel panelWithCheckbox in skillWrapPanel.Children)
             {
                 foreach(CheckBox skillCheckbox in panelWithCheckbox.Children)
                 {
+                    tooltipBody = " employments with this tag:";
                     skillCheckbox.Foreground = Brushes.Black;
                     counterOfEmploymentsWIthTag = 0;
-                    skillCheckbox.ToolTip = "";
                     foreach(Employment employment in employmentList)
                     {
                         foreach(Experience experience in employment.ExperiencesList)
                         {
-                            if (skillCheckbox.Content.Equals(experience.Tag))
+                            if (experience.Tag.Equals(skillCheckbox.DataContext as String))
                             {
                                 counterOfEmploymentsWIthTag++;
-                                skillCheckbox.ToolTip+= employment.Employer+" "+employment.Title+" \n";
+                                tooltipBody+= " \n" + employment.Employer+" | "+employment.Title;
                             }
                         }
                     }
                     if (counterOfEmploymentsWIthTag== 0)
                     {
                         skillCheckbox.Foreground = Brushes.Red;
+                        tooltipBody = tooltipBody.Substring(0, tooltipBody.Length-1);
                     }
-                    skillCheckbox.ToolTip += counterOfEmploymentsWIthTag +" Employments with this tag";
+                    else if (counterOfEmploymentsWIthTag ==1)
+                    {
+                        tooltipBody = tooltipBody.Remove(11, 1);
+                    }
+                    skillCheckbox.ToolTip += counterOfEmploymentsWIthTag +tooltipBody;
                 }
             }
         }
@@ -260,7 +285,7 @@ namespace ResumeBuilderUI
             //Case if Applicant Profile has Employments.
             if (employmentList.Count > 0)
             {
-                employmentList = Employment.SortListOfEmployments(employmentList);
+                employmentList = Employment.Sort(employmentList);
                 int ID = 0;
                 //Setting up each employment in applicant profile with edit and delete button
                 foreach (Employment employment in employmentList)
@@ -311,6 +336,7 @@ namespace ResumeBuilderUI
                 {
                     Grid innerGrid = GenerateItemListWithEditAndRemoveButtons(
                         contactOption + ": " + contactsList.GetValueOrDefault(contactOption), "contact");
+                    (innerGrid.Children[0] as CheckBox).DataContext = contactOption; 
                     (innerGrid.Children[1] as Button).Click += EditContactButton_Click;
                     (innerGrid.Children[1] as Button).DataContext = contactOption;
                     (innerGrid.Children[2] as Button).Click += RemoveContactButton_Click;
@@ -330,12 +356,12 @@ namespace ResumeBuilderUI
         private Dictionary<string, string> ReadActiveContactCheckBoxes()
         {
             Dictionary<string, string> activeContacts = new Dictionary<string, string>();
-            foreach (CheckBox contactCheckbox in contactsStack.Children)
+            foreach (Grid contactCheckboxHolder in contactsStack.Children)
             {
-                if (contactCheckbox.IsChecked== true)
+                if ((contactCheckboxHolder.Children[0] as CheckBox).IsChecked== true)
                 {
-                    activeContacts.Add(contactCheckbox.Name.ToString().Substring(15), 
-                        contactCheckbox.Content.ToString().Substring(contactCheckbox.Name.ToString().Length-13));
+                    activeContacts.Add((contactCheckboxHolder.Children[0] as CheckBox).DataContext as String,
+                        (activeProfile.contactsList.GetValueOrDefault((contactCheckboxHolder.Children[0] as CheckBox).DataContext as String)));
                 }
             }
             return activeContacts;
@@ -360,6 +386,7 @@ namespace ResumeBuilderUI
                 {
                     Grid innerGrid = GenerateItemListWithEditAndRemoveButtons(affiliation.ToString(), "Affiliation" + ID);
                     (innerGrid.Children[0] as CheckBox).Click += UpdateSkillsTooltipsCheckbox_Click;
+                    (innerGrid.Children[0] as CheckBox).DataContext = affiliation;
                     (innerGrid.Children[1] as Button).Click += EditAffiliationButton_Click;
                     (innerGrid.Children[1] as Button).DataContext = affiliation;
                     (innerGrid.Children[2] as Button).Click += RemoveAffiliationButton_Click;
@@ -377,11 +404,12 @@ namespace ResumeBuilderUI
         private List<ProffessionalAffiliation> ReadActiveAffiliationsCheckBoxes()
         {
             List<ProffessionalAffiliation> affiliationsList = new List<ProffessionalAffiliation>();
-            foreach (CheckBox contactCheckbox in affiliationsStack.Children)
+            foreach (Grid contactCheckboxHolder in affiliationsStack.Children)
             {
-                if (contactCheckbox.IsChecked == true)
+                if ((contactCheckboxHolder.Children[0] as CheckBox).IsChecked == true)
                 {
-                    affiliationsList.Add(ProffessionalAffiliation.Parse(contactCheckbox.Content.ToString()));
+                    affiliationsList.Add(new ProffessionalAffiliation((
+                        contactCheckboxHolder.Children[0] as CheckBox).DataContext as ProffessionalAffiliation));
                 }
             }
             return affiliationsList;
@@ -449,13 +477,13 @@ namespace ResumeBuilderUI
         {
             Button generatedButton = new Button
             {
-            Name = buttonName,
-            Content = new Image() { Source = buttonImage },
-            Width = 25,
-            Background = Brushes.Transparent,
-            BorderThickness = new Thickness(0),
-            HorizontalAlignment = HorizontalAlignment.Right
-        };
+                Name = buttonName,
+                Content = new Image() { Source = buttonImage },
+                Width = 25,
+                Background = Brushes.Transparent,
+                BorderThickness = new Thickness(0),
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
             return generatedButton;
         }
 
@@ -479,22 +507,35 @@ namespace ResumeBuilderUI
             }
         }
 
-        private void AddNewSkillButton_Click(object sender, RoutedEventArgs e)
+        private void AddNewSkillsetButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            SkillsetEditWindow skillsetEditWindow = new SkillsetEditWindow();
+            skillsetEditWindow.ShowDialog();
+            if (skillsetEditWindow.DialogResult == true)
+            {
+                activeProfile.skillsetsList.Add(new Skillset(skillsetEditWindow.editedSkillset));
+                SaveExpanderStatesToProfile();
+                InitializeUIElements();
+            }
+        }
+
+        private void EditSkillsetButton_Click(object sender, RoutedEventArgs e)
+        {
+            SkillsetEditWindow skillsetEditWindow = new SkillsetEditWindow((sender as Button).DataContext as Skillset);
+            skillsetEditWindow.ShowDialog();
+            if (skillsetEditWindow.DialogResult == true)
+            {
+                activeProfile.skillsetsList.Remove((sender as Button).DataContext as Skillset);
+                activeProfile.skillsetsList.Add(new Skillset(skillsetEditWindow.editedSkillset));
+                SaveExpanderStatesToProfile();
+                InitializeUIElements();
+            }
+
         }
 
         private void RemoveEmploymentButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Employment> updatedEmploymentList = new List<Employment>();
-            foreach (Employment employment in activeProfile.employmentsList)
-            {
-                if (!employment.Equals((sender as Button).DataContext as Employment))
-                {
-                    updatedEmploymentList.Add(employment);
-                }
-            }
-            activeProfile.employmentsList= updatedEmploymentList;
+            activeProfile.employmentsList.Remove((sender as Button).DataContext as Employment);
             SaveExpanderStatesToProfile();
             InitializeUIElements();
         }
@@ -505,7 +546,7 @@ namespace ResumeBuilderUI
             if (employmentEditWindow.DialogResult == true)
             {
                 activeProfile.employmentsList.Remove((sender as Button).DataContext as Employment);
-                activeProfile.employmentsList.Add(employmentEditWindow.editedEmployment.Clone());
+                activeProfile.employmentsList.Add(new Employment(employmentEditWindow.editedEmployment));
                 SaveExpanderStatesToProfile();
                 InitializeUIElements();
             }
@@ -516,7 +557,7 @@ namespace ResumeBuilderUI
             employmentEditWindow.ShowDialog();
             if (employmentEditWindow.DialogResult == true)
             {
-                activeProfile.employmentsList.Add(employmentEditWindow.editedEmployment);
+                activeProfile.employmentsList.Add(new Employment(employmentEditWindow.editedEmployment));
                 SaveExpanderStatesToProfile();
                 InitializeUIElements();
             }
@@ -536,15 +577,7 @@ namespace ResumeBuilderUI
 
         private void RemoveContactButton_Click(object sender, RoutedEventArgs e)
         {
-            Dictionary<string, string> updatedContactList = new Dictionary<string, string>();  
-            foreach(var contact in activeProfile.contactsList)
-            {
-                if(!contact.Key.Equals((sender as Button).DataContext.ToString()))
-                {
-                    updatedContactList.Add(contact.Key, contact.Value);
-                }
-            }
-            activeProfile.contactsList = updatedContactList;
+            activeProfile.contactsList.Remove((sender as Button).DataContext.ToString());
             SaveExpanderStatesToProfile();  
             InitializeUIElements();
         }
@@ -570,22 +603,14 @@ namespace ResumeBuilderUI
             affiliationEditWindow.ShowDialog();
             if (affiliationEditWindow.DialogResult == true)
             {
-                activeProfile.affiliationsList.Add(affiliationEditWindow.editedAffiliation);
+                activeProfile.affiliationsList.Add(new ProffessionalAffiliation(affiliationEditWindow.editedAffiliation));
                 SaveExpanderStatesToProfile();
                 InitializeUIElements();
             }
         }
         private void RemoveAffiliationButton_Click(object sender, RoutedEventArgs e)
         {
-            List<ProffessionalAffiliation> updatedAffiliationsList = new List<ProffessionalAffiliation>();
-            foreach(ProffessionalAffiliation affiliation in activeProfile.affiliationsList)
-            {
-                if (!affiliation.Equals((sender as Button).DataContext as ProffessionalAffiliation))
-                {
-                    updatedAffiliationsList.Add(affiliation);
-                }
-            }
-            activeProfile.affiliationsList = updatedAffiliationsList;
+            activeProfile.affiliationsList.Remove((sender as Button).DataContext as ProffessionalAffiliation);
             SaveExpanderStatesToProfile();
             InitializeUIElements();
         }
@@ -597,7 +622,7 @@ namespace ResumeBuilderUI
             if (affiliationEditWindow.DialogResult == true)
             {
                 activeProfile.affiliationsList.Remove((sender as Button).DataContext as ProffessionalAffiliation);
-                activeProfile.affiliationsList.Add(affiliationEditWindow.editedAffiliation);
+                activeProfile.affiliationsList.Add(new ProffessionalAffiliation(affiliationEditWindow.editedAffiliation));
                 SaveExpanderStatesToProfile();
                 InitializeUIElements();
             }
