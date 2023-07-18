@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -21,91 +22,31 @@ namespace ResumeBuilderUI
 
         public string Name { get; set; }
         public string Title { get; set; }
-        public List<string> LanguagesList { get; private set; }
-        public List<ProffessionalAffiliation> AffiliationsList { get; set; }
+        public string Summary { get; set; }
+        public List<Skillset> RelevantSkillsets { get; set; }
         public List<string> RelevantSkills { get; set; }
+        public Dictionary<string, string> LanguagesList { get; private set; }
         public List<Employment> EmploymentsList { get; set; }
+        public List<Education> EducationsList { get; set; }
         public Dictionary<string, string> ContactsList { get; set; }
+        public List<ProffessionalAffiliation> AffiliationsList { get; set; }
 
         public ResumeBuilder(string name,
-            string title, List<string> languagesList,
+            string title, string summary, Dictionary<string, string> languagesList,
             List<ProffessionalAffiliation> affiliationsList, List<string> relevantskills,
-            List<Employment> employmentsList, Dictionary<string, string> contactsList)
+            List<Skillset> relevantSkillsets, List<Employment> employmentsList, Dictionary<string, 
+                string> contactsList)
         {
             Name = name;
             Title = title;
+            Summary = summary;
             LanguagesList = languagesList;
             AffiliationsList = affiliationsList;
             RelevantSkills = relevantskills;
+            RelevantSkillsets = relevantSkillsets;
             EmploymentsList = employmentsList;
             ContactsList = contactsList;
         }
-
-        public ResumeBuilder(string pathToResumeResourceFile)
-        {
-            AffiliationsList = new List<ProffessionalAffiliation>();
-            LanguagesList = new List<string>();
-            EmploymentsList = new List<Employment>();
-            try
-            {
-                StreamReader resourceReader = new StreamReader(pathToResumeResourceFile);
-                string line = resourceReader.ReadLine();
-                while (line != null)
-                {
-                    switch (line)
-                    {
-                        case "[Name]":
-                            line = resourceReader.ReadLine();
-                            Name = line ?? "Ivan Ivanov";
-                            break;
-                        case "[Title]":
-                            line = resourceReader.ReadLine();
-                            Title = line ?? "Engineer";
-                            break;
-                        case "[Professional Affiliations]":
-                            line = resourceReader.ReadLine();
-                            if ((line != null) && (!line.StartsWith('[')) && (!line.Equals("")))
-                                do
-                                {
-                                    AffiliationsList.Add(ProffessionalAffiliation.Parse(line));
-                                    line = resourceReader.ReadLine();
-                                } while ((line != null) && (!line.StartsWith('[')) && (!line.Equals("")));
-                            break;
-                        case "[Languages]":
-                            line = resourceReader.ReadLine();
-                            if ((line != null) && (!line.StartsWith('[')) && (!line.Equals("")))
-                                do
-                                {
-                                    LanguagesList.Add(line);
-                                    line = resourceReader.ReadLine();
-                                } while ((line != null) && (!line.StartsWith('[')) && (!line.Equals("")));
-                            break;
-                        case "[Experience]":
-                            line = resourceReader.ReadLine();
-                            if ((line != null) && (!line.StartsWith('[')) && (!line.Equals("")))
-                                do
-                                {
-                                    EmploymentsList.Add(new Employment(line.Substring(1, (line.Length - 2))));
-                                    line = resourceReader.ReadLine();
-                                    while (line != null && line.StartsWith('-'))
-                                    {
-                                        EmploymentsList.Last().ExperiencesList.Add(new Experience(
-                                            line.Substring(1), resourceReader.ReadLine() ?? " "));
-                                        line = resourceReader.ReadLine();
-                                    }
-                                } while ((line != null) && (!line.StartsWith('[')) && (!line.Equals("")));
-                            break;
-                    }
-                    line = resourceReader.ReadLine();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-        }
-
         static IContainer LeftColumnMain(IContainer container)
         {
             return container
@@ -118,7 +59,6 @@ namespace ResumeBuilderUI
         {
             return container
                 .Background("#0C2C5E")
-                .AlignCenter()
                 .AlignTop();
         }
 
@@ -166,6 +106,13 @@ namespace ResumeBuilderUI
         private List<Experience> FindUniqueRelevantExperience(Employment employment)
         {
             List<Experience> uniqueRelevantExperience = new List<Experience>();
+            foreach(Experience experience in employment.ExperiencesList)
+            {
+                if (RelevantSkills.Contains(experience.Tag))
+                {
+                    uniqueRelevantExperience.Add(experience);
+                }
+            }
             //bool isUniqueExperience = false;
             //foreach (Employment employment in EmploymentsList)
             //{
@@ -253,7 +200,7 @@ namespace ResumeBuilderUI
                                 table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Summary").FontColor(textColorCVLight).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
                             });
-                            column.Item().Text("Experienced professional in mechanical design, robotics and mechatronics with 4+ years of industry experience in industrial automation and product development with an innovative, hands-on approach and a can-do attitude.")
+                            column.Item().Text(Summary)
                             .FontColor(textColorCVLight).FontSize(11).Light();
                             //Tools
                             column.Item().Table(table =>
@@ -266,52 +213,19 @@ namespace ResumeBuilderUI
                                 table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Tools").FontColor(textColorCVLight).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
                             });
-                            //Toolset 1
-                            column.Item().Table(table =>
+                            foreach (Skillset toolsCategoty in RelevantSkillsets)
                             {
-                                table.ColumnsDefinition(columns =>
+                                column.Item().Table(table =>
                                 {
-                                    columns.RelativeColumn();
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.RelativeColumn();
+                                    });
+                                    table.Cell().Row(1).Column(1).Element(ToolsBody).AlignCenter().Text(toolsCategoty.MainSkill).FontSize(14).FontColor(textColorCVLight).ExtraBold();
+                                    table.Cell().Row(2).Column(1).Element(ToolsBody).AlignLeft().Text(String.Join(',',toolsCategoty.SkillsList)).FontSize(11).FontColor(textColorCVLight);
                                 });
-                                table.Cell().Row(1).Column(1).Element(ToolsBody).Text("CAD").FontSize(14).FontColor(textColorCVLight).ExtraBold();
-                                table.Cell().Row(2).Column(1).Element(ToolsBody).Text("Solidworks, Compas-3D, Creo Parametric, AutoCAD, Siemens NX").FontSize(11).FontColor(textColorCVLight);
-                            });
-                            //Offset
-                            column.Item().Text("").FontSize(5);
-                            //Toolset 2
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.RelativeColumn();
-                                });
-                                table.Cell().Row(1).Column(1).Element(ToolsBody).Text("Simulation").FontSize(14).FontColor(textColorCVLight).ExtraBold();
-                                table.Cell().Row(2).Column(1).Element(ToolsBody).Text("Matlab, MathCAD, SolidWorks Simulation, Gazeebo, V-Rep, Ansys, RoboDK").FontSize(11).FontColor(textColorCVLight);
-                            });
-                            //Offset
-                            column.Item().Text("").FontSize(5);
-                            //Toolset 3
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.RelativeColumn();
-                                });
-                                table.Cell().Row(1).Column(1).Element(ToolsBody).Text("CAM/CAE/PLM").FontSize(14).FontColor(textColorCVLight).ExtraBold();
-                                table.Cell().Row(2).Column(1).Element(ToolsBody).Text("Scanform, Geomagic, Fusion 360, Soyuz-PLM, FreeMill").FontSize(11).FontColor(textColorCVLight);
-                            });
-                            //Offset
-                            column.Item().Text("").FontSize(5);
-                            //Toolset 4
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.RelativeColumn();
-                                });
-                                table.Cell().Row(1).Column(1).Element(ToolsBody).Text("Programming").FontSize(14).FontColor(textColorCVLight).ExtraBold();
-                                table.Cell().Row(2).Column(1).Element(ToolsBody).Text("Visual Studio (ASP.NET, C#), Android Studio (Java), Arduino IDE, PyCharm (Python), SQL").FontSize(11).FontColor(textColorCVLight);
-                            });
+                                column.Item().Text("").FontSize(5);
+                            }
                             //Languages
                             column.Item().Table(table =>
                             {
@@ -323,13 +237,13 @@ namespace ResumeBuilderUI
                                 table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Languages").FontColor(textColorCVLight).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
                             });
-                            foreach (string language in LanguagesList)
+                            foreach (string language in LanguagesList.Keys)
                             {
                                 column.Item().Text(text =>
                                 {
                                     text.DefaultTextStyle(x => x.FontColor(textColorCVLight).FontSize(11));
                                     text.Element().PaddingBottom(-6).Height(20).Image(pathToResoursesFolder + language.Substring(0, language.IndexOf(' ')) + ".png").FitHeight();
-                                    text.Span("   " + language);
+                                    text.Span("   " + language +" - "+ LanguagesList.GetValueOrDefault(language));
                                 });
                                 column.Item().Text("").FontSize(10);
                             }
@@ -459,6 +373,7 @@ namespace ResumeBuilderUI
                 });
             });
             resume.GeneratePdf(pathToOutputGeneratedResume);
+            new Process { StartInfo = new ProcessStartInfo(pathToOutputGeneratedResume) { UseShellExecute = true } }.Start();
             //resume.ShowInPreviewer();
         }
     }

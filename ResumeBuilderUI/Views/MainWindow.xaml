@@ -3,26 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ResumeBuilderUI"
+        xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
         mc:Ignorable="d"
         Title="Application Builder" Height="600" Width="900">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <ScrollViewer>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_Profile">
                     <MenuItem Header="_New"/>
                     <MenuItem Header="_Open"/>
-                    <MenuItem Header="_Save" Click="SaveProfileChangesMenuItem_Click"/>
+                    <MenuItem Header="_Save"/>
                 </MenuItem>
                 <MenuItem Name="menuLanguage" Header="_Language">
-                    <MenuItem Name="menuEnglish"  IsCheckable="True" IsChecked="True" Click="ChangeLanguageMenuButton_Click" Header="_English"/>
-                    <MenuItem Name="menuRussian"  IsCheckable="True" Click="ChangeLanguageMenuButton_Click" Header="_Russian"/>
+                    <MenuItem Name="menuEnglish"  IsCheckable="True" IsChecked="True" Header="_English"/>
+                    <MenuItem Name="menuRussian"  IsCheckable="True" Header="_Russian"/>
                 </MenuItem>
             </Menu>
             <StackPanel Name="stckpnlMain" Margin="10">
-                <WrapPanel>
-                    <Image Height="75" Width="75" Stretch="Fill"/>
-                </WrapPanel>
             </StackPanel>
     </DockPanel>
     </ScrollViewer>

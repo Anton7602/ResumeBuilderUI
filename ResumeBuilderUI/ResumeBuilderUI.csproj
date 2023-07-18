@@ -16,17 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="resourses\addButton.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="resourses\Address.png" />
-    <Resource Include="resourses\editButton.png" />
-    <Resource Include="resourses\Email.png" />
-    <Resource Include="resourses\English.png" />
-    <Resource Include="resourses\LinkedIn.png" />
-    <Resource Include="resourses\Phone.png" />
-    <Resource Include="resourses\removeButton.png" />
-    <Resource Include="resourses\Russian.png" />
+    <Folder Include="Images\" />
   </ItemGroup>
 
 </Project>

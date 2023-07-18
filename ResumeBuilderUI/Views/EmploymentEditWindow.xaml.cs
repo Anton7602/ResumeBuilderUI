@@ -17,6 +17,7 @@ namespace ResumeBuilderUI
         {
             InitializeComponent();
             btnNewExperience.Content = new Image() { Source = addButtonImage };
+            editedEmployment= new Employment();
         }
 
         public EmploymentEditWindow(Employment employment)

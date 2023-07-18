@@ -12,13 +12,14 @@ namespace ResumeBuilderUI
         public enum Language {English, Russian}
         public long ID { get; set; }
         public string? Name { get; set; }
-        public Language DefaultLanguage { get; set; }
         public List<string> TitlesList { get; set; }
-        public List<ProffessionalAffiliation> affiliationsList { get; set; }
-        public List<string> languagesList { get; set; }
         public List<Employment> employmentsList { get; set; }
         public List<Skillset> skillsetsList { get; set; }
+        public List<Education> educationsList { get; set; }
+        public List<ProffessionalAffiliation> affiliationsList { get; set; }
+        public Dictionary<string, string> languagesList { get; set; }
         public Dictionary<string, string> contactsList { get; set; }
+        public Language DefaultLanguage { get; set; }
         public List<bool> expanderStates { get; set; }
 
         public ApplicantProfile()
@@ -39,7 +40,7 @@ namespace ResumeBuilderUI
             DefaultLanguage = Language.English;
             TitlesList = new List<string>();
             affiliationsList = new List<ProffessionalAffiliation>();
-            languagesList = new List<string>();
+            languagesList = new Dictionary<string, string>();
             employmentsList = new List<Employment>();
             skillsetsList = new List<Skillset>();
             contactsList = new Dictionary<string, string>();
