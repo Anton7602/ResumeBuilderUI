@@ -23,6 +23,23 @@
                 </MenuItem>
             </Menu>
             <StackPanel Name="stckpnlMain" Margin="10">
+                <Label Content="{DynamicResource lang_Name}"/>
+                <TextBlock Text="{Binding ActiveProfile.Name, Mode=TwoWay}"
+                           FontSize="20"/>
+                <TextBox Text="{Binding ActiveProfile.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="10" FontSize="15"/>
+                <ListView ItemsSource="{Binding ActiveProfile.contactsList}"
+                          Margin="10"/>
+                <ListBox ItemsSource="{Binding ActiveProfile.employmentsList}"
+                          Margin="10">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                
+                            </WrapPanel>
+                        </DataTemplate>    
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
     </DockPanel>
     </ScrollViewer>
