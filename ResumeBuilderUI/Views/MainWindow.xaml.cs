@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Printing;
@@ -27,6 +28,27 @@ namespace ResumeBuilderUI
         public MainWindow()
         {
             InitializeComponent();
+            App.LanguageChanged += LanguageChanged;
+        }
+
+        private void LanguageChanged(object? sender, EventArgs e)
+        {
+            foreach(MenuItem availableLanguage in menuLanguage.Items)
+            {
+                availableLanguage.IsChecked = false;
+                if(App.Language.Equals(new CultureInfo(availableLanguage.Tag.ToString())))
+                {
+                    availableLanguage.IsChecked = true;
+                }
+            }
+        }
+
+        private void changeLanguageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if(((sender as MenuItem)!= null) && ((sender as MenuItem).Tag != null))
+            {
+                App.Language = new CultureInfo((sender as MenuItem).Tag.ToString());
+            }
         }
     }
 }

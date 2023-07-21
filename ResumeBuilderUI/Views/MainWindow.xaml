@@ -5,21 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
         mc:Ignorable="d"
-        Title="Application Builder" Height="600" Width="900">
+        Title="Application Builder" Height="600" Width="900" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <ScrollViewer>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_Profile">
-                    <MenuItem Header="_New"/>
-                    <MenuItem Header="_Open"/>
-                    <MenuItem Header="_Save"/>
+                <MenuItem Header="{DynamicResource lang_Profile}">
+                    <MenuItem Header="{DynamicResource lang_Profile_New}"/>
+                    <MenuItem Header="{DynamicResource lang_Profile_Open}"/>
+                    <MenuItem Header="{DynamicResource lang_Profile_Save}"/>
                 </MenuItem>
-                <MenuItem Name="menuLanguage" Header="_Language">
-                    <MenuItem Name="menuEnglish"  IsCheckable="True" IsChecked="True" Header="_English"/>
-                    <MenuItem Name="menuRussian"  IsCheckable="True" Header="_Russian"/>
+                <MenuItem Name="menuLanguage" Header="{DynamicResource lang_Language}">
+                    <MenuItem Name="menuEnglish"  IsCheckable="True" IsChecked="True" Header="{DynamicResource lang_Language_English}" Tag="en-US" Click="changeLanguageMenuItem_Click"/>
+                    <MenuItem Name="menuRussian"  IsCheckable="True" Header="{DynamicResource lang_Language_Russian}" Tag="ru-RU" Click="changeLanguageMenuItem_Click"/>
                 </MenuItem>
             </Menu>
             <StackPanel Name="stckpnlMain" Margin="10">

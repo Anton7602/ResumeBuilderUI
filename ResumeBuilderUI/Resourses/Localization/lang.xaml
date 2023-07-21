@@ -2,4 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
     <v:String x:Key="lang_Name">Name</v:String>
+    <v:String x:Key="lang_Profile">Profile</v:String>
+    <v:String x:Key="lang_Profile_New">New</v:String>
+    <v:String x:Key="lang_Profile_Open">Open</v:String>
+    <v:String x:Key="lang_Profile_Save">Save</v:String>
+    <v:String x:Key="lang_Language">Language</v:String>
+    <v:String x:Key="lang_Language_English">English</v:String>
+    <v:String x:Key="lang_Language_Russian">Russian</v:String>
 </ResourceDictionary>

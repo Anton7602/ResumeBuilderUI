@@ -25,24 +25,30 @@ namespace ResumeBuilderUI
                 if(value == null) throw new ArgumentNullException("value");
                 System.Threading.Thread.CurrentThread.CurrentUICulture = value;
 
-                ResourceDictionary dict = new ResourceDictionary();
+                ResourceDictionary newDictionary = new ResourceDictionary();
                 switch(value.Name)
                 {
                     case "ru-RU":
-                        dict.Source = new Uri("Resourses/Localization/lang" + value.Name + ".xaml", UriKind.Relative);
+                        newDictionary.Source = new Uri("Resourses/Localization/lang." + value.Name + ".xaml", UriKind.Relative);
                         break;
                     default:
-                        dict.Source = new Uri("Resourses/lang.xaml", UriKind.Relative);
+                        newDictionary.Source = new Uri("Resourses/Localization/lang.xaml", UriKind.Relative);
                         break;
                 }
-                ResourceDictionary replacedDictionary = (from d in Application.Current.Resources.MergedDictionaries
+                ResourceDictionary oldDictionary = (from d in Application.Current.Resources.MergedDictionaries
                                                          where d.Source!= null && d.Source.OriginalString.StartsWith("Resourses/Localization/lang.")
                                                          select d).First();
-                if (replacedDictionary != null)
+                if (oldDictionary != null)
                 {
-                    int i = Application.Current.Resources.MergedDictionaries.IndexOf(replacedDictionary);
-                    Application.Current.Resources
+                    int i = Application.Current.Resources.MergedDictionaries.IndexOf(oldDictionary);
+                    Application.Current.Resources.MergedDictionaries.Remove(oldDictionary);
+                    Application.Current.Resources.MergedDictionaries.Insert(i, newDictionary);
                 }
+                else
+                {
+                    Application.Current.Resources.MergedDictionaries.Add(newDictionary);
+                }
+                LanguageChanged(Application.Current, new EventArgs());
             }
         }
 
