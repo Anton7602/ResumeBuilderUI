@@ -6,13 +6,13 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ResumeBuilderUI
 {
     public partial class App : Application
     {
-        private static List<CultureInfo> supportedLanguages= new List<CultureInfo>();
-        public static List<CultureInfo> SupportedLanguages { get { return supportedLanguages; } }
+        public static Dictionary<string, CultureInfo> supportedLanguages= new Dictionary<string, CultureInfo>();
         public static event EventHandler LanguageChanged;
         public static CultureInfo Language
         {
@@ -48,16 +48,14 @@ namespace ResumeBuilderUI
                 {
                     Application.Current.Resources.MergedDictionaries.Add(newDictionary);
                 }
-                LanguageChanged(Application.Current, new EventArgs());
+                //LanguageChanged(Application.Current, new EventArgs());
             }
         }
 
 
         public App()
         {
-            supportedLanguages.Clear();
-            supportedLanguages.Add(new CultureInfo("en-US"));
-            supportedLanguages.Add(new CultureInfo("ru-RU"));
+
         }
     }
 }

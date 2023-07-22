@@ -17,15 +17,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resourses\Images\Avatar.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="QuestPDF" Version="2023.6.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
+    <PackageReference Include="QuestPDF" Version="2023.6.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resourses\Images\" />
+    <Resource Include="Resourses\Images\Avatar.png" />
   </ItemGroup>
 
 </Project>

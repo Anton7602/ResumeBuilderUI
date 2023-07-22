@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResumeBuilderUI
+namespace ResumeBuilderUI.Models
 {
     [Serializable]
     public class Employment

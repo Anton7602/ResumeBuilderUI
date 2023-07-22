@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
+    <v:String x:Key="currentLanguage">Русский</v:String>
     <v:String x:Key="lang_Name">Имя</v:String>
     <v:String x:Key="lang_Profile">Профиль</v:String>
     <v:String x:Key="lang_Profile_New">Создать</v:String>
@@ -9,4 +10,19 @@
     <v:String x:Key="lang_Language">Язык</v:String>
     <v:String x:Key="lang_Language_English">Английский</v:String>
     <v:String x:Key="lang_Language_Russian">Русский</v:String>
+    <v:String x:Key="lang_PersonalInfo">Персональные данные</v:String>
+    <v:String x:Key="lang_Skills">Навыки</v:String>
+    <v:String x:Key="lang_Experience">Опыт работы</v:String>
+    <v:String x:Key="lang_Education">Образование</v:String>
+    <v:String x:Key="lang_Contacts">Контакты</v:String>
+    <v:String x:Key="lang_Affiliations">Дипломы и сертификаты</v:String>
+    <v:String x:Key="lang_Languages">Языки</v:String>
+    <v:String x:Key="lang_BuildCV">Сгенерировать резюме</v:String>
+    <v:String x:Key="lang_Setting">Настройки</v:String>
+    <v:String x:Key="lang_Setting_AppLanguage">Язык приложения</v:String>
+
+    <x:Array x:Key="lang_LanguageMenuItems" Type="v:String">
+        <v:String>Английский</v:String>
+        <v:String>Русский</v:String>
+    </x:Array>
 </ResourceDictionary>

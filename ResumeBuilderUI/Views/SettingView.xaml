@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="ResumeBuilderUI.Views.SettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ResumeBuilderUI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:SettingViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0">
+
+            <Label FontSize="16" FontWeight="Bold" 
+                         VerticalAlignment="Top" HorizontalAlignment="Left"
+                         Content="{DynamicResource lang_Setting_AppLanguage}"/>
+
+            <ComboBox ItemsSource="{Binding AvailableLanguages}" SelectedValue="{Binding SelectedLanguage, NotifyOnTargetUpdated=True}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

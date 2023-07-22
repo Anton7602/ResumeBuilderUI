@@ -11,7 +11,7 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Previewer;
 
-namespace ResumeBuilderUI
+namespace ResumeBuilderUI.Models
 {
     [Serializable]
     public class ResumeBuilder
