@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ResumeBuilderUI.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -12,7 +13,13 @@ namespace ResumeBuilderUI
 {
     public partial class App : Application
     {
-        public static Dictionary<string, CultureInfo> supportedLanguages= new Dictionary<string, CultureInfo>();
+        public static ApplicantProfile activeProfile; 
+
+        public static readonly Dictionary<string, CultureInfo> supportedLanguages = new Dictionary<string, CultureInfo>()
+        {
+            { "English - English", new CultureInfo("en-US") },
+            { "Russian - Русский", new CultureInfo("ru-RU") }
+        };
         public static event EventHandler LanguageChanged;
         public static CultureInfo Language
         {
@@ -55,7 +62,7 @@ namespace ResumeBuilderUI
 
         public App()
         {
-
+            activeProfile=new ApplicantProfile();
         }
     }
 }

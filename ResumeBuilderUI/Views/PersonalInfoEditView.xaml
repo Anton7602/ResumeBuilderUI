@@ -2,18 +2,29 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
              xmlns:local="clr-namespace:ResumeBuilderUI.Views"
+             xmlns:uc="clr-namespace:ResumeBuilderUI.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-
-            <TextBlock FontSize="40" FontWeight="Bold" 
-                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                         Text="{DynamicResource lang_PersonalInfo}"/>
-        </StackPanel>
-    </Grid>
+    <UserControl.DataContext>
+        <vm:PersonalInfoViewModel/>
+    </UserControl.DataContext>
+    <Border CornerRadius="10" Background="{StaticResource PrimaryColorBrush}">
+        <Grid VerticalAlignment="Center" ShowGridLines="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical"  HorizontalAlignment="Left" Margin="30 0 0 0" Grid.Column="0">
+                
+                
+                <uc:TextField Caption="{DynamicResource lang_Name}" Hint="{DynamicResource lang_Name_Enter}" 
+                              Text="{Binding ActiveProfile.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
+                <uc:TextField Caption="{DynamicResource lang_Title}" Hint="{DynamicResource lang_Title_Enter}" 
+                              Text="{Binding ActiveProfile.TitlesList[0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

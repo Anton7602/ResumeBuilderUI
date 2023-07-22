@@ -8,52 +8,64 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:views="clr-namespace:ResumeBuilderUI.Views" 
         mc:Ignorable="d"
-        Title="Application Builder" Height="600" Width="900" WindowStartupLocation="CenterScreen">
+        Title="Application Builder" Height="600" Width="900" WindowStyle="None"  WindowStartupLocation="CenterScreen"
+        AllowsTransparency="true" Background="Transparent" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid ShowGridLines="True">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <Border CornerRadius="10" Background="{StaticResource PrimaryColorBrush}" MouseDown="Border_MouseDown">
+        <Grid ShowGridLines="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <ListBox x:Name="NavigationMenuListBox"
-        Style="{StaticResource NavigationListBoxStyle}"
-        ItemContainerStyle="{DynamicResource NavigationListBoxItemStyle}"
-        ItemTemplate="{DynamicResource NavigationDataTemplate}"
-        ItemsSource="{DynamicResource NavigationMenuItems}"
-                    Grid.Row="1" Grid.Column="0"/>
+            <ToggleButton Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Style="{StaticResource SettingsButtonStyle}" 
+                          Name="SettingToggleButton" IsChecked="{Binding IsSettingsVisible}" >
+                <iconPacks:PackIconMaterial VerticalAlignment="Center" HorizontalAlignment="Right" Margin="12" 
+                                        Kind="CogOutline" Height="25" Width="25"/>
+            </ToggleButton>
 
-        <Button Grid.Column="0" Grid.Row="1" Height="Auto" VerticalAlignment="Bottom" Style="{StaticResource MainButtonStyle}">
-            <Grid Margin="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <iconPacks:PackIconMaterial x:Name="BuildButtonIcon" VerticalAlignment="Center" 
-                                        HorizontalAlignment="Left" Margin="12" Grid.Column="0" Kind="ClipboardCheckOutline"/>
-                <TextBlock Text="{DynamicResource lang_BuildCV}" HorizontalAlignment="Left" VerticalAlignment="Center"
-                           Name="BuildButtonText" FontSize="16" Margin="5" Grid.Column="1"/>
-            </Grid>
-        </Button>
+                <ToggleButton Grid.Column="0" Grid.Row="0" Height="Auto" Width="Auto" Style="{StaticResource SettingsButtonStyle}"
+                          Name="UserToggleButton" IsChecked="{Binding IsUserVisible}">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="35" Height="35" HorizontalAlignment="Center" Margin="15">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="pack://application:,,,/Resourses/Images/Avatar.png"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Text="{DynamicResource lang_User}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Name="UserButtonText" FontSize="16" Margin="12"/>
+                    </StackPanel>
+                </ToggleButton>
 
-        <Ellipse Width="45" Height="45" HorizontalAlignment="Center" Margin="5" Grid.Column="0" Grid.Row="0">
-            <Ellipse.Fill>
-                <ImageBrush ImageSource="pack://application:,,,/Resourses/Images/Avatar.png"/>
-            </Ellipse.Fill>
-        </Ellipse>
-        
-        <Button Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Style="{StaticResource MainButtonStyle}" Command="{Binding SettingControlCommand}">
-            <iconPacks:PackIconMaterial VerticalAlignment="Center" HorizontalAlignment="Right" Margin="12" 
-                                    Kind="CogOutline" Height="25" Width="25"/>
-        </Button>
+                <ListBox x:Name="NavigationMenuListBox"
+            Style="{StaticResource NavigationListBoxStyle}"
+            ItemContainerStyle="{DynamicResource NavigationListBoxItemStyle}"
+            ItemTemplate="{DynamicResource NavigationDataTemplate}"
+            ItemsSource="{DynamicResource NavigationMenuItems}"
+                        Grid.Row="1" Grid.Column="0" SelectedIndex="{Binding NavBarSelectionIndex}" Margin="0,10,0,0"
+                         Background="Transparent"/>
 
-        <ContentControl Grid.Column="1" Grid.Row="1" Style="{StaticResource NavigationContentStyle}" Visibility="{Binding NavBarVisibility}"/>
-        <ContentControl Grid.Column="1" Grid.Row="1" ContentTemplate="{StaticResource SettingViewTemplate}" Visibility="{Binding SettingsVisibility}"/>
-    </Grid>
+            <Button Grid.Column="0" Grid.Row="1" Height="Auto" VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                    Margin="0 0 0 20"  Style="{StaticResource MainButtonStyle}">
+                <Grid Margin="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <iconPacks:PackIconMaterial x:Name="BuildButtonIcon" VerticalAlignment="Center" 
+                                            HorizontalAlignment="Left" Margin="12" Grid.Column="0" Kind="ClipboardCheckOutline"/>
+                    <TextBlock Text="{DynamicResource lang_BuildCV}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Name="BuildButtonText" FontSize="16" Margin="5" Grid.Column="1"/>
+                </Grid>
+            </Button>
+
+            <ContentControl Grid.Column="1" Grid.Row="1" Style="{StaticResource NavigationContentStyle}"/>
+        </Grid>
+    </Border>
 </Window>

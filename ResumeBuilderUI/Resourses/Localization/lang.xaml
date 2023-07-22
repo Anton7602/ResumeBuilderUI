@@ -1,8 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
-    <v:String x:Key="currentLanguage">English</v:String>
+    <v:String x:Key="currentLanguage">English - English</v:String>
     <v:String x:Key="lang_Name">Name</v:String>
+    <v:String x:Key="lang_Name_Enter">Enter your name</v:String>
     <v:String x:Key="lang_Profile">Profile</v:String>
     <v:String x:Key="lang_Profile_New">New</v:String>
     <v:String x:Key="lang_Profile_Open">Open</v:String>
@@ -18,11 +19,9 @@
     <v:String x:Key="lang_Affiliations">Affiliations</v:String>
     <v:String x:Key="lang_Languages">Languages</v:String>
     <v:String x:Key="lang_BuildCV">Build CV</v:String>
+    <v:String x:Key="lang_User">User</v:String>
     <v:String x:Key="lang_Setting">Setting</v:String>
     <v:String x:Key="lang_Setting_AppLanguage">App Language</v:String>
-
-    <x:Array x:Key="lang_LanguageMenuItems" Type="v:String" >
-        <v:String>English</v:String>
-        <v:String>Russian</v:String>
-    </x:Array>
+    <v:String x:Key="lang_Title">Title</v:String>
+    <v:String x:Key="lang_Title_Enter">Enter target title</v:String>
 </ResourceDictionary>

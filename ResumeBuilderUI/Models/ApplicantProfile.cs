@@ -26,6 +26,7 @@ namespace ResumeBuilderUI.Models
         {
             Name = "Placeholder";
             InitializeDefaultParameters();
+            TitlesList.Add("Cool Fella");
         }
 
         public ApplicantProfile(string name)

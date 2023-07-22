@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="ResumeBuilderUI.UserControls.TextField"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
+             xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
+             mc:Ignorable="d"
+             d:DesignWidth="300" Name="ucTextField" Background="{StaticResource PrimaryColorBrush}" >
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibility"/>
+    </UserControl.Resources>
+    <StackPanel Margin="10 5" Orientation="Vertical" HorizontalAlignment="Stretch">
+        <TextBlock Text ="{Binding ElementName=ucTextField, Path=Caption}" Foreground="#97a5b4" FontSize="13" Margin="0 0 0 8"/>
+        <Grid HorizontalAlignment="Stretch">
+            <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#868686" IsHitTestVisible="False"
+                       Panel.ZIndex="1" FontSize="14" Text="{Binding ElementName=ucTextField, Path=Hint}" 
+                       Visibility="{Binding ElementName=ucTextField, Mode=TwoWay, Path=IsTextEmpty, Converter={StaticResource boolToVisibility}}"/>
+            <TextBox x:Name="textBox" Text="{Binding ElementName=ucTextField, Path=TextFieldText, UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{StaticResource AdvancedTextboxStyle}"/>
+        </Grid>
+    </StackPanel>
+</UserControl>
