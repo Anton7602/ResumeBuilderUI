@@ -18,9 +18,9 @@ namespace ResumeBuilderUI.Views
     /// <summary>
     /// Interaction logic for LanguagesEditView.xaml
     /// </summary>
-    public partial class LanguagesEditView : UserControl
+    public partial class LanguagesView : UserControl
     {
-        public LanguagesEditView()
+        public LanguagesView()
         {
             InitializeComponent();
         }

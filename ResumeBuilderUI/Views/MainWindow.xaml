@@ -9,12 +9,74 @@
         xmlns:views="clr-namespace:ResumeBuilderUI.Views" 
         mc:Ignorable="d"
         Title="Application Builder" Height="600" Width="900" WindowStyle="None"  WindowStartupLocation="CenterScreen"
-        AllowsTransparency="true" Background="Transparent" ResizeMode="NoResize">
+        AllowsTransparency="true" Background="Transparent" ResizeMode="NoResize" Name="MainApplicationWindow">
+    <!--Binding DataContext-->
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Border CornerRadius="10" Background="{StaticResource PrimaryColorBrush}" MouseDown="Border_MouseDown">
-        <Grid ShowGridLines="True">
+    <!--Resources-->
+    <Window.Resources>
+        <!--Defenition of NavBar elements-->
+        <x:Array x:Key="NavigationMenuItems" Type="v:String">
+            <v:String>PersonalInfo</v:String>
+            <v:String>Skills</v:String>
+            <v:String>Experience</v:String>
+            <v:String>Education</v:String>
+            <v:String>Contacts</v:String>
+            <v:String>Affiliations</v:String>
+            <v:String>Languages</v:String>
+        </x:Array>
+
+        <!--Defenition of Text/Icon content of NavBar elements-->
+        <DataTemplate x:Key="NavigationDataTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <iconPacks:PackIconMaterial x:Name="NavMenuItemIcon" VerticalAlignment="Center" 
+                                        HorizontalAlignment="Left" Margin="12" Grid.Column="0"/>
+                <TextBlock Text="Test" HorizontalAlignment="Left" VerticalAlignment="Center"
+                           Name="NavMenuItemText" FontSize="16" Margin="5" Grid.Column="1"/>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding}" Value="PersonalInfo">
+                    <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="AccountOutline"/>
+                    <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_PersonalInfo}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Skills">
+                    <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="BallotOutline"/>
+                    <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Skills}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Experience">
+                    <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="BadgeAccountHorizontalOutline"/>
+                    <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Experience}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Education">
+                    <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="SchoolOutline"/>
+                    <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Education}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Contacts">
+                    <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="ContactsOutline"/>
+                    <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Contacts}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Affiliations">
+                    <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="CertificateOutline"/>
+                    <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Affiliations}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="Languages">
+                    <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="Translate"/>
+                    <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Languages}"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <!--Main Layout-->
+    <Border CornerRadius="10" MouseDown="Border_MouseDown" Background="{StaticResource PrimaryColorBrush}" 
+            Width="{Binding ElementName=MainApplicationWindow, Path=ActualWidth}">
+        <Grid ShowGridLines="True" Width="{Binding ElementName=MainApplicationWindow, Path=ActualWidth}">
+            <!--Grid Parameters-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
@@ -23,37 +85,40 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-
+            
+            <!--Settings Button-->
             <ToggleButton Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Style="{StaticResource SettingsButtonStyle}" 
                           Name="SettingToggleButton" IsChecked="{Binding IsSettingsVisible}" >
                 <iconPacks:PackIconMaterial VerticalAlignment="Center" HorizontalAlignment="Right" Margin="12" 
                                         Kind="CogOutline" Height="25" Width="25"/>
             </ToggleButton>
 
-                <ToggleButton Grid.Column="0" Grid.Row="0" Height="Auto" Width="Auto" Style="{StaticResource SettingsButtonStyle}"
-                          Name="UserToggleButton" IsChecked="{Binding IsUserVisible}">
-                    <StackPanel Orientation="Horizontal">
-                        <Ellipse Width="35" Height="35" HorizontalAlignment="Center" Margin="15">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="pack://application:,,,/Resourses/Images/Avatar.png"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        <TextBlock Text="{DynamicResource lang_User}" HorizontalAlignment="Left" VerticalAlignment="Center"
-                               Name="UserButtonText" FontSize="16" Margin="12"/>
-                    </StackPanel>
-                </ToggleButton>
+            <!--User Button-->
+            <ToggleButton Grid.Column="0" Grid.Row="0" Height="Auto" Width="Auto" Style="{StaticResource SettingsButtonStyle}"
+                        Name="UserToggleButton" IsChecked="{Binding IsUserVisible}">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Width="35" Height="35" HorizontalAlignment="Center" Margin="15">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="pack://application:,,,/Resourses/Images/Avatar.png"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock Text="{DynamicResource lang_User}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Name="UserButtonText" FontSize="16" Margin="12"/>
+                </StackPanel>
+            </ToggleButton>
 
-                <ListBox x:Name="NavigationMenuListBox"
+            <!--Navigation Bar-->
+            <ListBox x:Name="NavigationMenuListBox" Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" Background="Transparent"
+            SelectedIndex="{Binding NavBarSelectionIndex}"
             Style="{StaticResource NavigationListBoxStyle}"
             ItemContainerStyle="{DynamicResource NavigationListBoxItemStyle}"
             ItemTemplate="{DynamicResource NavigationDataTemplate}"
-            ItemsSource="{DynamicResource NavigationMenuItems}"
-                        Grid.Row="1" Grid.Column="0" SelectedIndex="{Binding NavBarSelectionIndex}" Margin="0,10,0,0"
-                         Background="Transparent"/>
+            ItemsSource="{DynamicResource NavigationMenuItems}"/>
 
-            <Button Grid.Column="0" Grid.Row="1" Height="Auto" VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                    Margin="0 0 0 20"  Style="{StaticResource MainButtonStyle}">
-                <Grid Margin="3">
+            <!--Build CV Button-->
+            <Button Grid.Column="0" Grid.Row="1" Height="Auto" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 20"  
+                    Style="{StaticResource MainButtonStyle}">
+                <Grid Margin="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -65,6 +130,7 @@
                 </Grid>
             </Button>
 
+            <!--Content Window Control-->
             <ContentControl Grid.Column="1" Grid.Row="1" Style="{StaticResource NavigationContentStyle}"/>
         </Grid>
     </Border>

@@ -1,6 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
+    
+    <!--                              -->
+    <!--Style of TextField UserControl-->
+    <!--                              -->
+    
     <Style TargetType="TextBox" x:Key="AdvancedTextboxStyle">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#000000"/>
@@ -21,7 +25,6 @@
                                       VerticalScrollBarVisibility="Hidden"/>
 
                     </Border>
-
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" TargetName="txtBorder" Value="{StaticResource SecondaryColorBrush}"/>

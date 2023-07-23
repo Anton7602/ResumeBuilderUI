@@ -15,9 +15,9 @@ using System.Windows.Shapes;
 
 namespace ResumeBuilderUI.Views
 {
-    public partial class ExperienceEditView : UserControl
+    public partial class SkillsView : UserControl
     {
-        public ExperienceEditView()
+        public SkillsView()
         {
             InitializeComponent();
         }

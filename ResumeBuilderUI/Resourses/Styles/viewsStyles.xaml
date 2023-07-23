@@ -4,10 +4,17 @@
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
                     xmlns:views="clr-namespace:ResumeBuilderUI.Views">
     
+    <!--Main Application Colors-->
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="SecondaryColorBrush" Color="#FF1F90FF"/>
     <SolidColorBrush x:Key="HoveringOverColorBrush" Color="#ebecf0"/>
+    <SolidColorBrush x:Key="PrimaryTextColor" Color="#000000"/>
 
+    <!--                -->
+    <!--MainWindowStyles-->
+    <!--                -->
+    
+    <!--NavBar listBox Style-->
     <Style x:Key="NavigationListBoxStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
@@ -40,6 +47,7 @@
         </Style.Triggers>
     </Style>
 
+    <!--NavBar Item Container Style-->
     <Style x:Key="NavigationListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource SecondaryColorBrush}"/>
@@ -94,95 +102,36 @@
         </Setter>
     </Style>
 
-    <x:Array x:Key="NavigationMenuItems" Type="v:String">
-        <v:String>PersonalInfo</v:String>
-        <v:String>Skills</v:String>
-        <v:String>Experience</v:String>
-        <v:String>Education</v:String>
-        <v:String>Contacts</v:String>
-        <v:String>Affiliations</v:String>
-        <v:String>Languages</v:String>
-    </x:Array>
-
-    <DataTemplate x:Key="NavigationDataTemplate">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <iconPacks:PackIconMaterial x:Name="NavMenuItemIcon" VerticalAlignment="Center" 
-                                        HorizontalAlignment="Left" Margin="12" Grid.Column="0"/>
-            <TextBlock Text="Test" HorizontalAlignment="Left" VerticalAlignment="Center"
-                           Name="NavMenuItemText" FontSize="16" Margin="5" Grid.Column="1"/>
-        </Grid>
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding}" Value="PersonalInfo">
-                <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="AccountOutline"/>
-                <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_PersonalInfo}"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="Skills">
-                <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="BallotOutline"/>
-                <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Skills}"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="Experience">
-                <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="BadgeAccountHorizontalOutline"/>
-                <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Experience}"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="Education">
-                <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="SchoolOutline"/>
-                <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Education}"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="Contacts">
-                <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="ContactsOutline"/>
-                <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Contacts}"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="Affiliations">
-                <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="CertificateOutline"/>
-                <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Affiliations}"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="Languages">
-                <Setter TargetName="NavMenuItemIcon" Property="Kind" Value="Translate"/>
-                <Setter TargetName="NavMenuItemText" Property="Text" Value="{DynamicResource lang_Languages}"/>
-            </DataTrigger>
-        </DataTemplate.Triggers>
-    </DataTemplate>
-
+    <!--Window Content To Views Definitions for Navigation ContentControl Style-->
     <DataTemplate x:Key="PersonalInfoViewTemplate">
-        <views:PersonalInfoEditView/>
+        <views:PersonalInfoView/>
     </DataTemplate>
-
     <DataTemplate x:Key="SkillsEditViewTemplate">
-        <views:SkillsEditView/>
+        <views:SkillsView/>
     </DataTemplate>
-
     <DataTemplate x:Key="EmploymentEditViewTemplate">
-        <views:ExperienceEditView/>
+        <views:ExperienceView/>
     </DataTemplate>
-
     <DataTemplate x:Key="EducationEditViewTemplate">
-        <views:EducationEditView/>
+        <views:EducationView/>
     </DataTemplate>
-
     <DataTemplate x:Key="ContactsEditViewTemplate">
-        <views:ContactsEditView/>
+        <views:ContactsView/>
     </DataTemplate>
-
     <DataTemplate x:Key="AffiliationsEditViewTemplate">
-        <views:AffiliationsEditView/>
+        <views:AffiliationsView/>
     </DataTemplate>
-
     <DataTemplate x:Key="LanguagesEditViewTemplate">
-        <views:LanguagesEditView/>
+        <views:LanguagesView/>
     </DataTemplate>
-
     <DataTemplate x:Key="SettingViewTemplate">
         <views:SettingView/>
     </DataTemplate>
-
     <DataTemplate x:Key="UserViewTemplate">
         <views:UserView/>
     </DataTemplate>
 
+    <!--Main Window ContentControl Style-->
     <Style x:Key="NavigationContentStyle" TargetType="ContentControl">
         <Setter Property="ContentTemplate" Value="{StaticResource PersonalInfoViewTemplate}"/>
         <Setter Property="Visibility" Value="Visible"/>
@@ -226,6 +175,7 @@
         </Style.Triggers>
     </Style>
 
+    <!--Build CV Button Style-->
     <Style x:Key="MainButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource SecondaryColorBrush}"/>
@@ -252,6 +202,7 @@
         </Style.Triggers>
     </Style>
 
+    <!--Settings Button Style-->
     <Style x:Key="SettingsButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource SecondaryColorBrush}"/>
@@ -276,4 +227,130 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    <!--                 -->
+    <!--SkillsView Styles-->
+    <!--                 -->
+
+    <!--Skillsets ListBox Style-->
+    <Style x:Key="SkillsetItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="0" SnapsToDevicePixels="true" 
+                            CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Main Skills elements style-->
+    <Style x:Key="MainSkillElementsStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{StaticResource SecondaryColorBrush}"
+                            BorderThickness="2" CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="13,8"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource HoveringOverColorBrush}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{StaticResource SecondaryColorBrush}"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Skills ListBox Style-->
+    <Style x:Key="SkillItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Skills elements style-->
+    <Style x:Key="SkillElementsStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderBrush="{StaticResource SecondaryColorBrush}"
+                            BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="13,8"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource HoveringOverColorBrush}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{StaticResource SecondaryColorBrush}"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

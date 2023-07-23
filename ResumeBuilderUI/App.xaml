@@ -10,8 +10,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resourses/Localization/lang.xaml"/>
-                <ResourceDictionary Source="Resourses/Styles/mainStyles.xaml"/>
-                <ResourceDictionary Source="Resourses/Styles/customStyles.xaml"/>
+                <ResourceDictionary Source="Resourses/Styles/userControlsStyles.xaml"/>
+                <ResourceDictionary Source="Resourses/Styles/viewsStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

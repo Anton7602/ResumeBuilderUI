@@ -15,12 +15,9 @@ using System.Windows.Shapes;
 
 namespace ResumeBuilderUI.Views
 {
-    /// <summary>
-    /// Interaction logic for ContactsEditView.xaml
-    /// </summary>
-    public partial class ContactsEditView : UserControl
+    public partial class PersonalInfoView : UserControl
     {
-        public ContactsEditView()
+        public PersonalInfoView()
         {
             InitializeComponent();
         }

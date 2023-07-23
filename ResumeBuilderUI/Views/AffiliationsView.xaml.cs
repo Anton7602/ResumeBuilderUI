@@ -15,12 +15,9 @@ using System.Windows.Shapes;
 
 namespace ResumeBuilderUI.Views
 {
-    /// <summary>
-    /// Interaction logic for EducationEditView.xaml
-    /// </summary>
-    public partial class EducationEditView : UserControl
+    public partial class AffiliationsView : UserControl
     {
-        public EducationEditView()
+        public AffiliationsView()
         {
             InitializeComponent();
         }

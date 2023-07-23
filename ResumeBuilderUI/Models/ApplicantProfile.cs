@@ -27,6 +27,20 @@ namespace ResumeBuilderUI.Models
             Name = "Placeholder";
             InitializeDefaultParameters();
             TitlesList.Add("Cool Fella");
+            Skillset tempSet = new Skillset("CAD");
+            tempSet.SkillsList.Add("SolidWorks");
+            tempSet.SkillsList.Add("AutoCAD");
+            tempSet.SkillsList.Add("Siemens NX");
+            tempSet.SkillsList.Add("Kompas-3D");
+            tempSet.SkillsList.Add("Creo Parametrics");
+            tempSet.SkillsList.Add("Pro Engineer");
+            tempSet.SkillsList.Add("Autodesk Inventor");
+            tempSet.SkillsList.Add("Catia");
+            skillsetsList.Add(tempSet);
+            tempSet = new Skillset("Programming");
+            tempSet.SkillsList.Add("Visual Studio");
+            tempSet.SkillsList.Add("Android Studio");
+            skillsetsList.Add(tempSet);
         }
 
         public ApplicantProfile(string name)
