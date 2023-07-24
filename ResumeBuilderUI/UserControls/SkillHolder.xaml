@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="ResumeBuilderUI.UserControls.SkillHolder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
+             xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
+             mc:Ignorable="d" Name="SkillHolderBox">
+    <Border BorderThickness="1" BorderBrush="#000000" CornerRadius="10">
+        <WrapPanel Background="Transparent" >
+            <ToggleButton Name="AddNewSkillButton" Visibility="Collapsed" Content="+" Style="{StaticResource SkillElementsStyle}" Margin="15" VerticalAlignment="Top"/>
+            <ListBox Name="SkillHolderListBox"  ItemContainerStyle="{StaticResource SkillItemContainerStyle}">
+                <!--Listbox border parameters-->
+                <ListBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </ListBox.Resources>
+                <!--Redefining ItemPanel for list of skills in SKillset-->
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Margin="8" MaxWidth="{Binding ElementName=SkillViewBorder, Path=ActualWidth}" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <!--Define skills Item Template-->
+
+            </ListBox>
+        </WrapPanel>
+    </Border>
+</UserControl>

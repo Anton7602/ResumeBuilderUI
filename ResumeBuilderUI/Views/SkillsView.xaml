@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ResumeBuilderUI.Views"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:uc="clr-namespace:ResumeBuilderUI.UserControls"
              xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
              mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
     <!--Binding DataContext -->
@@ -12,10 +14,12 @@
     </UserControl.DataContext>
     <!--Main Layout-->
     <Border Name="SkillViewBorder" CornerRadius="10" Background="Transparent">
-        <ScrollViewer HorizontalAlignment="Stretch">
-            <Border Name="InnerSkillViewBorder" Margin="20 5" Background="Transparent">
-                <ListBox ItemsSource="{Binding ActiveProfile.skillsetsList}" BorderThickness="0" HorizontalAlignment="Center"
-                     ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
+        <Grid>
+            <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" />
+            <ScrollViewer HorizontalAlignment="Stretch" Grid.Row="1">
+                <!--ListBox for skillsets-->
+                <ListBox ItemsSource="{Binding ActiveProfile.SkillsetsList}" BorderThickness="0" HorizontalAlignment="Center"
+                         ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}" Name="SkillsetListBox">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel HorizontalAlignment="Center"/>
@@ -25,37 +29,15 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate >
                             <StackPanel HorizontalAlignment="Right" Margin="0 5">
-                                <ToggleButton FontSize="16" Content="{Binding Path=MainSkill}" HorizontalAlignment="Left" FontWeight="Bold"  
-                                              Style="{StaticResource MainSkillElementsStyle}"/>
-                                <ListBox ItemsSource="{Binding Path=SkillsList}" HorizontalAlignment="Center" BorderThickness="3"
-                                         ItemContainerStyle="{StaticResource SkillItemContainerStyle}" 
-                                         Width="{Binding ElementName=InnerSkillViewBorder, Path=ActualWidth}">
-                                    <!--Listbox border parameters-->
-                                    <ListBox.Resources>
-                                        <Style TargetType="Border">
-                                            <Setter Property="CornerRadius" Value="10"/>
-                                        </Style>
-                                    </ListBox.Resources>
-                                    <!--Redefining ItemPanel for list of skills in SKillset-->
-                                    <ListBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Margin="8" MaxWidth="{Binding ElementName=SkillViewBorder, Path=ActualWidth}" />
-                                        </ItemsPanelTemplate>
-                                    </ListBox.ItemsPanel>
-                                    <!--Define skills Item Template-->
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <WrapPanel>
-                                                <ToggleButton FontSize="12" Content="{Binding}" Style="{StaticResource SkillElementsStyle}"/>
-                                            </WrapPanel>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
+                                <ToggleButton Content="{Binding Path=MainSkill}" HorizontalAlignment="Left" FontWeight="Bold"  
+                                                Style="{StaticResource MainSkillElementsStyle}"/>
+                                <uc:SkillHolder SkillsSource="{Binding Path=SkillsList, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"
+                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </Border>
-        </ScrollViewer>
+            </ScrollViewer>
+        </Grid>
     </Border>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ResumeBuilderUI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,16 @@ namespace ResumeBuilderUI.Views
 {
     public partial class SkillsView : UserControl
     {
+        public ApplicantProfile activeProfile = App.activeProfile;
         public SkillsView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            activeProfile.SkillsetsList[0].SkillsList.Add("TestSkill");
+            App.activeProfile = activeProfile;
         }
     }
 }

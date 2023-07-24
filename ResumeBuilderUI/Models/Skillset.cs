@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,18 +10,18 @@ namespace ResumeBuilderUI.Models
     public class Skillset
     {
         public string MainSkill { get; set; }
-        public List<string> SkillsList { get; set; }
+        public ObservableCollection<string> SkillsList { get; set; }
 
         public Skillset()
         {
             MainSkill = string.Empty;
-            SkillsList = new List<string>();
+            SkillsList = new ObservableCollection<string>();
         }
 
         public Skillset(string mainSkill)
         {
             MainSkill= mainSkill;
-            SkillsList = new List<string>();
+            SkillsList = new ObservableCollection<string>();
         }
 
         public Skillset(Skillset skillset)
