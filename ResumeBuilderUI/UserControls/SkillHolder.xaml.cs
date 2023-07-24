@@ -24,13 +24,32 @@ namespace ResumeBuilderUI.UserControls
         public SkillHolder()
         {
             InitializeComponent();
-            collectionContainer.Collection = SkillsSource;
+            App.activeProfile.SkillsetsList[0].SkillsList.CollectionChanged += SkillsList_CollectionChanged;
+            Toggles = new ObservableCollection<ToggleButton>();
+            collectionContainer.Collection = Toggles;
             Button AddNewSkillButton = new Button();
             AddNewSkillButton.Content = "+";
+            AddNewSkillButton.Style = App.Current.Resources["AddSkillButtonStyle"] as Style;
             AddNewSkillButton.Click += AddNewSkillButton_Click;
             compositeCollection.Add(AddNewSkillButton);
             compositeCollection.Add(collectionContainer);
             SkillHolderListBox.ItemsSource = compositeCollection;
+        }
+
+        private void SkillsList_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if ((sender as ObservableCollection<string>).Equals(SkillsSource))
+            {
+                ToggleButton tempToggleButton;
+                foreach (string skill in e.NewItems)
+                {
+                    tempToggleButton = new ToggleButton();
+                    tempToggleButton.Content = skill;
+                    tempToggleButton.Style = App.Current.Resources["SkillElementsStyle"] as Style;
+                    Toggles.Insert(0, tempToggleButton);
+                }
+                collectionContainer.Collection = Toggles;
+            }
         }
 
         private void AddNewSkillButton_Click(object sender, RoutedEventArgs e)
@@ -41,6 +60,8 @@ namespace ResumeBuilderUI.UserControls
         private readonly CompositeCollection compositeCollection = new CompositeCollection();
         private readonly CollectionContainer collectionContainer = new CollectionContainer();
 
+
+        public ObservableCollection<ToggleButton> Toggles { get; set; }
 
         public System.Collections.IEnumerable SkillsSource
         {
@@ -56,7 +77,16 @@ namespace ResumeBuilderUI.UserControls
 
         private static void OnSkillsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as SkillHolder).collectionContainer.Collection = (d as SkillHolder).SkillsSource;
+            //(d as SkillHolder).collectionContainer.Collection = (d as SkillHolder).SkillsSource;
+            ToggleButton tempToggleButton;
+            foreach(string skill in (d as SkillHolder).SkillsSource)
+            {
+                tempToggleButton = new ToggleButton();
+                tempToggleButton.Content= skill;
+                tempToggleButton.Style = App.Current.Resources["SkillElementsStyle"] as Style;
+                (d as SkillHolder).Toggles.Add(tempToggleButton);
+            }
+            (d as SkillHolder).collectionContainer.Collection = (d as SkillHolder).Toggles;
         }
     }
 }

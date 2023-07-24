@@ -6,25 +6,27 @@
              xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
              xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
              mc:Ignorable="d" Name="SkillHolderBox">
-    <Border BorderThickness="1" BorderBrush="#000000" CornerRadius="10">
-        <WrapPanel Background="Transparent" >
-            <ToggleButton Name="AddNewSkillButton" Visibility="Collapsed" Content="+" Style="{StaticResource SkillElementsStyle}" Margin="15" VerticalAlignment="Top"/>
-            <ListBox Name="SkillHolderListBox"  ItemContainerStyle="{StaticResource SkillItemContainerStyle}">
-                <!--Listbox border parameters-->
-                <ListBox.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </ListBox.Resources>
-                <!--Redefining ItemPanel for list of skills in SKillset-->
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Margin="8" MaxWidth="{Binding ElementName=SkillViewBorder, Path=ActualWidth}" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <!--Define skills Item Template-->
-
-            </ListBox>
-        </WrapPanel>
+    <Border Name="SkillHolderBorder" BorderThickness="1" BorderBrush="#000000" CornerRadius="10">
+        <Grid>
+            <Border Name="SkillWidthRegulatorBorder" Margin="1 0" Height="0"/>
+            <WrapPanel Background="Transparent">
+                <ListBox Name="SkillHolderListBox"  ItemContainerStyle="{StaticResource SkillItemContainerStyle}" BorderThickness="0"
+                         Width="{Binding ElementName=SkillWidthRegulatorBorder, Path=ActualWidth}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <!--Listbox border parameters-->
+                    <ListBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </ListBox.Resources>
+                    <!--Redefining ItemPanel for list of skills in SKillset-->
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+            </WrapPanel>
+            
+        </Grid>
     </Border>
 </UserControl>

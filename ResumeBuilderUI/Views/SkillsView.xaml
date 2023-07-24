@@ -32,7 +32,9 @@
                                 <ToggleButton Content="{Binding Path=MainSkill}" HorizontalAlignment="Left" FontWeight="Bold"  
                                                 Style="{StaticResource MainSkillElementsStyle}"/>
                                 <uc:SkillHolder SkillsSource="{Binding Path=SkillsList, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"
-                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
+                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}">
+                                    
+                                </uc:SkillHolder>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

@@ -23,11 +23,5 @@ namespace ResumeBuilderUI.Views
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            activeProfile.SkillsetsList[0].SkillsList.Add("TestSkill");
-            App.activeProfile = activeProfile;
-        }
     }
 }
