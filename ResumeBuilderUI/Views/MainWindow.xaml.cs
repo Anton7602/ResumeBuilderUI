@@ -20,6 +20,7 @@ namespace ResumeBuilderUI.Views
         public MainWindow()
         {
             InitializeComponent();
+            App.Language = new CultureInfo(ResumeBuilderUI.Properties.Settings.Default.DefaultLanguage);
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)

@@ -31,7 +31,6 @@ namespace ResumeBuilderUI
             {
                 if(value == null) throw new ArgumentNullException("value");
                 System.Threading.Thread.CurrentThread.CurrentUICulture = value;
-
                 ResourceDictionary newDictionary = new ResourceDictionary();
                 switch(value.Name)
                 {
@@ -55,14 +54,22 @@ namespace ResumeBuilderUI
                 {
                     Application.Current.Resources.MergedDictionaries.Add(newDictionary);
                 }
-                //LanguageChanged(Application.Current, new EventArgs());
+                LanguageChanged(Application.Current, new EventArgs());
             }
+        }
+
+        private void App_LanguageChanged(Object sender, EventArgs e)
+        {
+            ResumeBuilderUI.Properties.Settings.Default.DefaultLanguage = Language.Name;
+            ResumeBuilderUI.Properties.Settings.Default.Save();
         }
 
 
         public App()
         {
+            InitializeComponent();
             activeProfile=new ApplicantProfile();
+            App.LanguageChanged += App_LanguageChanged;
         }
     }
 }

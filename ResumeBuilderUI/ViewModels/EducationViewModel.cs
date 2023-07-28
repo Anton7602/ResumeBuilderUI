@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ResumeBuilderUI.ViewModels
 {
-    internal class PersonalInfoViewModel : ViewModelBase
+    class EducationViewModel : ViewModelBase
     {
         private ApplicantProfile activeProfile = App.activeProfile;
         public ApplicantProfile ActiveProfile
@@ -15,14 +15,11 @@ namespace ResumeBuilderUI.ViewModels
             get { return activeProfile; }
             set
             {
-                activeProfile= value;
+                activeProfile = value;
                 App.activeProfile = activeProfile;
-                OnPropertyChanged("ActiveProfile");
+                OnPropertyChanged(nameof(ActiveProfile));
             }
         }
-        public PersonalInfoViewModel()
-        {
 
-        }
     }
 }

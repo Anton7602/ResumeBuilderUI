@@ -18,7 +18,6 @@ namespace ResumeBuilderUI.Views
 {
     public partial class SkillsView : UserControl
     {
-        public ApplicantProfile activeProfile = App.activeProfile;
         public SkillsView()
         {
             InitializeComponent();

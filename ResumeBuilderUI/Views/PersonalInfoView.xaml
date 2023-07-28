@@ -18,8 +18,6 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical"  HorizontalAlignment="Left" Margin="30 0 0 0" Grid.Column="0">
-                
-                
                 <uc:TextField Caption="{DynamicResource lang_Name}" Hint="{DynamicResource lang_Name_Enter}" 
                               Text="{Binding ActiveProfile.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
                 <uc:TextField Caption="{DynamicResource lang_Title}" Hint="{DynamicResource lang_Title_Enter}" 

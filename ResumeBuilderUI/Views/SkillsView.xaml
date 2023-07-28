@@ -31,9 +31,9 @@
                             <StackPanel HorizontalAlignment="Right" Margin="0 5">
                                 <ToggleButton Content="{Binding Path=MainSkill}" HorizontalAlignment="Left" FontWeight="Bold"  
                                                 Style="{StaticResource MainSkillElementsStyle}"/>
-                                <uc:SkillHolder SkillsSource="{Binding Path=SkillsList, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"
-                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}">
-                                    
+                                <uc:SkillHolder SkillsSource="{Binding Path=SkillsList}" HorizontalAlignment="Center"
+                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"
+                                                AcceptCommand="{Binding AddSkillCommand}">
                                 </uc:SkillHolder>
                             </StackPanel>
                         </DataTemplate>

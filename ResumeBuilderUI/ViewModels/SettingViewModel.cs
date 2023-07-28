@@ -17,7 +17,7 @@ namespace ResumeBuilderUI.ViewModels
             get { return _availableLanguages; }
         }
 
-        private string selectedLanguage = string.Empty;
+        private string selectedLanguage = Application.Current.Resources["currentLanguage"] as string;
         public string SelectedLanguage
         {
             get { return selectedLanguage; }
@@ -31,7 +31,7 @@ namespace ResumeBuilderUI.ViewModels
 
         public SettingViewModel()
         {
-            SelectedLanguage = Application.Current.Resources["currentLanguage"] as string;
+
         }
     }
 }

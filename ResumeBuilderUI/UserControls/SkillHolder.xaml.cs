@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ResumeBuilderUI.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,13 +25,8 @@ namespace ResumeBuilderUI.UserControls
         public SkillHolder()
         {
             InitializeComponent();
-            App.activeProfile.SkillsetsList[0].SkillsList.CollectionChanged += SkillsList_CollectionChanged;
-            Toggles = new ObservableCollection<ToggleButton>();
-            collectionContainer.Collection = Toggles;
-            Button AddNewSkillButton = new Button();
-            AddNewSkillButton.Content = "+";
-            AddNewSkillButton.Style = App.Current.Resources["AddSkillButtonStyle"] as Style;
-            AddNewSkillButton.Click += AddNewSkillButton_Click;
+            ElementsToggleButtons = new ObservableCollection<ToggleButton>();
+            collectionContainer.Collection = ElementsToggleButtons;
             compositeCollection.Add(AddNewSkillButton);
             compositeCollection.Add(collectionContainer);
             SkillHolderListBox.ItemsSource = compositeCollection;
@@ -46,26 +42,22 @@ namespace ResumeBuilderUI.UserControls
                     tempToggleButton = new ToggleButton();
                     tempToggleButton.Content = skill;
                     tempToggleButton.Style = App.Current.Resources["SkillElementsStyle"] as Style;
-                    Toggles.Insert(0, tempToggleButton);
+                    ElementsToggleButtons.Insert(0, tempToggleButton);
                 }
-                collectionContainer.Collection = Toggles;
+                collectionContainer.Collection = ElementsToggleButtons;
             }
-        }
-
-        private void AddNewSkillButton_Click(object sender, RoutedEventArgs e)
-        {
-            App.activeProfile.SkillsetsList[0].SkillsList.Insert(0,"TestSkill");
         }
 
         private readonly CompositeCollection compositeCollection = new CompositeCollection();
         private readonly CollectionContainer collectionContainer = new CollectionContainer();
+        private TextFieldButton AddNewSkillButton = new TextFieldButton();
 
 
-        public ObservableCollection<ToggleButton> Toggles { get; set; }
+        public ObservableCollection<ToggleButton> ElementsToggleButtons { get; set; }
 
-        public System.Collections.IEnumerable SkillsSource
+        public ObservableCollection<string> SkillsSource
         {
-            get { return (IEnumerable)GetValue(SkillsSourceProperty); }
+            get { return (ObservableCollection<string>)GetValue(SkillsSourceProperty); }
             set 
             { 
                 SetValue(SkillsSourceProperty, value);
@@ -73,20 +65,34 @@ namespace ResumeBuilderUI.UserControls
         }
 
         public static readonly DependencyProperty SkillsSourceProperty =
-            DependencyProperty.Register("SkillsSource", typeof(IEnumerable), typeof(SkillHolder), new PropertyMetadata(OnSkillsSourceChanged));
+            DependencyProperty.Register("SkillsSource", typeof(ObservableCollection<string>), typeof(SkillHolder), new PropertyMetadata(OnSkillsSourceChanged));
 
         private static void OnSkillsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            //(d as SkillHolder).collectionContainer.Collection = (d as SkillHolder).SkillsSource;
             ToggleButton tempToggleButton;
-            foreach(string skill in (d as SkillHolder).SkillsSource)
+            (d as SkillHolder).SkillsSource.CollectionChanged += (d as SkillHolder).SkillsList_CollectionChanged;
+            foreach (string skill in (d as SkillHolder).SkillsSource)
             {
                 tempToggleButton = new ToggleButton();
                 tempToggleButton.Content= skill;
                 tempToggleButton.Style = App.Current.Resources["SkillElementsStyle"] as Style;
-                (d as SkillHolder).Toggles.Add(tempToggleButton);
+                (d as SkillHolder).ElementsToggleButtons.Add(tempToggleButton);
             }
-            (d as SkillHolder).collectionContainer.Collection = (d as SkillHolder).Toggles;
+            (d as SkillHolder).collectionContainer.Collection = (d as SkillHolder).ElementsToggleButtons;
+        }
+
+        public static readonly DependencyProperty AcceptCommandProperty =
+    DependencyProperty.Register("AcceptCommand", typeof(ICommand), typeof(SkillHolder), new PropertyMetadata(OnAcceptCommandChange));
+
+        private static void OnAcceptCommandChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as SkillHolder).AddNewSkillButton.AcceptCommand = (d as SkillHolder).AcceptCommand;
+        }
+
+        public ICommand AcceptCommand
+        {
+            get { return (ICommand)GetValue(AcceptCommandProperty); }
+            set { SetValue(AcceptCommandProperty, value); }
         }
     }
 }

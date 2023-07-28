@@ -4,16 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ResumeBuilderUI.Views"
+             xmlns:uc="clr-namespace:ResumeBuilderUI.UserControls"
+             xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:EducationViewModel/>
+    </UserControl.DataContext>
     <Grid>
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
 
-            <TextBlock FontSize="40" FontWeight="Bold" 
-                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                         Text="{DynamicResource lang_Education}"/>
+            <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" />
+            <ListBox Name="EmploymentListBox" ItemsSource="{Binding ActiveProfile.EducationsList}" BorderThickness="0" HorizontalAlignment="Center">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <uc:EducationHolder EducationSource="{Binding}" HorizontalAlignment="Center"
+                                                 Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
     </Grid>
 </UserControl>
