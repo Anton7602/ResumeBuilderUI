@@ -1,10 +1,4 @@
-﻿using ResumeBuilderUI.ViewModels;
-using ResumeBuilderUI.Views;
-using System;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Security;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 

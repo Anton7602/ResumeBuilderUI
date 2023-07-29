@@ -1,5 +1,4 @@
-﻿
-namespace ResumeBuilderUI.Models
+﻿namespace ResumeBuilderUI.Models
 {
     public class Contact
     {
