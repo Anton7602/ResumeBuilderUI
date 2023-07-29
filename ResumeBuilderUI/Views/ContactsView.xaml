@@ -3,17 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:ResumeBuilderUI.UserControls"
+             xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
              xmlns:local="clr-namespace:ResumeBuilderUI.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:ContactsViewModel/>
+    </UserControl.DataContext>
     <Grid>
-        <StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-
-            <TextBlock FontSize="40" FontWeight="Bold" 
-                         VerticalAlignment="Center" HorizontalAlignment="Center"
-                         Text="{DynamicResource lang_Contacts}"/>
-        </StackPanel>
+        <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" Background="{StaticResource PrimaryColorBrush}"/>
+        <ListBox Name="ContactListBox" ItemsSource="{Binding ActiveProfile.ContactsList}" BorderThickness="0" 
+                 HorizontalAlignment="Center" Background="{StaticResource PrimaryColorBrush}" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <uc:ContactHolder ContactSource="{Binding}" HorizontalAlignment="Center"
+                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

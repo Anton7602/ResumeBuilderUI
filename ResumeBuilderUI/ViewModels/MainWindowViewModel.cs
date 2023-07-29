@@ -88,21 +88,6 @@ namespace ResumeBuilderUI.ViewModels
             //db.Database.EnsureCreated();
             //db.Users.Add(new User { Name = "Anton" });
             //db.SaveChanges();
-
-            ActiveProfile = new ApplicantProfile("Binding Test");
-            ActiveProfile.ContactsList.Add("Email", "TestEmail@gmail.com");
-            ActiveProfile.ContactsList.Add("Phone", "999888777666");
-            Employment employment = new Employment()
-            {
-                Employer = "Class Engineering",
-                EndDate= DateTime.Now,
-                StartDate= DateTime.Now,
-                Title="Mechanical Design Engineer"
-            };
-            Employment employment2 = new Employment(employment);
-            employment2.Employer = "Google";
-            ActiveProfile.EmploymentsList.Add(employment);
-            ActiveProfile.EmploymentsList.Add(employment2);
         }
     }
 }

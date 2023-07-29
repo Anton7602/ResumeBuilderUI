@@ -6,13 +6,14 @@
              xmlns:uc="clr-namespace:ResumeBuilderUI.UserControls"
              xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
              xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
-             mc:Ignorable="d" Name="SkillHolderBox">
-    <Border Name="SkillHolderBorder" BorderThickness="1" BorderBrush="#000000" CornerRadius="10">
+             mc:Ignorable="d" Name="SkillHolderControl">
+    <Border Name="SkillHolderBorder" BorderThickness="0" BorderBrush="#000000" CornerRadius="10">
         <Grid>
-            <Border Name="SkillWidthRegulatorBorder" Margin="1 0" Height="0"/>
+            <Border Name="SkillWidthRegulatorBorder" Margin="2 5" Height="0"/>
             <WrapPanel Background="Transparent">
                 <ListBox Name="SkillHolderListBox"  ItemContainerStyle="{StaticResource SkillItemContainerStyle}" BorderThickness="0"
-                         Width="{Binding ElementName=SkillWidthRegulatorBorder, Path=ActualWidth}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                         Width="{Binding ElementName=SkillWidthRegulatorBorder, Path=ActualWidth}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         Background="#F6F6F6">
                     <!--Listbox border parameters-->
                     <ListBox.Resources>
                         <Style TargetType="Border">
@@ -22,7 +23,7 @@
                     <!--Redefining ItemPanel for list of skills in SKillset-->
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel/>
+                            <WrapPanel Margin="0 5"/>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                 </ListBox>

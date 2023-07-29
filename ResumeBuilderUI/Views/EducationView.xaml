@@ -12,19 +12,15 @@
         <vm:EducationViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-
-            <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" />
-            <ListBox Name="EmploymentListBox" ItemsSource="{Binding ActiveProfile.EducationsList}" BorderThickness="0" HorizontalAlignment="Center">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <uc:EducationHolder EducationSource="{Binding}" HorizontalAlignment="Center"
-                                                 Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
+        <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" Background="Transparent"/>
+        <ListBox Name="EducationListBox" ItemsSource="{Binding ActiveProfile.EducationsList}" BorderThickness="0" HorizontalAlignment="Center"
+                 Background="Transparent" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <uc:EducationHolder EducationSource="{Binding}" HorizontalAlignment="Center"
+                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

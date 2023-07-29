@@ -6,9 +6,19 @@
              xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Name="AffiliationHolderControl">
-    <Border x:Name="AffiliationHolderBorder" Background="White">
-        <Grid>
-            <TextBlock Text="{Binding ElementName=AffiliationHolderControl, Path=AffiliationSource.Company}"/>
+    <ToggleButton x:Name="AffiliationHolderToggle" Style="{StaticResource SkillElementsStyle}" 
+                  IsChecked="{Binding ElementName=AffiliationHolderControl, Path=AffiliationSource.IsSelected}">
+        <Grid Width="{Binding ElementName=AffiliationHolderToggle, Path=ActualWidth}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding ElementName=AffiliationHolderControl, Path=AffiliationSource.Date.Year}" Grid.Column="0" Margin="5"/>
+            <TextBlock Text="{Binding ElementName=AffiliationHolderControl, Path=AffiliationSource.Company}" Grid.Column="1" Margin="5"/>
+            <TextBlock Text="{Binding ElementName=AffiliationHolderControl, Path=AffiliationSource.Description}" Grid.Column="2" Margin="5"
+                       HorizontalAlignment="Left"/>
         </Grid>
-    </Border>
+    </ToggleButton>
 </UserControl>

@@ -15,6 +15,7 @@ namespace ResumeBuilderUI.Models
         public bool WithHonors { get; set; }
         public string Program { get; set; }
         public string Description { get; set; }
+        public bool IsSelected { get; set; }
 
         public Education()
         {
@@ -25,6 +26,7 @@ namespace ResumeBuilderUI.Models
             WithHonors= false;
             Program= string.Empty;
             Description= string.Empty;
+            IsSelected= false;
         }
 
         public Education(string institution, string degree, DateTime startDate, 
@@ -37,6 +39,7 @@ namespace ResumeBuilderUI.Models
             WithHonors = withHonors;
             Program = program;
             Description = description;
+            IsSelected= false;
         }
     }
 }

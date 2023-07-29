@@ -10,10 +10,11 @@
     <UserControl.DataContext>
         <vm:ExperienceViewModel/>
     </UserControl.DataContext>
-    <Border x:Name="ExperienceViewBorder" CornerRadius="10">
+    <Border x:Name="ExperienceViewBorder" CornerRadius="10" Background="Transparent">
         <Grid Name="ExperienceViewGrid">
             <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" />
-            <ListBox Name="EmploymentListBox" ItemsSource="{Binding ActiveProfile.EmploymentsList}" BorderThickness="0" HorizontalAlignment="Center">
+            <ListBox Name="EmploymentListBox" ItemsSource="{Binding ActiveProfile.EmploymentsList}" BorderThickness="0" HorizontalAlignment="Center"
+                     Background="Transparent" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                             <uc:EmploymentHolder EmploymentSource="{Binding}" HorizontalAlignment="Center"

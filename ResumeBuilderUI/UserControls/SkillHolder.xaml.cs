@@ -37,10 +37,10 @@ namespace ResumeBuilderUI.UserControls
             if ((sender as ObservableCollection<string>).Equals(SkillsSource))
             {
                 ToggleButton tempToggleButton;
-                foreach (string skill in e.NewItems)
+                foreach (Skill skill in e.NewItems)
                 {
                     tempToggleButton = new ToggleButton();
-                    tempToggleButton.Content = skill;
+                    tempToggleButton.Content = skill.SkillName;
                     tempToggleButton.Style = App.Current.Resources["SkillElementsStyle"] as Style;
                     ElementsToggleButtons.Insert(0, tempToggleButton);
                 }
@@ -55,9 +55,9 @@ namespace ResumeBuilderUI.UserControls
 
         public ObservableCollection<ToggleButton> ElementsToggleButtons { get; set; }
 
-        public ObservableCollection<string> SkillsSource
+        public ObservableCollection<Skill> SkillsSource
         {
-            get { return (ObservableCollection<string>)GetValue(SkillsSourceProperty); }
+            get { return (ObservableCollection<Skill>)GetValue(SkillsSourceProperty); }
             set 
             { 
                 SetValue(SkillsSourceProperty, value);
@@ -65,16 +65,16 @@ namespace ResumeBuilderUI.UserControls
         }
 
         public static readonly DependencyProperty SkillsSourceProperty =
-            DependencyProperty.Register("SkillsSource", typeof(ObservableCollection<string>), typeof(SkillHolder), new PropertyMetadata(OnSkillsSourceChanged));
+            DependencyProperty.Register("SkillsSource", typeof(ObservableCollection<Skill>), typeof(SkillHolder), new PropertyMetadata(OnSkillsSourceChanged));
 
         private static void OnSkillsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ToggleButton tempToggleButton;
             (d as SkillHolder).SkillsSource.CollectionChanged += (d as SkillHolder).SkillsList_CollectionChanged;
-            foreach (string skill in (d as SkillHolder).SkillsSource)
+            foreach(Skill skill in (d as SkillHolder).SkillsSource)
             {
                 tempToggleButton = new ToggleButton();
-                tempToggleButton.Content= skill;
+                tempToggleButton.Content= skill.SkillName;
                 tempToggleButton.Style = App.Current.Resources["SkillElementsStyle"] as Style;
                 (d as SkillHolder).ElementsToggleButtons.Add(tempToggleButton);
             }

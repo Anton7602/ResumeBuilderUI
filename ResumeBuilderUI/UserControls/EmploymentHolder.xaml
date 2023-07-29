@@ -6,24 +6,27 @@
              xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="700" Name="EmploymentHolderControl">
-    <Border Name="EmploymentHolderBorder" CornerRadius="10" Background="White" Margin="5">
-        <Grid HorizontalAlignment="Stretch">
+    <ToggleButton Name="EmploymentHolderToggle" HorizontalAlignment="Stretch" Style="{StaticResource SkillElementsStyle}" 
+                      IsChecked="{Binding ElementName=EmploymentHolderControl, Path=EmploymentSource.IsSelected}">
+        <Grid HorizontalAlignment="Left" Width="{Binding ElementName=EmploymentHolderControl, Path=ActualWidth}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="35"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Text="{Binding ElementName=EmploymentHolderControl, Path=EmploymentSource.Employer}" Grid.Column="0" Grid.Row="0"
-                       FontSize="16"/>
+                        FontSize="16"/>
             <TextBlock Text="{Binding ElementName=EmploymentHolderControl, Path=EmploymentSource.Title}" Grid.Column="0" Grid.Row="1"
-                       Margin="10,0,0,0" FontSize="13"/>
+                        Margin="10,0,0,0" FontSize="13"/>
             <TextBlock Name="EmploymentDatesTextBox"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Text="{Binding ElementName=EmploymentHolderControl, Path=EmploymentSource.ExperiencesList.Count}" 
-                       Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"
+                        FontSize="13"/>
         </Grid>
-    </Border>
+    </ToggleButton>
 </UserControl>

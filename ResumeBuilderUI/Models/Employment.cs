@@ -14,8 +14,8 @@ namespace ResumeBuilderUI.Models
         public string Title { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        //Item 1 is SkillTag, Item 2 is Experience Description
         public List<Experience> ExperiencesList { get; set; }
+        public bool IsSelected { get; set; }
         //ResumeBuilder writes here experiences to be printed in application
 
         public Employment()
@@ -24,6 +24,7 @@ namespace ResumeBuilderUI.Models
             Title = string.Empty;
             StartDate = DateTime.Now;
             EndDate = DateTime.Now;
+            IsSelected = false;
             ExperiencesList = new List<Experience>();
         }
 
@@ -35,6 +36,7 @@ namespace ResumeBuilderUI.Models
             Title = parts[1];
             StartDate = DateTime.Parse(parts[2]);
             EndDate = DateTime.Parse(parts[3]);
+            IsSelected = false;
         }
 
         public Employment(Employment employment)
@@ -43,6 +45,7 @@ namespace ResumeBuilderUI.Models
             Title = employment.Title;
             StartDate = employment.StartDate;
             EndDate = employment.EndDate;
+            IsSelected = false;
             ExperiencesList = new List<Experience>(employment.ExperiencesList);
         }
 

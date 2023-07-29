@@ -5,7 +5,7 @@
                     xmlns:views="clr-namespace:ResumeBuilderUI.Views">
     
     <!--Main Application Colors-->
-    <SolidColorBrush x:Key="PrimaryColorBrush" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="PrimaryColorBrush" Color="#EEEEEE"/>
     <SolidColorBrush x:Key="SecondaryColorBrush" Color="#FF1F90FF"/>
     <SolidColorBrush x:Key="HoveringOverColorBrush" Color="#ebecf0"/>
     <SolidColorBrush x:Key="PrimaryTextColor" Color="#000000"/>

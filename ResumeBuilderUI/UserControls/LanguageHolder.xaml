@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="ResumeBuilderUI.UserControls.LanguageHolder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Name="LanguageHolderControl">
+    <ToggleButton Name="LanguageHolderToggle" Style="{StaticResource SkillElementsStyle}" 
+                  IsChecked="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.IsSelected}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.LanguageName}" Grid.Column="0" Margin="5"/>
+            <TextBlock Text="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.Proficiency}" Grid.Column="1" Margin="5"/>
+        </Grid>
+    </ToggleButton>
+</UserControl>

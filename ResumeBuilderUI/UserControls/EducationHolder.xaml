@@ -4,11 +4,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Name="EducationHolderControl">
-    <Border Name="EducationHolderBorder">
-        <Grid>
-            <TextBlock Text="{Binding ElementName=EducationHolderControl, Path=EducationSource.Institution}"/>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibility"/>
+    </UserControl.Resources>
+    <ToggleButton Name="EducationHolderToggle" Style="{StaticResource SkillElementsStyle}" 
+                  IsChecked="{Binding ElementName=EducationHolderControl, Path=EducationSource.IsSelected}">
+        <Grid HorizontalAlignment="Stretch" Width="{Binding ElementName=EducationHolderToggle, Path=ActualWidth}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding ElementName=EducationHolderControl, Path=EducationSource.Institution}" FontSize="16" Grid.Column="0"
+                        Grid.Row="0" />
+            <TextBlock Text="{Binding ElementName=EducationHolderControl, Path=EducationSource.Program}" FontSize="13" Margin="10,0,0,0"
+                        Grid.Column="0" Grid.Row="1"/>
+            <TextBlock Text="{Binding ElementName=EducationHolderControl, Path=EducationSource.Degree}" Grid.Column="1" Grid.Row="0"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Name="EducationDatesTextBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding ElementName=EducationHolderControl, Path=EducationSource.Description}" Grid.Column="0" Grid.ColumnSpan="3"
+                        Grid.Row="3" Margin="0 10 0 0"/>
+            <iconPacks:PackIconMaterial Kind="Seal" Visibility="{Binding ElementName=EducationHolderControl, Path=EducationSource.WithHonors, Mode=TwoWay, Converter={StaticResource boolToVisibility}}"
+                                        Grid.Column="2" Grid.RowSpan="3" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                            Foreground="#FFD700"/>
         </Grid>
-    </Border>
+    </ToggleButton>
 </UserControl>

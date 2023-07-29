@@ -27,7 +27,13 @@ namespace ResumeBuilderUI.UserControls
         }
 
         public static readonly DependencyProperty EducationProperty =
-DependencyProperty.Register("EducationSource", typeof(Education), typeof(EducationHolder));
+DependencyProperty.Register("EducationSource", typeof(Education), typeof(EducationHolder), new PropertyMetadata(OnEducationSourceChange));
+
+        private static void OnEducationSourceChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as EducationHolder).EducationDatesTextBox.Text = (d as EducationHolder).EducationSource.StartDate.ToString("Y", App.Language) +
+                " - " + (d as EducationHolder).EducationSource.EndDate.ToString("Y", App.Language);
+        }
 
         public Education EducationSource
         {
