@@ -18,7 +18,7 @@
                        Panel.ZIndex="1" FontSize="14" Text="{Binding ElementName=ucTextField, Path=Hint}" 
                        Visibility="{Binding ElementName=ucTextField, Mode=TwoWay, Path=IsTextEmpty, Converter={StaticResource boolToVisibility}}"/>
             <TextBox x:Name="textBox" Text="{Binding ElementName=ucTextField, Path=TextFieldText, UpdateSourceTrigger=PropertyChanged}" 
-                     Style="{StaticResource AdvancedTextboxStyle}"/>
+                     Style="{StaticResource AdvancedTextboxStyle}" TextWrapping="{Binding ElementName=ucTextField, Path=TextWrap}"/>
         </Grid>
     </StackPanel>
 </UserControl>

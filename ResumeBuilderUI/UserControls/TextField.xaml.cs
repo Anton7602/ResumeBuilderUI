@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ResumeBuilderUI.Models;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -78,6 +79,24 @@ namespace ResumeBuilderUI.UserControls
                 OnPropertyChanged("TextFieldText");
                 SetValue(TextProperty, value);
             }
+        }
+
+        public static readonly DependencyProperty TextHeightProperty =
+DependencyProperty.Register("TextHeight", typeof(int), typeof(TextField));
+
+        public int TextHeight
+        {
+            get { return (int)GetValue(TextHeightProperty); }
+            set { SetValue(TextHeightProperty, value); }
+        }
+
+        public static readonly DependencyProperty TextWrapProperty =
+DependencyProperty.Register("TextWrap", typeof(TextWrapping), typeof(TextField));
+
+        public TextWrapping TextWrap
+        {
+            get { return (TextWrapping)GetValue(TextWrapProperty); }
+            set { SetValue(TextWrapProperty, value); }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

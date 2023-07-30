@@ -30,7 +30,7 @@
                         <DataTemplate >
                             <StackPanel HorizontalAlignment="Right" Margin="0 5">
                                 <ToggleButton Content="{Binding Path=MainSkill}" HorizontalAlignment="Left" FontWeight="SemiBold"  
-                                                Style="{StaticResource MainSkillElementsStyle}"/>
+                                                Style="{StaticResource MainSkillElementsStyle}" IsChecked="{Binding Path=IsSelected}"/>
                                 <uc:SkillHolder SkillsSource="{Binding Path=SkillsList}" HorizontalAlignment="Center"
                                                 Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"
                                                 AcceptCommand="{Binding AddSkillCommand}">

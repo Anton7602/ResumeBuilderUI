@@ -25,11 +25,16 @@ namespace ResumeBuilderUI.UserControls
             if ((sender as ObservableCollection<string>).Equals(SkillsSource))
             {
                 ToggleButton tempToggleButton;
+                Binding binding;
                 foreach (Skill skill in e.NewItems)
                 {
+                    binding = new Binding();
+                    binding.Source = skill;
+                    binding.Path = new PropertyPath("IsSelected");
                     tempToggleButton = new ToggleButton();
                     tempToggleButton.Content = skill.SkillName;
                     tempToggleButton.Style = App.Current.Resources["SkillElementsStyle"] as Style;
+                    tempToggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
                     ElementsToggleButtons.Insert(0, tempToggleButton);
                 }
                 collectionContainer.Collection = ElementsToggleButtons;
@@ -58,12 +63,17 @@ namespace ResumeBuilderUI.UserControls
         private static void OnSkillsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ToggleButton tempToggleButton;
+            Binding binding;
             (d as SkillHolder).SkillsSource.CollectionChanged += (d as SkillHolder).SkillsList_CollectionChanged;
             foreach(Skill skill in (d as SkillHolder).SkillsSource)
             {
+                binding = new Binding();
+                binding.Source = skill;
+                binding.Path = new PropertyPath("IsSelected");
                 tempToggleButton = new ToggleButton();
                 tempToggleButton.Content= skill.SkillName;
                 tempToggleButton.Style = App.Current.Resources["SkillElementsStyle"] as Style;
+                tempToggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
                 (d as SkillHolder).ElementsToggleButtons.Add(tempToggleButton);
             }
             (d as SkillHolder).collectionContainer.Collection = (d as SkillHolder).ElementsToggleButtons;

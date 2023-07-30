@@ -4,6 +4,9 @@ using System.Windows;
 
 namespace ResumeBuilderUI.ViewModels
 {
+    /// <summary>
+    /// ViewModel for SettingView
+    /// </summary>
     internal class SettingViewModel :ViewModelBase
     {
         private List<string> _availableLanguages = App.supportedLanguages.Keys.ToList();

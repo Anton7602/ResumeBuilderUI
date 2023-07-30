@@ -4,14 +4,14 @@ namespace ResumeBuilderUI.ViewModels
 {
     class LanguagesViewModel : ViewModelBase
     {
-        private ApplicantProfile activeProfile = App.activeProfile;
+        private ApplicantProfile activeProfile = App.ActiveProfile;
         public ApplicantProfile ActiveProfile
         {
             get { return activeProfile; }
             set
             {
                 activeProfile = value;
-                App.activeProfile = activeProfile;
+                App.ActiveProfile = activeProfile;
                 OnPropertyChanged(nameof(ActiveProfile));
             }
         }

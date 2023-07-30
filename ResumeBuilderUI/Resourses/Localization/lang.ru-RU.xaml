@@ -24,4 +24,6 @@
     <v:String x:Key="lang_Setting_AppLanguage">Язык приложения</v:String>
     <v:String x:Key="lang_Title">Должность</v:String>
     <v:String x:Key="lang_Title_Enter">Введите название должности</v:String>
+    <v:String x:Key="lang_Summary">Краткое описание</v:String>
+    <v:String x:Key="lang_Summary_Enter">Введите своё краткое описание</v:String>
 </ResourceDictionary>

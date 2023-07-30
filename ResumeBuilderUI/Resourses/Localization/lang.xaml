@@ -24,4 +24,6 @@
     <v:String x:Key="lang_Setting_AppLanguage">App Language</v:String>
     <v:String x:Key="lang_Title">Title</v:String>
     <v:String x:Key="lang_Title_Enter">Enter target title</v:String>
+    <v:String x:Key="lang_Summary">Summary</v:String>
+    <v:String x:Key="lang_Summary_Enter">Enter your summary</v:String>
 </ResourceDictionary>

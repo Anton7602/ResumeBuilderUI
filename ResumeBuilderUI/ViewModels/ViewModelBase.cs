@@ -2,6 +2,9 @@
 
 namespace ResumeBuilderUI.ViewModels
 {
+    /// <summary>
+    /// Base implementation of ViewModel functionality
+    /// </summary>
     class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;

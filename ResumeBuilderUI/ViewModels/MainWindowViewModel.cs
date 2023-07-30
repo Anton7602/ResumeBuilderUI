@@ -1,12 +1,14 @@
 ﻿using ResumeBuilderUI.Models;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ResumeBuilderUI.ViewModels
 {
     class MainWindowViewModel : ViewModelBase
     {
         private int LastSelectedNavBarIndex = 0;
-        private ApplicantProfile _activeProfile = new ApplicantProfile();
+        private ApplicantProfile _activeProfile = App.ActiveProfile;
         public ApplicantProfile ActiveProfile
         {
             get { return _activeProfile; }
@@ -73,12 +75,117 @@ namespace ResumeBuilderUI.ViewModels
             }
         }
 
+        public RelayCommand<object> BuildCVCommand { get; private set; }
 
         public MainWindowViewModel()
         {
+            BuildCVCommand = new RelayCommand<object>(BuildCV);
             //db.Database.EnsureCreated();
             //db.Users.Add(new User { Name = "Anton" });
             //db.SaveChanges();
+        }
+
+        private void BuildCV(object obj)
+        {
+            ResumeBuilder CVbuilder = new ResumeBuilder(ActiveProfile.Name, ActiveProfile.TitlesList.First(), ActiveProfile.Summary,
+                GetSelectedLanguagesList(), GetSelectedAffiliationsList(), GetSelectedSkillsList(), GetSelectedSkillsetsList(), 
+                GetSelectedEmploymentsList(), GetSelectedEducationsList(), GetSelectedContactList());
+            CVbuilder.BuildResume("CV " + CVbuilder.Name + " - " + CVbuilder.Title + ".pdf");
+        }
+
+        private List<Skillset> GetSelectedSkillsetsList()
+        {
+            List<Skillset> activeSkillsetsList = new List<Skillset>();
+            foreach(Skillset skillset in ActiveProfile.SkillsetsList)
+            {
+                activeSkillsetsList.Add(skillset);
+            }
+            return activeSkillsetsList;
+        }
+
+        private List<Education> GetSelectedEducationsList()
+        {
+            List<Education> activeEducationList = new List<Education>();
+            foreach(Education education in ActiveProfile.EducationsList)
+            {
+                if(education.IsSelected)
+                {
+                    activeEducationList.Add(education);
+                }
+            }
+            return activeEducationList;
+        }
+
+        private List<Contact> GetSelectedContactList()
+        {
+            List<Contact> activeContactList = new List<Contact>(); 
+            foreach(Contact contact in ActiveProfile.ContactsList)
+            {
+                if(contact.IsSelected)
+                {
+                    activeContactList.Add(contact);
+                }
+            }
+            return activeContactList;
+        }
+
+        private List<Employment> GetSelectedEmploymentsList()
+        {
+            List<Employment> activeEmploymentsList = new List<Employment>();
+            foreach(Employment employment in ActiveProfile.EmploymentsList)
+            {
+                if(employment.IsSelected)
+                {
+                    activeEmploymentsList.Add(employment);
+                }
+            }
+            return activeEmploymentsList;
+        }
+
+        private List<Skill> GetSelectedSkillsList()
+        {
+            List<Skill> activeSkillsList = new List<Skill>();
+            foreach(Skillset skillset in ActiveProfile.SkillsetsList)
+            {
+                if(skillset.IsSelected)
+                {
+                    activeSkillsList.Add(new Skill(skillset.MainSkill));
+                }
+                foreach(Skill skill in skillset.SkillsList)
+                {
+                    if(skill.IsSelected)
+                    {
+                        activeSkillsList.Add(skill);
+                    }
+                }
+            }
+            return activeSkillsList;
+        }
+
+        private List<ProffessionalAffiliation> GetSelectedAffiliationsList()
+        {
+            List<ProffessionalAffiliation> activeAffiliationsList = new List<ProffessionalAffiliation>();
+            foreach(ProffessionalAffiliation affiliation in ActiveProfile.AffiliationsList)
+            {
+                if(affiliation.IsSelected)
+                {
+                    activeAffiliationsList.Add(affiliation);
+                }
+            }
+            return activeAffiliationsList;
+        }
+
+        private List<Language> GetSelectedLanguagesList()
+        {
+            List<Language> activeLanguageslist = new List<Language>();
+            foreach(Language language in ActiveProfile.LanguagesList)
+            {
+                if(language.IsSelected)
+                {
+                    activeLanguageslist.Add(language);
+                }
+            }
+            return activeLanguageslist;
         }
     }
 }

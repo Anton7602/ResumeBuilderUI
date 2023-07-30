@@ -19,18 +19,17 @@ namespace ResumeBuilderUI.Models
         public string Title { get; set; }
         public string Summary { get; set; }
         public List<Skillset> RelevantSkillsets { get; set; }
-        public List<string> RelevantSkills { get; set; }
-        public Dictionary<string, string> LanguagesList { get; private set; }
+        public List<Skill> RelevantSkills { get; set; }
+        public List<Language> LanguagesList { get; private set; }
         public List<Employment> EmploymentsList { get; set; }
         public List<Education> EducationsList { get; set; }
-        public Dictionary<string, string> ContactsList { get; set; }
+        public List<Contact> ContactsList { get; set; }
         public List<ProffessionalAffiliation> AffiliationsList { get; set; }
 
         public ResumeBuilder(string name,
-            string title, string summary, Dictionary<string, string> languagesList,
-            List<ProffessionalAffiliation> affiliationsList, List<string> relevantskills,
-            List<Skillset> relevantSkillsets, List<Employment> employmentsList, Dictionary<string, 
-                string> contactsList)
+            string title, string summary, List<Language> languagesList,
+            List<ProffessionalAffiliation> affiliationsList, List<Skill> relevantskills,
+            List<Skillset> relevantSkillsets, List<Employment> employmentsList, List<Education> educationList, List<Contact> contactsList)
         {
             Name = name;
             Title = title;
@@ -40,6 +39,7 @@ namespace ResumeBuilderUI.Models
             RelevantSkills = relevantskills;
             RelevantSkillsets = relevantSkillsets;
             EmploymentsList = employmentsList;
+            EducationsList = educationList;
             ContactsList = contactsList;
         }
         static IContainer LeftColumnMain(IContainer container)
@@ -103,10 +103,10 @@ namespace ResumeBuilderUI.Models
             List<Experience> uniqueRelevantExperience = new List<Experience>();
             foreach(Experience experience in employment.ExperiencesList)
             {
-                if (RelevantSkills.Contains(experience.Tag))
-                {
-                    uniqueRelevantExperience.Add(experience);
-                }
+                //if (RelevantSkills.Contains(experience.Tag))
+                //{
+                //    uniqueRelevantExperience.Add(experience);
+                //}
             }
             //bool isUniqueExperience = false;
             //foreach (Employment employment in EmploymentsList)
@@ -175,7 +175,7 @@ namespace ResumeBuilderUI.Models
                                     columns.RelativeColumn();
                                 });
                                 //Avatar
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Image(pathToResoursesFolder + "Avatar Circle.png");
+                                //table.Cell().Row(1).Column(1).Element(LeftColumnMain).Image(pathToResoursesFolder + "Avatar Circle.png");
                                 //Name and Title
                                 table.Cell().Row(1).Column(2).Element(LeftColumnMain).Text(text =>
                                 {
@@ -208,8 +208,14 @@ namespace ResumeBuilderUI.Models
                                 table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Tools").FontColor(textColorCVLight).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
                             });
+                            List<string> skillsNames;
                             foreach (Skillset toolsCategoty in RelevantSkillsets)
                             {
+                                skillsNames = new List<string>();
+                                foreach(Skill skill in toolsCategoty.SkillsList)
+                                {
+                                    skillsNames.Add(skill.SkillName);
+                                }
                                 column.Item().Table(table =>
                                 {
                                     table.ColumnsDefinition(columns =>
@@ -217,7 +223,7 @@ namespace ResumeBuilderUI.Models
                                         columns.RelativeColumn();
                                     });
                                     table.Cell().Row(1).Column(1).Element(ToolsBody).AlignCenter().Text(toolsCategoty.MainSkill).FontSize(14).FontColor(textColorCVLight).ExtraBold();
-                                    table.Cell().Row(2).Column(1).Element(ToolsBody).AlignLeft().Text(String.Join(',',toolsCategoty.SkillsList)).FontSize(11).FontColor(textColorCVLight);
+                                    table.Cell().Row(2).Column(1).Element(ToolsBody).AlignLeft().Text(String.Join(',',skillsNames)).FontSize(11).FontColor(textColorCVLight);
                                 });
                                 column.Item().Text("").FontSize(5);
                             }
@@ -232,13 +238,13 @@ namespace ResumeBuilderUI.Models
                                 table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Languages").FontColor(textColorCVLight).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
                             });
-                            foreach (string language in LanguagesList.Keys)
+                            foreach (Language language in LanguagesList)
                             {
                                 column.Item().Text(text =>
                                 {
                                     text.DefaultTextStyle(x => x.FontColor(textColorCVLight).FontSize(11));
-                                    text.Element().PaddingBottom(-6).Height(20).Image(pathToResoursesFolder + language.Substring(0, language.IndexOf(' ')) + ".png").FitHeight();
-                                    text.Span("   " + language +" - "+ LanguagesList.GetValueOrDefault(language));
+                                    //text.Element().PaddingBottom(-6).Height(20).Image(pathToResoursesFolder + language.LanguageName + ".png").FitHeight();
+                                    text.Span("   " + language.LanguageName +" - "+ language.Proficiency);
                                 });
                                 column.Item().Text("").FontSize(10);
                             }
@@ -253,20 +259,20 @@ namespace ResumeBuilderUI.Models
                                 table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Contacts").FontColor(textColorCVLight).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
                             });
-                            foreach (string contactOption in ContactsList.Keys)
+                            foreach (Contact contactOption in ContactsList)
                             {
                                 column.Item().Text(text =>
                                 {
                                     text.DefaultTextStyle(x => x.FontColor(textColorCVLight).FontSize(11));
                                     try
                                     {
-                                        text.Element().PaddingBottom(-6).Height(20).Image(pathToResoursesFolder + contactOption + ".png").FitHeight();
+                                        //text.Element().PaddingBottom(-6).Height(20).Image(pathToResoursesFolder + contactOption.ContactType + ".png").FitHeight();
                                     }
                                     catch (Exception ex)
                                     {
                                         text.Span(contactOption + " ");
                                     }
-                                    text.Span("   " + ContactsList.GetValueOrDefault(contactOption));
+                                    text.Span("   " + contactOption.ContactDescription);
                                 });
                                 column.Item().Text("").FontSize(5);
                             }
@@ -302,9 +308,12 @@ namespace ResumeBuilderUI.Models
                                         column.Item().AlignLeft().PaddingHorizontal(5)
                                         .Text(position.StartDate.ToString("Y") + " - " + position.EndDate.ToString("Y"))
                                         .FontColor("282828").FontSize(9);
-                                        foreach (Experience experience in FindUniqueRelevantExperience(position))
+                                        foreach (Experience experience in position.ExperiencesList)
                                         {
-                                            column.Item().AlignLeft().PaddingHorizontal(15).Text("• " + experience.Description).FontSize(10).FontColor("000000");
+                                            if (RelevantSkills.Contains(new Skill(experience.Tag)))
+                                            {
+                                                column.Item().AlignLeft().PaddingHorizontal(15).Text("• " + experience.Description).FontSize(10).FontColor("000000");
+                                            }
                                         }
                                     }
                                 }
@@ -321,33 +330,29 @@ namespace ResumeBuilderUI.Models
                                 table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Education").FontColor(textCVAccentColor).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(20).LineHorizontal(1).LineColor(textCVAccentColor);
                             });
-                            //University
-                            column.Item().AlignRight().PaddingHorizontal(10).Text("ITMO University").FontColor(textCVAccentColor).FontSize(13);
-                            column.Item().AlignRight().PaddingHorizontal(10).Text("September 2014 - August 2020").FontColor("282828").FontSize(9);
-                            //First Degree
-                            column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
+                            foreach(Education education in EducationsList)
                             {
-                                text.DefaultTextStyle(x => x.FontSize(12).FontColor(textCVAccentColor));
-                                text.Span("Master of Science").ExtraBold();
-                                text.Span(" - Intellectual Technologies In Robotics");
-                            });
-                            column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
-                            {
-                                text.DefaultTextStyle(x => x.FontSize(9).FontColor("282828"));
-                                text.Span("September 2018 - August 2020 - ");
-                                text.Span("Diploma with Honours").FontColor("FF0000");
-                            });
-                            column.Item().AlignLeft().PaddingHorizontal(5).Text("Thesis Title: Development of wearable sign language Interpreter").FontColor("000000").FontSize(11);
-                            column.Item().Text("").FontSize(10);
-                            //Second Degree
-                            column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
-                            {
-                                text.DefaultTextStyle(x => x.FontSize(12).FontColor(textCVAccentColor));
-                                text.Span("Bachelor of Science").ExtraBold();
-                                text.Span(" - Mechatronics and Robotics");
-                            });
-                            column.Item().AlignLeft().PaddingHorizontal(5).Text("September 2014 - August 2018 - ").FontSize(9).FontColor("282828");
-                            column.Item().AlignLeft().PaddingHorizontal(5).Text("Thesis Title: Development of a motion restriction system for interaction with objects of virtual and augmented reality").FontColor("000000").FontSize(11);
+                                column.Item().AlignRight().PaddingHorizontal(10).Text(education.Institution).FontColor(textCVAccentColor).FontSize(13);
+                                column.Item().AlignRight().PaddingHorizontal(10).Text(education.StartDate.ToString("Y", App.Language) + " - " + 
+                                    education.EndDate.ToString("Y", App.Language)).FontColor("282828").FontSize(9);
+                                column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
+                                {
+                                    text.DefaultTextStyle(x => x.FontSize(12).FontColor(textCVAccentColor));
+                                    text.Span(education.Degree).ExtraBold();
+                                    text.Span(" - "+ education.Program);
+                                });
+                                column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
+                                {
+                                    text.DefaultTextStyle(x => x.FontSize(9).FontColor("282828"));
+                                    text.Span(education.StartDate.ToString("Y", App.Language) + " - " + education.EndDate.ToString("Y", App.Language));
+                                    if(education.WithHonors)
+                                    {
+                                        text.Span(" - Diploma with Honours").FontColor("FF0000");
+                                    }
+                                });
+                                column.Item().AlignLeft().PaddingHorizontal(5).Text(education.Description).FontColor("000000").FontSize(11);
+                                column.Item().Text("").FontSize(10);
+                            }
                             // Professional Affiliations
                             column.Item().Table(table =>
                             {

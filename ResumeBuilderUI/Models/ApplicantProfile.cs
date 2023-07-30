@@ -10,6 +10,7 @@ namespace ResumeBuilderUI.Models
         public long ID { get; set; }
         public string? Name { get; set; }
         public List<string> TitlesList { get; set; }
+        public string Summary { get; set; }
         public ObservableCollection<Employment> EmploymentsList { get; set; }
         public ObservableCollection<Skillset> SkillsetsList { get; set; }
         public ObservableCollection<Education> EducationsList { get; set; }
@@ -69,7 +70,7 @@ namespace ResumeBuilderUI.Models
             tempEmployment.Employer = "Class Engineering";
             tempEmployment.StartDate = DateTime.Now;
             tempEmployment.EndDate = DateTime.Now;
-            tempEmployment.ExperiencesList.Add(new Experience("Solidworks", "Designed some cool stuff"));
+            tempEmployment.ExperiencesList.Add(new Experience("SolidWorks", "Designed some cool stuff"));
             EmploymentsList.Add(tempEmployment);
             Education tempEducation = new Education();
             tempEducation.Institution = "ITMO University";

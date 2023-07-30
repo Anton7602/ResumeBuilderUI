@@ -13,7 +13,7 @@ namespace ResumeBuilderUI
 {
     public partial class App : Application
     {
-        public static ApplicantProfile activeProfile; 
+        public static ApplicantProfile ActiveProfile { get; set; } 
 
         public static readonly Dictionary<string, CultureInfo> supportedLanguages = new Dictionary<string, CultureInfo>()
         {
@@ -68,7 +68,7 @@ namespace ResumeBuilderUI
         public App()
         {
             InitializeComponent();
-            activeProfile=new ApplicantProfile();
+            ActiveProfile=new ApplicantProfile();
             App.LanguageChanged += App_LanguageChanged;
         }
     }

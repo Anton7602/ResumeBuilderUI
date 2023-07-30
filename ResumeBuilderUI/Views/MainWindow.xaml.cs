@@ -4,6 +4,9 @@ using System.Windows.Input;
 
 namespace ResumeBuilderUI.Views
 {
+    /// <summary>
+    /// Main Window of ResumeBuilderUI app
+    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()

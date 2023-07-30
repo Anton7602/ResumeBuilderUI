@@ -11,5 +11,10 @@ namespace ResumeBuilderUI.Models
             SkillName = skillName;
             IsSelected = false;
         }
+
+        public override bool Equals(object? obj)
+        {
+            return SkillName.Equals((obj as Skill).SkillName);
+        }
     }
 }

@@ -117,7 +117,7 @@
 
             <!--Build CV Button-->
             <Button Grid.Column="0" Grid.Row="1" Height="Auto" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 20"  
-                    Style="{StaticResource MainButtonStyle}">
+                    Style="{StaticResource MainButtonStyle}" Command="{Binding BuildCVCommand}">
                 <Grid Margin="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
