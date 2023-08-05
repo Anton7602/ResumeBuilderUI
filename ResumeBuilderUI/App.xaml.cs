@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -68,7 +70,6 @@ namespace ResumeBuilderUI
         public App()
         {
             InitializeComponent();
-            ActiveProfile=new ApplicantProfile();
             App.LanguageChanged += App_LanguageChanged;
         }
     }

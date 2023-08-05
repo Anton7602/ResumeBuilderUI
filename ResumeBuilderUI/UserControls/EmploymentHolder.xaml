@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="700" Name="EmploymentHolderControl">
-    <ToggleButton Name="EmploymentHolderToggle" HorizontalAlignment="Stretch" Style="{StaticResource SkillElementsStyle}" 
+    <ToggleButton Name="EmploymentHolderToggle" HorizontalAlignment="Stretch" Style="{StaticResource ListElementsStyle}" 
                       IsChecked="{Binding ElementName=EmploymentHolderControl, Path=EmploymentSource.IsSelected}">
         <Grid HorizontalAlignment="Left" Width="{Binding ElementName=EmploymentHolderControl, Path=ActualWidth}">
             <Grid.ColumnDefinitions>

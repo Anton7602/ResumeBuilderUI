@@ -6,21 +6,40 @@
              xmlns:local="clr-namespace:ResumeBuilderUI.Views"
              xmlns:uc="clr-namespace:ResumeBuilderUI.UserControls"
              xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <vm:AffiliationsViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibility"/>
+    </UserControl.Resources>
     <Grid>
-        <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" Background="{StaticResource PrimaryColorBrush}"/>
-        <ListBox Name="AffiliationListBox" ItemsSource="{Binding ActiveProfile.AffiliationsList}" BorderThickness="0" 
-                 HorizontalAlignment="Center" Background="{StaticResource PrimaryColorBrush}" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <uc:AffiliationHolder AffiliationSource="{Binding}" HorizontalAlignment="Center"
-                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" Background="{StaticResource PrimaryColorBrush}" CornerRadius="10"/>
+        <ScrollViewer Background="Transparent">
+            <StackPanel>
+                <uc:AffiliationHolder x:Name="EditedAffiliationHolder" AffiliationSource="{Binding EditedAffiliation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"
+                                      Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}" Grid.Row="0" ActiveMode="EditMode"
+                                      Visibility="{Binding EditedAffiliation.IsSelected, Converter={StaticResource boolToVisibility}}"
+                                      AcceptCommand="{Binding SubmitNewAffiliationCommand}" Background="Transparent" Margin="0 4 0 0"/>
+        
+                <ListBox Name="AffiliationListBox" ItemsSource="{Binding ActiveProfile.AffiliationsList}" BorderThickness="0" Grid.Row="1"
+                         HorizontalAlignment="Center" Background="{StaticResource PrimaryColorBrush}" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <uc:AffiliationHolder AffiliationSource="{Binding}" HorizontalAlignment="Center" ActiveMode="ShowMode"
+                                                  Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button x:Name="addNewAffiliationButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                Style="{StaticResource AddNewElementButtonStyle}" Command="{Binding EditNewAffiliationCommand}">
+            <iconPacks:PackIconMaterial Kind="Plus"/>
+        </Button>
+            
     </Grid>
 </UserControl>

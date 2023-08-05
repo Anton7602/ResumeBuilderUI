@@ -7,8 +7,89 @@
     <!--Main Application Colors-->
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="#EEEEEE"/>
     <SolidColorBrush x:Key="SecondaryColorBrush" Color="#FF1F90FF"/>
-    <SolidColorBrush x:Key="HoveringOverColorBrush" Color="#ebecf0"/>
     <SolidColorBrush x:Key="PrimaryTextColor" Color="#000000"/>
+    <SolidColorBrush x:Key="HoveringOverColorBrush" Color="#ebecf0"/>
+    <SolidColorBrush x:Key="PositiveActionColorBrush" Color="#008000"/>
+    <SolidColorBrush x:Key="NegativeActionColorBrush" Color="#800000"/>
+
+
+    <!--             -->
+    <!--Shared Styles-->
+    <!--             -->
+    
+    <!--Add New Element Button Style-->
+    <Style x:Key="AddNewElementButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource PrimaryColorBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource PositiveActionColorBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border CornerRadius="10 0 10 0" Background="{TemplateBinding Background}" BorderBrush="{StaticResource PositiveActionColorBrush}"
+                            BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20 20"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource HoveringOverColorBrush}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource SecondaryColorBrush}"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Generic list elements style-->
+    <Style x:Key="ListElementsStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderBrush="{StaticResource SecondaryColorBrush}"
+                            BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="13,8"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource HoveringOverColorBrush}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{StaticResource SecondaryColorBrush}"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Generic edited listelement style-->
+    <Style x:Key="EditedListElementsStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderBrush="{StaticResource SecondaryColorBrush}"
+                            BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="13,8"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <!--                -->
     <!--MainWindowStyles-->
@@ -202,15 +283,15 @@
         </Style.Triggers>
     </Style>
 
-    <!--Settings Button Style-->
-    <Style x:Key="SettingsButtonStyle" TargetType="{x:Type ToggleButton}">
+    <!--Control ToggleButton (Upper Right Corner)-->
+    <Style x:Key="ControlToggleButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource SecondaryColorBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="{TemplateBinding Background}">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="10">
                         <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
@@ -227,7 +308,29 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
+    <!--Control Button (Upper Right Corner) Style-->
+    <Style x:Key="ControlButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryColorBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource HoveringOverColorBrush}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!--                 -->
     <!--SkillsView Styles-->
     <!--                 -->
@@ -294,34 +397,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <!--Skills elements style-->
-    <Style x:Key="SkillElementsStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryTextColor}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderBrush="{StaticResource SecondaryColorBrush}"
-                            BorderThickness="1">
-                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="13,8"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource HoveringOverColorBrush}"/>
-                <Setter Property="Cursor" Value="Hand"/>
-            </Trigger>
-            <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="{StaticResource SecondaryColorBrush}"/>
-                <Setter Property="Foreground" Value="White"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <!--Add Skill button style-->

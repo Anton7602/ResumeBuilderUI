@@ -1,7 +1,10 @@
 ﻿using ResumeBuilderUI.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Windows;
 
 namespace ResumeBuilderUI.ViewModels
 {
@@ -76,16 +79,27 @@ namespace ResumeBuilderUI.ViewModels
         }
 
         public RelayCommand<object> BuildCVCommand { get; private set; }
+        public RelayCommand<object> CloseAppCommand { get; private set; }
 
         public MainWindowViewModel()
         {
             BuildCVCommand = new RelayCommand<object>(BuildCV);
-            //db.Database.EnsureCreated();
-            //db.Users.Add(new User { Name = "Anton" });
-            //db.SaveChanges();
+            CloseAppCommand = new RelayCommand<object>(CloseApp);
+
         }
 
-        private void BuildCV(object obj)
+        private void CloseApp(object commandParameter)
+        {
+            using (StreamWriter profileWriter = new StreamWriter(@"profiles\" + App.ActiveProfile.Name + App.ActiveProfile.ID + ".cvp", false))
+            {
+                profileWriter.WriteLine(JsonSerializer.Serialize(App.ActiveProfile));
+            }
+            ResumeBuilderUI.Properties.Settings.Default.DefaultProfile = (App.ActiveProfile.Name + App.ActiveProfile.ID + ".cvp");
+            ResumeBuilderUI.Properties.Settings.Default.Save();
+            (commandParameter as Window).Close();
+        }
+
+        private void BuildCV(object commandParameter)
         {
             ResumeBuilder CVbuilder = new ResumeBuilder(ActiveProfile.Name, ActiveProfile.TitlesList.First(), ActiveProfile.Summary,
                 GetSelectedLanguagesList(), GetSelectedAffiliationsList(), GetSelectedSkillsList(), GetSelectedSkillsetsList(), 

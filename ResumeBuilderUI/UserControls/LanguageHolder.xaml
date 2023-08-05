@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Name="LanguageHolderControl">
-    <ToggleButton Name="LanguageHolderToggle" Style="{StaticResource SkillElementsStyle}" 
+    <ToggleButton Name="LanguageHolderToggle" Style="{StaticResource ListElementsStyle}" 
                   IsChecked="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.IsSelected}">
         <Grid>
             <Grid.ColumnDefinitions>

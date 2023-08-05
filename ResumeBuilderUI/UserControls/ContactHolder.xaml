@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Name="ContactHolderControl">
-    <ToggleButton Name="ContactHolderToggle" Style="{StaticResource SkillElementsStyle}" 
+    <ToggleButton Name="ContactHolderToggle" Style="{StaticResource ListElementsStyle}" 
                   IsChecked="{Binding ElementName=ContactHolderControl, Path=ContactSource.IsSelected}">
         <Grid>
             <Grid.ColumnDefinitions>

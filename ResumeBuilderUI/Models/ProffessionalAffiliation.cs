@@ -1,21 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 
 namespace ResumeBuilderUI.Models
 {
-    public class ProffessionalAffiliation
+    public class ProffessionalAffiliation : INotifyPropertyChanged
     {
-        public string Company { get; set; }
-        public string Description { get; set; }
-        public DateTime Date { get; set; }
-        public bool IsSelected { get; set; }
+        private string _company;
+        public string Company
+        {
+            get { return _company; }
+            set { _company = value; OnPropertyChanged(nameof(Company)); }
+        }
+        private string _description;
+        public string Description
+        {
+            get { return _description; }
+            set { _description= value; OnPropertyChanged(nameof(Description)); }
+        }
+        private DateTime _date;
+        public DateTime Date
+        {
+            get { return _date; }
+            set { _date= value; OnPropertyChanged(nameof(Date));}
+        }
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set { _isSelected = value; OnPropertyChanged(nameof(IsSelected)); }
+        }
 
         public ProffessionalAffiliation()
         {
             Company= string.Empty;
             Description= string.Empty;
-            Date= DateTime.MinValue;
+            Date= DateTime.Now;
             IsSelected= false;
         }
 
@@ -52,9 +75,34 @@ namespace ResumeBuilderUI.Models
             return parsedAffiliation;
         }
 
+        public static List<ProffessionalAffiliation> Sort(List<ProffessionalAffiliation> affiliations)
+        {
+            affiliations.Sort((p, q) => p.Date.CompareTo(q.Date));
+            affiliations.Reverse();
+            return affiliations;
+        }
+
+        public static ObservableCollection<ProffessionalAffiliation> Sort(ObservableCollection<ProffessionalAffiliation> affiliations)
+        {
+            List<ProffessionalAffiliation> tempAffiliations = affiliations.ToList();
+            affiliations.Clear();
+            foreach(ProffessionalAffiliation tempAffiliation in ProffessionalAffiliation.Sort(tempAffiliations))
+            {
+                affiliations.Add(tempAffiliation);
+            }
+            return affiliations;
+        }
+
         public override string ToString()
         {
             return Date.ToString("yyyy")+"  "+Company+" - "+Description;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName = null));
         }
     }
 }

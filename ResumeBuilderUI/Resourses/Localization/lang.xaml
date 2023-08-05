@@ -17,6 +17,10 @@
     <v:String x:Key="lang_Education">Education</v:String>
     <v:String x:Key="lang_Contacts">Contacts</v:String>
     <v:String x:Key="lang_Affiliations">Affiliations</v:String>
+    <v:String x:Key="lang_Affiliation_Company">Affiliated Company</v:String>
+    <v:String x:Key="lang_Affiliation_Company_Enter">Enter company name</v:String>
+    <v:String x:Key="lang_Affiliation_Description">Affiliation Description</v:String>
+    <v:String x:Key="lang_Affiliation_Description_Enter">Enter Description</v:String>
     <v:String x:Key="lang_Languages">Languages</v:String>
     <v:String x:Key="lang_BuildCV">Build CV</v:String>
     <v:String x:Key="lang_User">User</v:String>

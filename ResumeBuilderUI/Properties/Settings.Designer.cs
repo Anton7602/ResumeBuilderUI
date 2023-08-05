@@ -34,5 +34,17 @@ namespace ResumeBuilderUI.Properties {
                 this["DefaultLanguage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultProfile {
+            get {
+                return ((string)(this["DefaultProfile"]));
+            }
+            set {
+                this["DefaultProfile"] = value;
+            }
+        }
     }
 }

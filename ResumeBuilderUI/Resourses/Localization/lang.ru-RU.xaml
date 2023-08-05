@@ -16,7 +16,11 @@
     <v:String x:Key="lang_Experience">Опыт работы</v:String>
     <v:String x:Key="lang_Education">Образование</v:String>
     <v:String x:Key="lang_Contacts">Контакты</v:String>
-    <v:String x:Key="lang_Affiliations">Дипломы и сертификаты</v:String>
+    <v:String x:Key="lang_Affiliations">Профессиональные связи</v:String>
+    <v:String x:Key="lang_Affiliation_Company">Связанная компания</v:String>
+    <v:String x:Key="lang_Affiliation_Company_Enter">Введите имя компании</v:String>
+    <v:String x:Key="lang_Affiliation_Description">Описание</v:String>
+    <v:String x:Key="lang_Affiliation_Description_Enter">Введите описание</v:String>
     <v:String x:Key="lang_Languages">Языки</v:String>
     <v:String x:Key="lang_BuildCV">Сгенерировать резюме</v:String>
     <v:String x:Key="lang_User">Пользователь</v:String>

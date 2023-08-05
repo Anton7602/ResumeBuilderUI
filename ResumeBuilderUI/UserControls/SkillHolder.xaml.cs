@@ -33,7 +33,7 @@ namespace ResumeBuilderUI.UserControls
                     binding.Path = new PropertyPath("IsSelected");
                     tempToggleButton = new ToggleButton();
                     tempToggleButton.Content = skill.SkillName;
-                    tempToggleButton.Style = App.Current.Resources["SkillElementsStyle"] as Style;
+                    tempToggleButton.Style = App.Current.Resources["ListElementsStyle"] as Style;
                     tempToggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
                     ElementsToggleButtons.Insert(0, tempToggleButton);
                 }
@@ -72,7 +72,7 @@ namespace ResumeBuilderUI.UserControls
                 binding.Path = new PropertyPath("IsSelected");
                 tempToggleButton = new ToggleButton();
                 tempToggleButton.Content= skill.SkillName;
-                tempToggleButton.Style = App.Current.Resources["SkillElementsStyle"] as Style;
+                tempToggleButton.Style = App.Current.Resources["ListElementsStyle"] as Style;
                 tempToggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
                 (d as SkillHolder).ElementsToggleButtons.Add(tempToggleButton);
             }

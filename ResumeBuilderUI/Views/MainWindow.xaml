@@ -85,16 +85,24 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
-            <!--Settings Button-->
-            <ToggleButton Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Style="{StaticResource SettingsButtonStyle}" 
-                          Name="SettingToggleButton" IsChecked="{Binding IsSettingsVisible}" >
-                <iconPacks:PackIconMaterial VerticalAlignment="Center" HorizontalAlignment="Right" Margin="12" 
-                                        Kind="CogOutline" Height="25" Width="25"/>
-            </ToggleButton>
+
+            <!--Upper Right Corner Buttons-->
+            <WrapPanel FlowDirection="RightToLeft" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 0">
+                <!-- Close App Button-->
+                <Button Name="CloseAppButton" Style="{StaticResource ControlButtonStyle}" Margin="10 0" Command="{Binding CloseAppCommand}"
+                        CommandParameter="{Binding ElementName=MainApplicationWindow}">
+                    <iconPacks:PackIconMaterial Kind="CloseOutline" Foreground="{StaticResource NegativeActionColorBrush}" Height="25"
+                                                Width="25"/>
+                </Button>
+
+                <!--Settings Button-->
+                <ToggleButton Style="{StaticResource ControlToggleButtonStyle}" Name="SettingToggleButton" IsChecked="{Binding IsSettingsVisible}" >
+                    <iconPacks:PackIconMaterial Margin="12" Kind="CogOutline" Height="25" Width="25"/>
+                </ToggleButton>
+            </WrapPanel>
 
             <!--User Button-->
-            <ToggleButton Grid.Column="0" Grid.Row="0" Height="Auto" Width="Auto" Style="{StaticResource SettingsButtonStyle}"
+            <ToggleButton Grid.Column="0" Grid.Row="0" Height="Auto" Width="Auto" Style="{StaticResource ControlToggleButtonStyle}"
                         Name="UserToggleButton" IsChecked="{Binding IsUserVisible}">
                 <StackPanel Orientation="Horizontal">
                     <Ellipse Width="35" Height="35" HorizontalAlignment="Center" Margin="15">
