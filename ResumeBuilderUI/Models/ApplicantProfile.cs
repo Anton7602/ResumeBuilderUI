@@ -7,6 +7,7 @@ namespace ResumeBuilderUI.Models
     [Serializable]
     public class ApplicantProfile
     {
+        #region Fields and Properties
         public long ID { get; set; }
         public string? Name { get; set; }
         public List<string> TitlesList { get; set; }
@@ -17,7 +18,9 @@ namespace ResumeBuilderUI.Models
         public ObservableCollection<ProffessionalAffiliation> AffiliationsList { get; set; }
         public ObservableCollection<Language> LanguagesList { get; set; }
         public ObservableCollection<Contact> ContactsList { get; set; }
+        #endregion
 
+        #region Constructors
         public ApplicantProfile()
         {
             Name = "Placeholder";
@@ -105,7 +108,9 @@ namespace ResumeBuilderUI.Models
             Name = name;
             InitializeDefaultParameters();
         }
+        #endregion
 
+        #region Private Methods
         private void InitializeDefaultParameters()
         {
             ID = Int64.Parse(DateTime.Now.ToString("ddyyMMHHmmss"));
@@ -117,6 +122,7 @@ namespace ResumeBuilderUI.Models
             ContactsList = new ObservableCollection<Contact>();
             LanguagesList = new ObservableCollection<Language>();
         }
+        #endregion
 
     }
 }

@@ -9,6 +9,10 @@
     <v:String x:Key="lang_Profile_Open">Открыть</v:String>
     <v:String x:Key="lang_Profile_Save">Сохранить</v:String>
     <v:String x:Key="lang_Language">Язык</v:String>
+    <v:String x:Key="lang_Language_LanguageName">Язык</v:String>
+    <v:String x:Key="lang_Language_LanguageName_Enter">Введите язык</v:String>
+    <v:String x:Key="lang_Language_LanguageProficiency">Уровень владения</v:String>
+    <v:String x:Key="lang_Language_LanguageProficiency_Enter">Введите уровень владения</v:String>
     <v:String x:Key="lang_Language_English">Английский</v:String>
     <v:String x:Key="lang_Language_Russian">Русский</v:String>
     <v:String x:Key="lang_PersonalInfo">Персональные данные</v:String>
@@ -16,6 +20,10 @@
     <v:String x:Key="lang_Experience">Опыт работы</v:String>
     <v:String x:Key="lang_Education">Образование</v:String>
     <v:String x:Key="lang_Contacts">Контакты</v:String>
+    <v:String x:Key="lang_Contact_ContactType">Способ связи</v:String>
+    <v:String x:Key="lang_Contact_ContactType_Enter">Введите способ связи</v:String>
+    <v:String x:Key="lang_Contact_ContactDescription">Контактные Данные</v:String>
+    <v:String x:Key="lang_Contact_ContactDescription_Enter">Введите контактные данные</v:String>
     <v:String x:Key="lang_Affiliations">Профессиональные связи</v:String>
     <v:String x:Key="lang_Affiliation_Company">Связанная компания</v:String>
     <v:String x:Key="lang_Affiliation_Company_Enter">Введите имя компании</v:String>

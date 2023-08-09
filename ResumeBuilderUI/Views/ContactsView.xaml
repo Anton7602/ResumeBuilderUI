@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:uc="clr-namespace:ResumeBuilderUI.UserControls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
              xmlns:local="clr-namespace:ResumeBuilderUI.Views"
              mc:Ignorable="d" 
@@ -11,16 +12,33 @@
     <UserControl.DataContext>
         <vm:ContactsViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibility"/>
+    </UserControl.Resources>
     <Grid>
         <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" Background="{StaticResource PrimaryColorBrush}"/>
-        <ListBox Name="ContactListBox" ItemsSource="{Binding ActiveProfile.ContactsList}" BorderThickness="0" 
-                 HorizontalAlignment="Center" Background="{StaticResource PrimaryColorBrush}" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <uc:ContactHolder ContactSource="{Binding}" HorizontalAlignment="Center"
-                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ScrollViewer>
+            <StackPanel>
+                <uc:ContactHolder x:Name="EditedContactHolder" ContactSource="{Binding EditedContact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"
+                                      Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}" ActiveMode="EditMode"
+                                      Visibility="{Binding EditedContact.IsSelected, Converter={StaticResource boolToVisibility}}"
+                                      AcceptCommand="{Binding SubmitNewContactCommand}" Background="Transparent" Margin="0 4 0 0"/>
+
+                <ListBox Name="ContactListBox" ItemsSource="{Binding ActiveProfile.ContactsList}" BorderThickness="0" 
+                         HorizontalAlignment="Center" Background="{StaticResource PrimaryColorBrush}" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <uc:ContactHolder ContactSource="{Binding}" HorizontalAlignment="Center" ActiveMode="ShowMode"
+                                                        Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button x:Name="addNewAffiliationButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                Style="{StaticResource AddNewElementButtonStyle}" Command="{Binding EditNewContactCommand}">
+            <iconPacks:PackIconMaterial Kind="Plus"/>
+        </Button>
     </Grid>
 </UserControl>

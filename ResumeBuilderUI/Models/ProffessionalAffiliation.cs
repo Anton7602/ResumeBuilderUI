@@ -9,6 +9,7 @@ namespace ResumeBuilderUI.Models
 {
     public class ProffessionalAffiliation : INotifyPropertyChanged
     {
+        //Fields and Properties
         private string _company;
         public string Company
         {
@@ -34,6 +35,7 @@ namespace ResumeBuilderUI.Models
             set { _isSelected = value; OnPropertyChanged(nameof(IsSelected)); }
         }
 
+        //Constructors
         public ProffessionalAffiliation()
         {
             Company= string.Empty;
@@ -58,6 +60,7 @@ namespace ResumeBuilderUI.Models
             IsSelected = affiliation.IsSelected;
         }
 
+        //Methods
         public static List<ProffessionalAffiliation> SortListOfAffiliations(List<ProffessionalAffiliation> affiliations)
         {
             affiliations.Sort((p, q) => p.Date.CompareTo(q.Date));

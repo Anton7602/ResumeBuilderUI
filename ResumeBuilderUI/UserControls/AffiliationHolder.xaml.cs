@@ -11,25 +11,27 @@ namespace ResumeBuilderUI.UserControls
     /// </summary>
     public partial class AffiliationHolder : UserControl
     {
+        #region Constructors
         public AffiliationHolder()
         {
             InitializeComponent();
             SetUpViewMode(ActiveMode);
         }
+        #endregion
 
-
+        #region UserControlProperties
+        //AffiliationSource - Property for binding an Affiliation, shown in AffiliationHolder
         public static readonly DependencyProperty AffiliationProperty =
-    DependencyProperty.Register("AffiliationSource", typeof(ProffessionalAffiliation), typeof(AffiliationHolder));
-
+            DependencyProperty.Register("AffiliationSource", typeof(ProffessionalAffiliation), typeof(AffiliationHolder));
         public ProffessionalAffiliation AffiliationSource
         {
             get { return (ProffessionalAffiliation)GetValue(AffiliationProperty); }
             set { SetValue(AffiliationProperty, value); }
         }
-
+        //ActiveMode - Property for defining curent viewmode of holder. Can be ShowMode or EditMode. Titles are self-explanatory
         public enum ViewMode {ShowMode, EditMode}
         public static readonly DependencyProperty ActiveModeProperty =
-DependencyProperty.Register("ActiveMode", typeof(ViewMode), typeof(AffiliationHolder), new PropertyMetadata(OnActiveModeChange));
+            DependencyProperty.Register("ActiveMode", typeof(ViewMode), typeof(AffiliationHolder), new PropertyMetadata(OnActiveModeChange));
 
         public ViewMode ActiveMode
         {
@@ -40,7 +42,18 @@ DependencyProperty.Register("ActiveMode", typeof(ViewMode), typeof(AffiliationHo
         {
             (d as AffiliationHolder).SetUpViewMode((ViewMode)e.NewValue);
         }
+        //AcceptCommand - Property to bind a ViewModel command, that triggers upon pressing accept button of a holder
+        public static readonly DependencyProperty AcceptCommandProperty =
+            DependencyProperty.Register("AcceptCommand", typeof(ICommand), typeof(AffiliationHolder));
 
+        public ICommand AcceptCommand
+        {
+            get { return (ICommand)GetValue(AcceptCommandProperty); }
+            set { SetValue(AcceptCommandProperty, value); }
+        }
+        #endregion
+
+        #region Private Methods
         private void SetUpViewMode(ViewMode mode)
         {
             switch (mode)
@@ -77,14 +90,6 @@ DependencyProperty.Register("ActiveMode", typeof(ViewMode), typeof(AffiliationHo
         {
 
         }
-
-        public static readonly DependencyProperty AcceptCommandProperty =
-DependencyProperty.Register("AcceptCommand", typeof(ICommand), typeof(AffiliationHolder));
-
-        public ICommand AcceptCommand
-        {
-            get { return (ICommand)GetValue(AcceptCommandProperty); }
-            set { SetValue(AcceptCommandProperty, value); }
-        }
+        #endregion
     }
 }

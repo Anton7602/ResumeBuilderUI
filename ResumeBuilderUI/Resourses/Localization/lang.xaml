@@ -9,6 +9,10 @@
     <v:String x:Key="lang_Profile_Open">Open</v:String>
     <v:String x:Key="lang_Profile_Save">Save</v:String>
     <v:String x:Key="lang_Language">Language</v:String>
+    <v:String x:Key="lang_Language_LanguageName">Language</v:String>
+    <v:String x:Key="lang_Language_LanguageName_Enter">Enter Language</v:String>
+    <v:String x:Key="lang_Language_LanguageProficiency">Proficiency</v:String>
+    <v:String x:Key="lang_Language_LanguageProficiency_Enter">Enter Proficiency</v:String>
     <v:String x:Key="lang_Language_English">English</v:String>
     <v:String x:Key="lang_Language_Russian">Russian</v:String>
     <v:String x:Key="lang_PersonalInfo">Personal Info</v:String>
@@ -16,6 +20,10 @@
     <v:String x:Key="lang_Experience">Work Experience</v:String>
     <v:String x:Key="lang_Education">Education</v:String>
     <v:String x:Key="lang_Contacts">Contacts</v:String>
+    <v:String x:Key="lang_Contact_ContactType">Contact Type</v:String>
+    <v:String x:Key="lang_Contact_ContactType_Enter">Enter Type of Contact</v:String>
+    <v:String x:Key="lang_Contact_ContactDescription">Contact Information</v:String>
+    <v:String x:Key="lang_Contact_ContactDescription_Enter">Enter Contact Information</v:String>
     <v:String x:Key="lang_Affiliations">Affiliations</v:String>
     <v:String x:Key="lang_Affiliation_Company">Affiliated Company</v:String>
     <v:String x:Key="lang_Affiliation_Company_Enter">Enter company name</v:String>
