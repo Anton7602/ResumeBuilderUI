@@ -2,29 +2,92 @@
 
 namespace ResumeBuilderUI.Models
 {
-    public class Education
+    /// <summary>
+    /// Class that stores info about Education instances of an Applicant
+    /// </summary>
+    public class Education: ResumeElementBase
     {
-        public string Institution { get; set; }
-        public string Degree { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public bool WithHonors { get; set; }
-        public string Program { get; set; }
-        public string Description { get; set; }
-        public bool IsSelected { get; set; }
-
-        public Education()
+        #region Fields and Parameters
+        private string _institution = string.Empty;
+        public string Institution
         {
-            Institution= string.Empty;
-            Degree= string.Empty;
-            StartDate=DateTime.Now; 
-            EndDate=DateTime.Now;
-            WithHonors= false;
-            Program= string.Empty;
-            Description= string.Empty;
-            IsSelected= false;
+            get { return _institution; }
+            set
+            {
+                _institution= value;
+                OnPropertyChanged(nameof(Institution));
+            }
         }
+        private string _degree = string.Empty;
+        public string Degree
+        {
+            get { return _degree; }
+            set
+            {
+                _degree= value;
+                OnPropertyChanged(nameof(Degree));
+            }
+        }
+        private DateTime _startDate = DateTime.Now;
+        public DateTime StartDate
+        {
+            get { return _startDate; }
+            set
+            {
+                _startDate= value;
+                OnPropertyChanged(nameof(StartDate));
+            }
+        }
+        private DateTime _endDate = DateTime.Now;
+        public DateTime EndDate
+        {
+            get { return _endDate; }
+            set
+            {
+                _endDate= value;
+                OnPropertyChanged(nameof(EndDate));
+            }
+        }
+        private bool _withHonors = false;
+        public bool WithHonors
+        {
+            get { return _withHonors;}
+            set
+            {
+                _withHonors= value;
+                OnPropertyChanged(nameof(WithHonors));
+            }
+        }
+        private string _program = string.Empty;
+        public string Program
+        {
+            get { return _program; }
+            set
+            {
+                _program= value;
+                OnPropertyChanged(nameof(Program));
+            }
+        }
+        private string _description = string.Empty;
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                _description= value;
+                OnPropertyChanged(nameof(Description));
+            }
+        }
+        #endregion
+        #region Constructors
+        /// <summary>
+        /// Base Education Constructor
+        /// </summary>
+        public Education() { }
 
+        /// <summary>
+        /// Adcanced Education Constructor with all parameters 
+        /// </summary>
         public Education(string institution, string degree, DateTime startDate, 
             DateTime endDate, bool withHonors, string program, string description)
         {
@@ -37,5 +100,6 @@ namespace ResumeBuilderUI.Models
             Description = description;
             IsSelected= false;
         }
+        #endregion
     }
 }

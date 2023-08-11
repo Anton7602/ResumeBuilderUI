@@ -14,11 +14,12 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
                 <ColumnDefinition Width="35"/>
             </Grid.ColumnDefinitions>
             <!--Language name -->
             <!--Show-->
-            <TextBlock Name="LanguageNameTextBloc" Text="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.LanguageName}" 
+            <TextBlock Name="LanguageNameTextBlock" Text="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.LanguageName}" 
                        Grid.Column="0" Margin="5"/>
             <!--Edit-->
             <uc:TextField x:Name="LanguageNameTextField" Text="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.LanguageName, Mode=TwoWay}"
@@ -26,15 +27,16 @@
                           Hint="{StaticResource lang_Language_LanguageName_Enter}" Caption="{StaticResource lang_Language_LanguageName}"/>
             <!--Language Proficiency-->
             <!--Show -->
-            <TextBlock Text="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.Proficiency}" Grid.Column="1" Margin="5"/>
+            <TextBlock Name="LanguageProfficiencyTextBlock"  Text="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.Proficiency}"
+                       Grid.Column="1" Margin="5"/>
             <!--Edit-->
-            <uc:TextField x:Name="ContactTypeTextField" Text="{Binding ElementName=ContactHolderControl, Path=ContactSource.ContactType, Mode=TwoWay}"
-                          Grid.Column="0" Margin="5" Visibility="Collapsed"
+            <uc:TextField x:Name="LanguageProficiencyTextField" Text="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.Proficiency, Mode=TwoWay}"
+                          Grid.Column="1" Margin="5" Visibility="Collapsed" HorizontalAlignment="Stretch"
                           Hint="{StaticResource lang_Language_LanguageProficiency_Enter}" Caption="{StaticResource lang_Language_LanguageProficiency}"/>
             <!--Buttons-->
             <!--Accept-->
             <Button x:Name="AcceptChangesButton" Grid.Column="2" VerticalAlignment="Top" Padding="10" Margin="20 0" 
-                    HorizontalAlignment="Right" Visibility="Collapsed" Command="{Binding ElementName=ContactHolderControl, Path=AcceptCommand}">
+                    HorizontalAlignment="Right" Visibility="Collapsed" Command="{Binding ElementName=LanguageHolderControl, Path=AcceptCommand}">
                 <iconPacks:PackIconMaterial Kind="Check" MinHeight="20"/>
             </Button>
             <!--Cancel -->

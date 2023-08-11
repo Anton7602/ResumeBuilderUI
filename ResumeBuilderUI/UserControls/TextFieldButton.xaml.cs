@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -7,38 +8,80 @@ namespace ResumeBuilderUI.UserControls
     /// <summary>
     /// Interaction logic for TextFieldButton.xaml
     /// </summary>
-    public partial class TextFieldButton : UserControl
+    public partial class TextFieldButton : UserControl, INotifyPropertyChanged
     {
+        #region Fields and Properties
+        private string _textFieldButtonText;
+        public string TextFieldButtonText
+        {
+            get { return _textFieldButtonText; }
+            set
+            {
+                _textFieldButtonText = value;
+                OnPropertyChanged(nameof(TextFieldButtonText));
+                SetValue(TextProperty, value);
+            }
+        }
+        #endregion
+
+        #region Constructors
         public TextFieldButton()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region UserControl Properties
+        //AcceptCommand - Property to bind a ViewModel command, that triggers upon pressing accept button of a TextFieldButton
+        public static readonly DependencyProperty AcceptCommandProperty =
+            DependencyProperty.Register("AcceptCommand", typeof(ICommand), typeof(TextFieldButton));
+        public ICommand AcceptCommand
+        {
+            get { return (ICommand)GetValue(AcceptCommandProperty); }
+            set { SetValue(AcceptCommandProperty, value); }
+        }
+        //Text - Property that binds text to a TextBox within TextFieldButton
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register("Text", typeof(string), typeof(TextFieldButton),
+                new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTextChanged)));
+        public string Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as TextFieldButton).TextFieldButtonText = e.NewValue.ToString();
+        }
+        #endregion
+
+        #region Private Methods
         private void ShowTextButton_Click(object sender, RoutedEventArgs e)
         {
             TextFieldButtonIcon.Visibility = Visibility.Collapsed;
-            TextFieldButtonText.Visibility = Visibility.Visible;
+            TextFieldButtonTextBox.Visibility = Visibility.Visible;
             TextFieldSubmitButton.Visibility = Visibility.Visible;
             TextFieldCancelButton.Visibility = Visibility.Visible;
-            TextFieldButtonText.Focus();
+            TextFieldButtonTextBox.Focus();
         }
 
         private void SubmitInput()
         {
-            if (TextFieldButtonText.Text != string.Empty)
+            if (TextFieldButtonTextBox.Text != string.Empty)
             {
                 TextFieldSubmitButton.Command.Execute(
-                    TextFieldButtonText.Text.Substring(0,1).ToUpper() + TextFieldButtonText.Text.Substring(1));
+                    TextFieldButtonTextBox.Text.Substring(0,1).ToUpper() + TextFieldButtonTextBox.Text.Substring(1));
             }
         }
 
         private void HideTextButton()
         {
             TextFieldButtonIcon.Visibility = Visibility.Visible;
-            TextFieldButtonText.Visibility = Visibility.Collapsed;
+            TextFieldButtonTextBox.Visibility = Visibility.Collapsed;
             TextFieldSubmitButton.Visibility = Visibility.Collapsed;
             TextFieldCancelButton.Visibility = Visibility.Collapsed;
-            TextFieldButtonText.Text = string.Empty;
+            TextFieldButtonTextBox.Text = string.Empty;
         }
 
         private void TextFieldButtonText_LostFocus(object sender, RoutedEventArgs e)
@@ -60,7 +103,7 @@ namespace ResumeBuilderUI.UserControls
         {
             if(e.Key==Key.Enter)
             {
-                if(TextFieldButtonText.IsFocused)
+                if(TextFieldButtonTextBox.IsFocused)
                 {
                     SubmitInput();
                     HideTextButton();
@@ -68,7 +111,7 @@ namespace ResumeBuilderUI.UserControls
             }
             if(e.Key==Key.Escape)
             {
-                if(TextFieldButtonText.IsFocused)
+                if(TextFieldButtonTextBox.IsFocused)
                 {
                     HideTextButton();
                 }
@@ -79,14 +122,14 @@ namespace ResumeBuilderUI.UserControls
         {
             HideTextButton();
         }
+        #endregion
 
-        public static readonly DependencyProperty AcceptCommandProperty =
-    DependencyProperty.Register("AcceptCommand", typeof(ICommand), typeof(TextFieldButton));
-
-        public ICommand AcceptCommand
+        #region Interface Implementation
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
         {
-            get { return (ICommand)GetValue(AcceptCommandProperty); }
-            set { SetValue(AcceptCommandProperty, value); }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName = null));
         }
+        #endregion
     }
 }

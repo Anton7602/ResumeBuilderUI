@@ -54,6 +54,9 @@ namespace ResumeBuilderUI.UserControls
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// Switches visibility parameters of the holder's elements according to picked ViewMode
+        /// </summary>
         private void SetUpViewMode(ViewMode mode)
         {
             switch (mode)

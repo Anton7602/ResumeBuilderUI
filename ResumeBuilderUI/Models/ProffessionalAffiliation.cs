@@ -7,9 +7,12 @@ using System.Linq;
 
 namespace ResumeBuilderUI.Models
 {
-    public class ProffessionalAffiliation : INotifyPropertyChanged
+    /// <summary>
+    /// Class that stores any affiliation an Applicant had - courses, internships, competitions etc.
+    /// </summary>
+    public class ProffessionalAffiliation : ResumeElementBase
     {
-        //Fields and Properties
+        #region Fields and Properties
         private string _company;
         public string Company
         {
@@ -28,30 +31,32 @@ namespace ResumeBuilderUI.Models
             get { return _date; }
             set { _date= value; OnPropertyChanged(nameof(Date));}
         }
-        private bool _isSelected;
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set { _isSelected = value; OnPropertyChanged(nameof(IsSelected)); }
-        }
+        #endregion
 
-        //Constructors
+        #region Constructors
+        /// <summary>
+        /// Base Affiliation constructor
+        /// </summary>
         public ProffessionalAffiliation()
         {
             Company= string.Empty;
             Description= string.Empty;
             Date= DateTime.Now;
-            IsSelected= false;
         }
-
+        /// <summary>
+        /// Full Affiliation constructor
+        /// </summary>
         public ProffessionalAffiliation(string company, string affiliation, DateTime dateOfAffiliation)
         {
             Company = company;
             Description = affiliation;
             Date = dateOfAffiliation;
-            IsSelected = false;
         }
 
+        /// <summary>
+        /// ProfessionalAffiliation constructor that creates referenceless duplicate of provided ProfessionalAffiliation
+        /// </summary>
+        /// <param name="affiliation"></param>
         public ProffessionalAffiliation(ProffessionalAffiliation affiliation)
         {
             Company = affiliation.Company;
@@ -59,15 +64,13 @@ namespace ResumeBuilderUI.Models
             Date = affiliation.Date;
             IsSelected = affiliation.IsSelected;
         }
+        #endregion
 
-        //Methods
-        public static List<ProffessionalAffiliation> SortListOfAffiliations(List<ProffessionalAffiliation> affiliations)
-        {
-            affiliations.Sort((p, q) => p.Date.CompareTo(q.Date));
-            affiliations.Reverse();
-            return affiliations;
-        }
-
+        #region Public Methods
+        /// <summary>
+        /// Parses a string with a format "Year Company - Description to a ProfessionalAffiliation object
+        /// </summary>
+        /// <returns></returns>
         public static ProffessionalAffiliation Parse(string affiliationInString)
         {
             ProffessionalAffiliation parsedAffiliation = new ProffessionalAffiliation();
@@ -78,6 +81,10 @@ namespace ResumeBuilderUI.Models
             return parsedAffiliation;
         }
 
+        /// <summary>
+        /// Sorts List of ProfessionalAffiliations in reverse chronological order
+        /// </summary>
+        /// <returns>Sorted List of ProfessionalAffiliations</returns>
         public static List<ProffessionalAffiliation> Sort(List<ProffessionalAffiliation> affiliations)
         {
             affiliations.Sort((p, q) => p.Date.CompareTo(q.Date));
@@ -85,6 +92,10 @@ namespace ResumeBuilderUI.Models
             return affiliations;
         }
 
+        /// <summary>
+        /// Sorts ObservableCollection of Professional Affiliations in reverse chronological order
+        /// </summary>
+        /// <returns>Sorted ObservableCollection of ProfessionalAffiliations</returns>
         public static ObservableCollection<ProffessionalAffiliation> Sort(ObservableCollection<ProffessionalAffiliation> affiliations)
         {
             List<ProffessionalAffiliation> tempAffiliations = affiliations.ToList();
@@ -96,16 +107,15 @@ namespace ResumeBuilderUI.Models
             return affiliations;
         }
 
+        /// <summary>
+        /// Parses ProfessionalAffiliation object ToString() 
+        /// </summary>
+        /// <returns>String with format "Year Company - Description</returns>
         public override string ToString()
         {
             return Date.ToString("yyyy")+"  "+Company+" - "+Description;
         }
+        #endregion
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName = null));
-        }
     }
 }

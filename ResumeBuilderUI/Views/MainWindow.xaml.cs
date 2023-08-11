@@ -1,9 +1,11 @@
 ﻿using ResumeBuilderUI.Models;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace ResumeBuilderUI.Views
@@ -29,6 +31,16 @@ namespace ResumeBuilderUI.Views
             {
                 App.ActiveProfile = new ApplicantProfile();
             }
+
+            DirectoryInfo d = new DirectoryInfo(@"profiles");
+            FileInfo[] filesArray = d.GetFiles("*.cvp");
+            List<string> profileNames = new List<string>();
+            foreach (FileInfo file in filesArray)
+            {
+                profileNames.Add(file.ToString().Substring(file.ToString().LastIndexOf(@"\") + 1));
+            }
+            ProfileSelectionCombobox.ItemsSource = profileNames;
+
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)

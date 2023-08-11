@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="ResumeBuilderUI.UserControls.ExperienceHolder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:uc="clr-namespace:ResumeBuilderUI.UserControls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
+             mc:Ignorable="d" Name="ExperienceHolderControl">
+    <Grid Width="{Binding ElementName=ExperienceHolderControl, Path=ActualWidth}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="35"/>
+        </Grid.ColumnDefinitions>
+        <!--Tag-->
+        <!--Show-->
+        <TextBlock Name="TagTextBlock" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Tag}"
+                        FontSize="16" Grid.Column="0"/>
+        <!--Edit-->
+        <uc:TextField x:Name="TagTextField" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Tag, Mode=TwoWay}"
+                          Grid.Row="0" Margin="5" Visibility="Collapsed" Grid.Column="0" Background="Transparent"
+                          Hint="{StaticResource lang_Experience_Tag_Enter}" Caption="{StaticResource lang_Experience_Tag}"/>
+        <!--Description-->
+        <!--Show-->
+        <TextBlock Name="DescriptionTextBlock" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Description}" 
+                   Grid.Column="1" FontSize="16"/>
+        <!--Edit-->
+        <uc:TextField x:Name="DescriptionTextField" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Description, Mode=TwoWay}"
+                          Grid.Column="1" Margin="5" Visibility="Collapsed" Background="Transparent"
+                          Hint="{StaticResource lang_Experience_Description_Enter}" Caption="{StaticResource lang_Experience_Description}"/>
+
+
+        <!--Buttons-->
+        <!--Edit-->
+        <!--Accept Button-->
+        <Button x:Name="AcceptChangesButton" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Padding="10" Margin="20 0" 
+                    HorizontalAlignment="Left" Visibility="Collapsed" Command="{Binding ElementName=ExperienceHolderControl, Path=AcceptCommand}">
+            <iconPacks:PackIconMaterial Kind="Check" MinHeight="20"/>
+        </Button>
+        <!--Cancel Button-->
+        <Button x:Name="CancelChangesButton" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Padding="10" Margin="20 0" 
+                    HorizontalAlignment="Right" Visibility="Collapsed">
+            <iconPacks:PackIconMaterial Kind="Close" MinHeight="20"/>
+        </Button>
+    </Grid>
+</UserControl>

@@ -103,8 +103,9 @@
             </WrapPanel>
             
             <!--Profile Selector-->
-            <ComboBox Name='ProfileSelectionCombobox' ItemsSource="{Binding ActiveProfile.TitlesList}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left"
-                      VerticalAlignment="Center" BorderThickness="0" Margin="10 0"/>
+            <ComboBox Name="ProfileSelectionCombobox" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" 
+                      VerticalAlignment="Center" BorderThickness="0" Margin="10 0" MinWidth="100" SelectedIndex="0">
+            </ComboBox>
 
             <!--User Button-->
             <ToggleButton Grid.Column="0" Grid.Row="0" Height="Auto" Width="Auto" Style="{StaticResource ControlToggleButtonStyle}"

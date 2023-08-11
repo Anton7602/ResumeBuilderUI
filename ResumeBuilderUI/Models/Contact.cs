@@ -2,7 +2,10 @@
 
 namespace ResumeBuilderUI.Models
 {
-    public class Contact :INotifyPropertyChanged
+    /// <summary>
+    /// Class that stores contact information of an Applicant
+    /// </summary>
+    public class Contact : ResumeElementBase
     {
         #region Fields and Properties
         //Contact Type - Defines method of contact: Email, Phone, Github etc.
@@ -27,30 +30,13 @@ namespace ResumeBuilderUI.Models
                 OnPropertyChanged(nameof(ContactDescription));
             }
         }
-        //Is Selected - Defines if this particular contact will be used by ResumeBuilder. Also helps with showing/hiding UI elements
-        private bool _isSelected = false;
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set
-            {
-                _isSelected = value;
-                OnPropertyChanged(nameof(IsSelected));
-            }
-        }
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Base contact constructor
+        /// </summary>
         public Contact() { }
-        #endregion
-
-        #region Interface Implementation
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName = null));
-        }
         #endregion
     }
 }

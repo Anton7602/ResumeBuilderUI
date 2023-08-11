@@ -12,33 +12,40 @@
     <UserControl.DataContext>
         <vm:SkillsViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibility"/>
+    </UserControl.Resources>
     <!--Main Layout-->
     <Border Name="SkillViewBorder" CornerRadius="10" Background="Transparent">
         <Grid>
             <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" />
             <ScrollViewer HorizontalAlignment="Stretch" Grid.Row="1">
-                <!--ListBox for skillsets-->
-                <ListBox ItemsSource="{Binding ActiveProfile.SkillsetsList}" BorderThickness="0" HorizontalAlignment="Center"
-                         ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}" Name="SkillsetListBox" Background="{StaticResource PrimaryColorBrush}">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel HorizontalAlignment="Center"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <!--Define skillset Item Template-->
-                    <ListBox.ItemTemplate>
-                        <DataTemplate >
-                            <StackPanel HorizontalAlignment="Right" Margin="0 5">
-                                <ToggleButton Content="{Binding Path=MainSkill}" HorizontalAlignment="Left" FontWeight="SemiBold"  
-                                                Style="{StaticResource MainSkillElementsStyle}" IsChecked="{Binding Path=IsSelected}"/>
-                                <uc:SkillHolder SkillsSource="{Binding Path=SkillsList}" HorizontalAlignment="Center"
-                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"
-                                                AcceptCommand="{Binding AddSkillCommand}">
-                                </uc:SkillHolder>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <StackPanel>
+                    <uc:TextFieldButton x:Name="EditedSkillsetHolder" Margin="13 10"
+                                        AcceptCommand="{Binding SubmitNewSkillsetCommand}" HorizontalAlignment="Left" Text="{Binding EditedSkillset.MainSkill}"/>
+                    <!--ListBox for skillsets-->
+                    <ListBox ItemsSource="{Binding ActiveProfile.SkillsetsList}" BorderThickness="0" HorizontalAlignment="Center"
+                             ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}" Name="SkillsetListBox" Background="{StaticResource PrimaryColorBrush}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <!--Define skillset Item Template-->
+                        <ListBox.ItemTemplate>
+                            <DataTemplate >
+                                <StackPanel HorizontalAlignment="Right" Margin="0 5">
+                                    <ToggleButton Content="{Binding Path=MainSkill}" HorizontalAlignment="Left" FontWeight="SemiBold"  
+                                                    Style="{StaticResource MainSkillElementsStyle}" IsChecked="{Binding Path=IsSelected}"/>
+                                    <uc:SkillHolder SkillsSource="{Binding Path=SkillsList}" HorizontalAlignment="Center"
+                                                    Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"
+                                                    AcceptCommand="{Binding AddSkillCommand}">
+                                    </uc:SkillHolder>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </ScrollViewer>
         </Grid>
     </Border>

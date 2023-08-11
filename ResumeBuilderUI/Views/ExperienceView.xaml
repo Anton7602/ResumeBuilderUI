@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:uc="clr-namespace:ResumeBuilderUI.UserControls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -13,15 +14,28 @@
     <Border x:Name="ExperienceViewBorder" CornerRadius="10" Background="Transparent">
         <Grid Name="ExperienceViewGrid">
             <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" />
-            <ListBox Name="EmploymentListBox" ItemsSource="{Binding ActiveProfile.EmploymentsList}" BorderThickness="0" HorizontalAlignment="Center"
-                     Background="Transparent" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                            <uc:EmploymentHolder EmploymentSource="{Binding}" HorizontalAlignment="Center"
-                                                 Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <ScrollViewer>
+                <StackPanel>
+                    <uc:EmploymentHolder x:Name="EditedEmploymentHolder" EmploymentSource="{Binding EditedEmployment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                    HorizontalAlignment="Center" Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}" ActiveMode="EditMode"
+                                      Visibility="{Binding EditedEmployment.IsSelected, Converter={StaticResource boolToVisibility}}"
+                                      AcceptCommand="{Binding SubmitNewEmploymentCommand}" Background="Transparent" Margin="0 4 0 0"/>
+                    <ListBox Name="EmploymentListBox" ItemsSource="{Binding ActiveProfile.EmploymentsList}" BorderThickness="0" HorizontalAlignment="Center"
+                             Background="Transparent" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                    <uc:EmploymentHolder EmploymentSource="{Binding}" HorizontalAlignment="Center" ActiveMode="ShowMode"
+                                                         Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Button x:Name="addNewEmploymentButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                Style="{StaticResource AddNewElementButtonStyle}" Command="{Binding EditNewEmploymentCommand}">
+                <iconPacks:PackIconMaterial Kind="Plus"/>
+            </Button>
         </Grid>
     </Border>
 </UserControl>

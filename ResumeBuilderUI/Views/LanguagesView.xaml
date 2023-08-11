@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:uc="clr-namespace:ResumeBuilderUI.UserControls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:vm="clr-namespace:ResumeBuilderUI.ViewModels"
              xmlns:local="clr-namespace:ResumeBuilderUI.Views"
              mc:Ignorable="d" 
@@ -11,16 +12,32 @@
     <UserControl.DataContext>
         <vm:LanguagesViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisibility"/>
+    </UserControl.Resources>
     <Grid>
         <Border Name="WidthRegulatorBorder" Height="0" Margin="20,0" Background="{StaticResource PrimaryColorBrush}"/>
-        <ListBox Name="LanguagesListBox" ItemsSource="{Binding ActiveProfile.LanguagesList}" BorderThickness="0" 
-                 HorizontalAlignment="Center" Background="{StaticResource PrimaryColorBrush}" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <uc:LanguageHolder LanguageSource="{Binding}" HorizontalAlignment="Center"
-                                                Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ScrollViewer>
+            <StackPanel>
+                <uc:LanguageHolder x:Name="EditedLanguageHolder" LanguageSource="{Binding EditedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"
+                                      Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}" ActiveMode="EditMode"
+                                      Visibility="{Binding EditedLanguage.IsSelected, Converter={StaticResource boolToVisibility}}"
+                                      AcceptCommand="{Binding SubmitNewLanguageCommand}" Background="Transparent" Margin="0 4 0 0"/>
+                <ListBox Name="LanguagesListBox" ItemsSource="{Binding ActiveProfile.LanguagesList}" BorderThickness="0" 
+                         HorizontalAlignment="Center" Background="{StaticResource PrimaryColorBrush}" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <uc:LanguageHolder LanguageSource="{Binding}" HorizontalAlignment="Center" ActiveMode="ShowMode"
+                                                        Width="{Binding ElementName=WidthRegulatorBorder, Path=ActualWidth}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button x:Name="addNewLanguageButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                Style="{StaticResource AddNewElementButtonStyle}" Command="{Binding EditNewLanguageCommand}">
+            <iconPacks:PackIconMaterial Kind="Plus"/>
+        </Button>
     </Grid>
 </UserControl>

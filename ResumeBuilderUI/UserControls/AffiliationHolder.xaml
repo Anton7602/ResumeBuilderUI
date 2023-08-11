@@ -46,12 +46,19 @@
                           Hint="{StaticResource lang_Affiliation_Description_Enter}" Caption="{StaticResource lang_Affiliation_Description}"
                           Width="{Binding ElementName=CompanyTextField, Path=ActualWidth}"/>
             <!--Buttons-->
+            <!--Show-->
+            <!--Edit Button-->
+            <Button x:Name="EditAffiliationButton" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Padding="10" HorizontalAlignment="Right"
+                    Style="{StaticResource AddSkillButtonStyle}">
+                <iconPacks:PackIconMaterial Kind="TooltipEdit" MinHeight="20"/>
+            </Button>
             <!--Edit-->
+            <!--Accept Button-->
             <Button x:Name="AcceptChangesButton" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Padding="10" Margin="20 0" 
                     HorizontalAlignment="Left" Visibility="Collapsed" Command="{Binding ElementName=AffiliationHolderControl, Path=AcceptCommand}">
                 <iconPacks:PackIconMaterial Kind="Check" MinHeight="20"/>
             </Button>
-            
+            <!--Cancel Button-->
             <Button x:Name="CancelChangesButton" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Padding="10" Margin="20 0" 
                     HorizontalAlignment="Right" Visibility="Collapsed" Click="CancelChangesButton_Click">
                 <iconPacks:PackIconMaterial Kind="Close" MinHeight="20"/>

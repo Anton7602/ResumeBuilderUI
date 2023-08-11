@@ -8,6 +8,9 @@ using QuestPDF.Infrastructure;
 
 namespace ResumeBuilderUI.Models
 {
+    /// <summary>
+    /// Builder class that gathers relevent information from ApplicantProfile and creates CV based on it. Supports PDF output.
+    /// </summary>
     [Serializable]
     public class ResumeBuilder
     {

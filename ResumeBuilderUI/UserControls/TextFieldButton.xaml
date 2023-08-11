@@ -14,11 +14,12 @@
                 Click="ShowTextButton_Click">
             <StackPanel Orientation="Horizontal" >
                 <iconPacks:PackIconMaterial Name="TextFieldButtonIcon"  Kind="PlusCircleOutline"/>
-                <TextBox Name="TextFieldButtonText" Visibility="Collapsed" LostFocus="TextFieldButtonText_LostFocus" MinWidth="15" 
-                         KeyDown="TextFieldButtonText_KeyDown"/>
+                <TextBox Name="TextFieldButtonTextBox" Visibility="Collapsed" LostFocus="TextFieldButtonText_LostFocus" MinWidth="15" 
+                         KeyDown="TextFieldButtonText_KeyDown" 
+                         Text="{Binding ElementName=TextFieldButtonControl, Path=TextFieldButtonText, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Name="TextFieldSubmitButton" Visibility="Collapsed" Background="Transparent" 
                         Command="{Binding ElementName=TextFieldButtonControl, Path=AcceptCommand}"
-                        CommandParameter="{Binding ElementName=TextFieldButtonText, Path=Text}">
+                        CommandParameter="{Binding ElementName=TextFieldButtonTextBox, Path=Text}">
                     <iconPacks:PackIconMaterial Kind="CheckOutline" Foreground="#008000"/>
                 </Button>
                 <Button x:Name="TextFieldCancelButton" Visibility="Collapsed" Background="Transparent"

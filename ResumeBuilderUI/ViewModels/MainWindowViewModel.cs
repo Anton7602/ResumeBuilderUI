@@ -18,7 +18,7 @@ namespace ResumeBuilderUI.ViewModels
             set
             {
                 _activeProfile = value;
-                OnPropertyChanged("Active Profile");
+                OnPropertyChanged(nameof(ActiveProfile));
             }
         }
         private bool _isSettingsVisible = false;
@@ -85,7 +85,6 @@ namespace ResumeBuilderUI.ViewModels
         {
             BuildCVCommand = new RelayCommand<object>(BuildCV);
             CloseAppCommand = new RelayCommand<object>(CloseApp);
-
         }
 
         private void CloseApp(object commandParameter)
@@ -101,6 +100,7 @@ namespace ResumeBuilderUI.ViewModels
 
         private void BuildCV(object commandParameter)
         {
+            ActiveProfile= App.ActiveProfile;
             ResumeBuilder CVbuilder = new ResumeBuilder(ActiveProfile.Name, ActiveProfile.TitlesList.First(), ActiveProfile.Summary,
                 GetSelectedLanguagesList(), GetSelectedAffiliationsList(), GetSelectedSkillsList(), GetSelectedSkillsetsList(), 
                 GetSelectedEmploymentsList(), GetSelectedEducationsList(), GetSelectedContactList());
