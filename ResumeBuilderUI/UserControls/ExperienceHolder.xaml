@@ -7,9 +7,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
              mc:Ignorable="d" Name="ExperienceHolderControl">
-    <Grid Width="{Binding ElementName=ExperienceHolderControl, Path=ActualWidth}">
+    <Grid Width="{Binding ElementName=ExperienceHolderControl, Path=ActualWidth}" MouseRightButtonDown="Grid_MouseRightButtonDown">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="6*"/>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="35"/>
@@ -17,7 +17,7 @@
         <!--Tag-->
         <!--Show-->
         <TextBlock Name="TagTextBlock" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Tag}"
-                        FontSize="16" Grid.Column="0"/>
+                        FontSize="13" FontWeight="SemiBold" Grid.Column="0"/>
         <!--Edit-->
         <uc:TextField x:Name="TagTextField" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Tag, Mode=TwoWay}"
                           Grid.Row="0" Margin="5" Visibility="Collapsed" Grid.Column="0" Background="Transparent"
@@ -25,7 +25,7 @@
         <!--Description-->
         <!--Show-->
         <TextBlock Name="DescriptionTextBlock" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Description}" 
-                   Grid.Column="1" FontSize="16"/>
+                   Grid.Column="1" FontSize="13"/>
         <!--Edit-->
         <uc:TextField x:Name="DescriptionTextField" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Description, Mode=TwoWay}"
                           Grid.Column="1" Margin="5" Visibility="Collapsed" Background="Transparent"
@@ -35,8 +35,8 @@
         <!--Buttons-->
         <!--Edit-->
         <!--Accept Button-->
-        <Button x:Name="AcceptChangesButton" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Padding="10" Margin="20 0" 
-                    HorizontalAlignment="Left" Visibility="Collapsed" Command="{Binding ElementName=ExperienceHolderControl, Path=AcceptCommand}">
+        <Button x:Name="AcceptChangesButton" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Padding="10" Margin="20 0"
+                    HorizontalAlignment="Left" Visibility="Collapsed" Click="AcceptChangesButton_Click">
             <iconPacks:PackIconMaterial Kind="Check" MinHeight="20"/>
         </Button>
         <!--Cancel Button-->

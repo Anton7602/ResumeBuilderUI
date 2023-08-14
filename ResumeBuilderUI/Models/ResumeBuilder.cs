@@ -60,6 +60,12 @@ namespace ResumeBuilderUI.Models
                 .AlignTop();
         }
 
+        private List<Education> GetEducationsList(List<Education> educations)
+        {
+            educations = Education.Sort(educations);
+            return educations;
+        }
+
         private List<string> GetEmployersList(List<Employment> employments)
         {
             employments = Employment.Sort(employments);
@@ -148,7 +154,7 @@ namespace ResumeBuilderUI.Models
         public void BuildResume(string pathToOutputGeneratedResume)
         {
             QuestPDF.Settings.License = LicenseType.Community;
-            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+            CultureInfo.CurrentCulture = App.Language;
             var resume = Document.Create(container =>
             {
                 _ = container.Page(page =>
@@ -192,10 +198,10 @@ namespace ResumeBuilderUI.Models
                             {
                                 table.ColumnsDefinition(columns =>
                                 {
-                                    columns.ConstantColumn(90);
+                                    columns.ConstantColumn(100);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Summary").FontColor(textColorCVLight).FontSize(16);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Summary"]).FontColor(textColorCVLight).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
                             });
                             column.Item().Text(Summary)
@@ -205,10 +211,10 @@ namespace ResumeBuilderUI.Models
                             {
                                 table.ColumnsDefinition(columns =>
                                 {
-                                    columns.ConstantColumn(50);
+                                    columns.ConstantColumn(100);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Tools").FontColor(textColorCVLight).FontSize(16);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Tools"]).FontColor(textColorCVLight).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
                             });
                             List<string> skillsNames;
@@ -226,7 +232,7 @@ namespace ResumeBuilderUI.Models
                                         columns.RelativeColumn();
                                     });
                                     table.Cell().Row(1).Column(1).Element(ToolsBody).AlignCenter().Text(toolsCategoty.MainSkill).FontSize(14).FontColor(textColorCVLight).ExtraBold();
-                                    table.Cell().Row(2).Column(1).Element(ToolsBody).AlignLeft().Text(String.Join(',',skillsNames)).FontSize(11).FontColor(textColorCVLight);
+                                    table.Cell().Row(2).Column(1).Element(ToolsBody).AlignLeft().Text(String.Join(", ",skillsNames)).FontSize(11).FontColor(textColorCVLight);
                                 });
                                 column.Item().Text("").FontSize(5);
                             }
@@ -238,7 +244,7 @@ namespace ResumeBuilderUI.Models
                                     columns.ConstantColumn(100);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Languages").FontColor(textColorCVLight).FontSize(16);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Languages"]).FontColor(textColorCVLight).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
                             });
                             foreach (Language language in LanguagesList)
@@ -259,7 +265,7 @@ namespace ResumeBuilderUI.Models
                                     columns.ConstantColumn(75);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Contacts").FontColor(textColorCVLight).FontSize(16);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Contacts"]).FontColor(textColorCVLight).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
                             });
                             foreach (Contact contactOption in ContactsList)
@@ -293,7 +299,7 @@ namespace ResumeBuilderUI.Models
                                     columns.ConstantColumn(135);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Work Experience").FontColor(textCVAccentColor).FontSize(16);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Experience"]).FontColor(textCVAccentColor).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(20).LineHorizontal(1).LineColor(textCVAccentColor);
                             });
                             //Experiences
@@ -313,7 +319,7 @@ namespace ResumeBuilderUI.Models
                                         .FontColor("282828").FontSize(9);
                                         foreach (Experience experience in position.ExperiencesList)
                                         {
-                                            if (RelevantSkills.Contains(new Skill(experience.Tag)))
+                                            if (RelevantSkills.Contains(new Skill(experience.Tag)) || (experience.Tag.Equals("Core")))
                                             {
                                                 column.Item().AlignLeft().PaddingHorizontal(15).Text("• " + experience.Description).FontSize(10).FontColor("000000");
                                             }
@@ -327,13 +333,13 @@ namespace ResumeBuilderUI.Models
                             {
                                 table.ColumnsDefinition(columns =>
                                 {
-                                    columns.ConstantColumn(90);
+                                    columns.ConstantColumn(110);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Education").FontColor(textCVAccentColor).FontSize(16);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Education"]).FontColor(textCVAccentColor).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(20).LineHorizontal(1).LineColor(textCVAccentColor);
                             });
-                            foreach(Education education in EducationsList)
+                            foreach(Education education in GetEducationsList(EducationsList))
                             {
                                 column.Item().AlignRight().PaddingHorizontal(10).Text(education.Institution).FontColor(textCVAccentColor).FontSize(13);
                                 column.Item().AlignRight().PaddingHorizontal(10).Text(education.StartDate.ToString("Y", App.Language) + " - " + 
@@ -364,7 +370,7 @@ namespace ResumeBuilderUI.Models
                                     columns.ConstantColumn(190);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text("Professional Affiliations").FontColor(textCVAccentColor).FontSize(16);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Affiliations"]).FontColor(textCVAccentColor).FontSize(16);
                                 table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(20).LineHorizontal(1).LineColor(textCVAccentColor);
                             });
                             foreach (ProffessionalAffiliation affiliation in AffiliationsList)

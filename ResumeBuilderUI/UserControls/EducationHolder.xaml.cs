@@ -93,5 +93,10 @@ namespace ResumeBuilderUI.UserControls
             }
             #endregion
         }
+
+        private void EducationHolderToggle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ActiveMode = ActiveMode.Equals(ViewMode.ShowMode) ? ViewMode.EditMode : ViewMode.ShowMode;
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 
@@ -48,6 +49,22 @@ namespace ResumeBuilderUI.Views
             if(e.ChangedButton == MouseButton.Left)
             {
                 this.DragMove();
+            }
+        }
+
+        private void ProfileSelectionCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            try
+            {
+                using (StreamReader profileReader = new StreamReader(@"profiles\" + (sender as ComboBox).SelectedItem))
+                {
+                    string profileJsonLine = profileReader.ReadToEnd();
+                    App.ActiveProfile = JsonSerializer.Deserialize<ApplicantProfile>(profileJsonLine);
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

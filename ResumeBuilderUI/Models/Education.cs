@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ResumeBuilderUI.Models
 {
@@ -99,6 +100,17 @@ namespace ResumeBuilderUI.Models
             Program = program;
             Description = description;
             IsSelected= false;
+        }
+
+        /// <summary>
+        /// Sorts given list of Employments in reverse chronological order by Employment EndDate
+        /// </summary>
+        /// <returns>Sorted list of Employments</returns>
+        public static List<Education> Sort(List<Education> educations)
+        {
+            educations.Sort((p, q) => p.EndDate.CompareTo(q.EndDate));
+            educations.Reverse();
+            return educations;
         }
         #endregion
     }

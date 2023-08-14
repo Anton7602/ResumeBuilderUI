@@ -104,7 +104,7 @@
             
             <!--Profile Selector-->
             <ComboBox Name="ProfileSelectionCombobox" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" 
-                      VerticalAlignment="Center" BorderThickness="0" Margin="10 0" MinWidth="100" SelectedIndex="0">
+                      VerticalAlignment="Center" BorderThickness="0" Margin="10 0" MinWidth="100" SelectedIndex="0" SelectionChanged="ProfileSelectionCombobox_SelectionChanged">
             </ComboBox>
 
             <!--User Button-->

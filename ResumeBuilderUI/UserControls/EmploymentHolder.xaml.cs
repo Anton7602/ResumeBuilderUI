@@ -1,5 +1,6 @@
 ﻿using ResumeBuilderUI.Models;
 using ResumeBuilderUI.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,16 +22,21 @@ namespace ResumeBuilderUI.UserControls
                 _editedExperience = value;
             }
         }
-        public RelayCommand<object> SubmitNewExperienceCommand { get; private set; }
         #endregion
 
         #region Constructors
         public EmploymentHolder()
         {
             InitializeComponent();
-            EditedExperience.Tag = "dfdfsdf";
-            EditedExperience.Description = "sdfsdfsdf";
-            SubmitNewExperienceCommand = new RelayCommand<object>(SubmitNewExperience);
+            EditedExperienceHolder.AcceptChanges += ExperienceHolderAcceptChanges_Click;
+        }
+
+        private void ExperienceHolderAcceptChanges_Click(object? sender, EventArgs e)
+        {
+            EmploymentSource.ExperiencesList.Insert(0, new Experience(EditedExperience));
+            EditedExperience.Tag = string.Empty;
+            EditedExperience.Description = string.Empty;
+            EditedExperienceHolder.Visibility = Visibility.Collapsed;
         }
         #endregion
 
@@ -103,17 +109,16 @@ namespace ResumeBuilderUI.UserControls
             }
         }
 
-        private void SubmitNewExperience(object obj)
-        {
-            EmploymentSource.ExperiencesList.Insert(0, EditedExperience);
-            EditedExperience = new Experience();
-            EditedExperienceHolder.Visibility = Visibility.Collapsed;
-        }
-        #endregion
-
         private void AddNewExperienceButton_Click(object sender, RoutedEventArgs e)
         {
             EditedExperienceHolder.Visibility = Visibility.Visible;
+            EditedExperienceHolder.TagTextField.Focus();
+        }
+        #endregion
+
+        private void EmploymentHolderToggle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ActiveMode = ActiveMode.Equals(ViewMode.ShowMode) ? ViewMode.EditMode : ViewMode.ShowMode;
         }
     }
 }

@@ -79,5 +79,10 @@ namespace ResumeBuilderUI.UserControls
             }
             #endregion
         }
+
+        private void ContactHolderToggle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ActiveMode = ActiveMode.Equals(ViewMode.ShowMode) ? ViewMode.EditMode : ViewMode.ShowMode;
+        }
     }
 }

@@ -112,7 +112,10 @@ namespace ResumeBuilderUI.ViewModels
             List<Skillset> activeSkillsetsList = new List<Skillset>();
             foreach(Skillset skillset in ActiveProfile.SkillsetsList)
             {
-                activeSkillsetsList.Add(skillset);
+                if (skillset.IsSelected)
+                {
+                    activeSkillsetsList.Add(skillset);
+                }
             }
             return activeSkillsetsList;
         }

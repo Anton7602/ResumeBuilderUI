@@ -12,7 +12,7 @@
         <BooleanToVisibilityConverter x:Key="boolToVisibility"/>
     </UserControl.Resources>
     <ToggleButton Name="EmploymentHolderToggle" HorizontalAlignment="Stretch" Style="{StaticResource ListElementsStyle}" 
-                      IsChecked="{Binding ElementName=EmploymentHolderControl, Path=EmploymentSource.IsSelected}">
+                      IsChecked="{Binding ElementName=EmploymentHolderControl, Path=EmploymentSource.IsSelected}" MouseRightButtonDown="EmploymentHolderToggle_MouseRightButtonDown">
         <Grid HorizontalAlignment="Left" Width="{Binding ElementName=EmploymentHolderControl, Path=ActualWidth}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -47,13 +47,13 @@
             <!--Edit-->
 
             <!--Experiences List-->
-            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left">
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" Orientation="Vertical">
                 <uc:ExperienceHolder x:Name="EditedExperienceHolder" ExperienceSource="{Binding ElementName=EmploymentHolderControl, Path=EditedExperience}"
-                                     ActiveMode="EditMode" Visibility="Collapsed" HorizontalAlignment="Left" Panel.ZIndex="5" Width="{Binding ElementName=EmploymentHolderToggle, Path=ActualWidth}"
-                                     AcceptCommand="{Binding ElementName=EmploymentHolderControl, Path=SubmitNewExperienceCommand}"/>
+                                     ActiveMode="EditMode" Visibility="Collapsed" HorizontalAlignment="Left" Width="{Binding ElementName=EmploymentHolderToggle, Path=ActualWidth}" 
+                                     Margin="10"/>
                 <ListBox Name="ExperiencesListBox"  ItemsSource="{Binding ElementName=EmploymentHolderControl, Path=EmploymentSource.ExperiencesList}" 
-                         ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}"  BorderThickness="0" Background="Transparent"
-                         Visibility="{Binding ElementName=ExperiencesToggleButton, Path=IsChecked, Converter={StaticResource boolToVisibility}}">
+                         ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}"  BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         Visibility="{Binding ElementName=ExperiencesToggleButton, Path=IsChecked, Converter={StaticResource boolToVisibility}}" Margin="0 10">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel HorizontalAlignment="Left"/>
@@ -61,11 +61,9 @@
                     </ListBox.ItemsPanel>
                     <!--Define skillset Item Template-->
                     <ListBox.ItemTemplate>
-                        <DataTemplate >
-                        <StackPanel>
+                        <DataTemplate>
                             <uc:ExperienceHolder x:Name="ExperienceListHolder" ExperienceSource="{Binding}" ActiveMode="ShowMode"
-                                                 Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=ActualWidth}"/>
-                        </StackPanel>
+                                                 Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}, Path=ActualWidth}"/>
                     </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

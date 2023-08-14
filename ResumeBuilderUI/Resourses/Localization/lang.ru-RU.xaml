@@ -9,6 +9,7 @@
     <v:String x:Key="lang_Profile_Open">Открыть</v:String>
     <v:String x:Key="lang_Profile_Save">Сохранить</v:String>
     <v:String x:Key="lang_Language">Язык</v:String>
+    <v:String x:Key="lang_Languages">Языкы</v:String>
     <v:String x:Key="lang_Language_LanguageName">Язык</v:String>
     <v:String x:Key="lang_Language_LanguageName_Enter">Введите язык</v:String>
     <v:String x:Key="lang_Language_LanguageProficiency">Уровень владения</v:String>
@@ -52,13 +53,13 @@
     <v:String x:Key="lang_Affiliation_Company_Enter">Введите имя компании</v:String>
     <v:String x:Key="lang_Affiliation_Description">Описание</v:String>
     <v:String x:Key="lang_Affiliation_Description_Enter">Введите описание</v:String>
-    <v:String x:Key="lang_Languages">Языки</v:String>
     <v:String x:Key="lang_BuildCV">Сгенерировать резюме</v:String>
+    <v:String x:Key="lang_Tools">Навыки</v:String>
     <v:String x:Key="lang_User">Пользователь</v:String>
     <v:String x:Key="lang_Setting">Настройки</v:String>
     <v:String x:Key="lang_Setting_AppLanguage">Язык приложения</v:String>
     <v:String x:Key="lang_Title">Должность</v:String>
     <v:String x:Key="lang_Title_Enter">Введите название должности</v:String>
-    <v:String x:Key="lang_Summary">Краткое описание</v:String>
-    <v:String x:Key="lang_Summary_Enter">Введите своё краткое описание</v:String>
+    <v:String x:Key="lang_Summary">Общее</v:String>
+    <v:String x:Key="lang_Summary_Enter">Введите общие сведения</v:String>
 </ResourceDictionary>

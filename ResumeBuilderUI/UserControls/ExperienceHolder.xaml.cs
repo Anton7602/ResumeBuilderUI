@@ -1,4 +1,5 @@
 ﻿using ResumeBuilderUI.Models;
+using ResumeBuilderUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,15 @@ namespace ResumeBuilderUI.UserControls
     /// </summary>
     public partial class ExperienceHolder : UserControl
     {
+
         #region Constructors
         public ExperienceHolder()
         {
             InitializeComponent();
         }
         #endregion
+
+
 
         #region UserControl Properies
         //ExperienceSource - Property for binding a Experience, shown in ExperienceHolder
@@ -84,5 +88,16 @@ namespace ResumeBuilderUI.UserControls
             }
         }
         #endregion
+
+        public event EventHandler AcceptChanges;
+        private void AcceptChangesButton_Click(object sender, RoutedEventArgs e)
+        {
+            AcceptChanges.Invoke(this, EventArgs.Empty);
+        }
+
+        private void Grid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ActiveMode = ActiveMode.Equals(ViewMode.ShowMode) ? ViewMode.EditMode : ViewMode.ShowMode;
+        }
     }
 }

@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Name="LanguageHolderControl">
     <ToggleButton Name="LanguageHolderToggle" Style="{StaticResource ListElementsStyle}" 
-                  IsChecked="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.IsSelected}">
+                  IsChecked="{Binding ElementName=LanguageHolderControl, Path=LanguageSource.IsSelected}" MouseRightButtonDown="LanguageHolderToggle_MouseRightButtonDown">
         <Grid Width="{Binding ElementName=LanguageHolderControl, Path=ActualWidth}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>

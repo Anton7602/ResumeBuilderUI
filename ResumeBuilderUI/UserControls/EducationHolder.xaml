@@ -12,7 +12,7 @@
         <BooleanToVisibilityConverter x:Key="boolToVisibility"/>
     </UserControl.Resources>
     <ToggleButton Name="EducationHolderToggle" Style="{StaticResource ListElementsStyle}" 
-                  IsChecked="{Binding ElementName=EducationHolderControl, Path=EducationSource.IsSelected}">
+                  IsChecked="{Binding ElementName=EducationHolderControl, Path=EducationSource.IsSelected}" MouseRightButtonDown="EducationHolderToggle_MouseRightButtonDown">
         <Grid HorizontalAlignment="Stretch" Width="{Binding ElementName=EducationHolderToggle, Path=ActualWidth}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

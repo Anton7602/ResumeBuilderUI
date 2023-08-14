@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace ResumeBuilderUI.Models
@@ -51,7 +52,7 @@ namespace ResumeBuilderUI.Models
                 OnPropertyChanged(nameof(EndDate));
             }
         }
-        public List<Experience> ExperiencesList { get; set; }
+        public ObservableCollection<Experience> ExperiencesList { get; set; }
         #endregion
 
         #region Constructors
@@ -60,7 +61,7 @@ namespace ResumeBuilderUI.Models
         /// </summary>
         public Employment()
         {
-            ExperiencesList = new List<Experience>();
+            ExperiencesList = new ObservableCollection<Experience>();
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace ResumeBuilderUI.Models
         /// </summary>
         public Employment(string EmploymentInfo)
         {
-            ExperiencesList = new List<Experience>();
+            ExperiencesList = new ObservableCollection<Experience>();
             string[] parts = EmploymentInfo.Split(" | ");
             Employer = parts[0];
             Title = parts[1];
@@ -87,7 +88,7 @@ namespace ResumeBuilderUI.Models
             StartDate = employment.StartDate;
             EndDate = employment.EndDate;
             IsSelected = false;
-            ExperiencesList = new List<Experience>(employment.ExperiencesList);
+            ExperiencesList = new ObservableCollection<Experience>(employment.ExperiencesList);
         }
         #endregion
 

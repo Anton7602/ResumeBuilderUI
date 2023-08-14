@@ -9,6 +9,7 @@
     <v:String x:Key="lang_Profile_Open">Open</v:String>
     <v:String x:Key="lang_Profile_Save">Save</v:String>
     <v:String x:Key="lang_Language">Language</v:String>
+    <v:String x:Key="lang_Languages">Languages</v:String>
     <v:String x:Key="lang_Language_LanguageName">Language</v:String>
     <v:String x:Key="lang_Language_LanguageName_Enter">Enter Language</v:String>
     <v:String x:Key="lang_Language_LanguageProficiency">Proficiency</v:String>
@@ -52,8 +53,8 @@
     <v:String x:Key="lang_Affiliation_Company_Enter">Enter company name</v:String>
     <v:String x:Key="lang_Affiliation_Description">Affiliation Description</v:String>
     <v:String x:Key="lang_Affiliation_Description_Enter">Enter Description</v:String>
-    <v:String x:Key="lang_Languages">Languages</v:String>
     <v:String x:Key="lang_BuildCV">Build CV</v:String>
+    <v:String x:Key="lang_Tools">Tools</v:String>
     <v:String x:Key="lang_User">User</v:String>
     <v:String x:Key="lang_Setting">Setting</v:String>
     <v:String x:Key="lang_Setting_AppLanguage">App Language</v:String>
