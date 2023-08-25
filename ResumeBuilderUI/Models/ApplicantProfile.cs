@@ -12,6 +12,7 @@ namespace ResumeBuilderUI.Models
     {
         #region Fields and Properties
         public long ID { get; set; }
+        public string? AvatarPath { get; set; }
         public string? Name { get; set; }
         public List<string> TitlesList { get; set; }
         public string Summary { get; set; }

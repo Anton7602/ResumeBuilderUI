@@ -108,7 +108,7 @@
             </ComboBox>
 
             <!--User Button-->
-            <ToggleButton Grid.Column="0" Grid.Row="0" Height="Auto" Width="Auto" Style="{StaticResource ControlToggleButtonStyle}"
+            <!--<ToggleButton Grid.Column="0" Grid.Row="0" Height="Auto" Width="Auto" Style="{StaticResource ControlToggleButtonStyle}"
                         Name="UserToggleButton" IsChecked="{Binding IsUserVisible}">
                 <StackPanel Orientation="Horizontal">
                     <Ellipse Width="35" Height="35" HorizontalAlignment="Center" Margin="15">
@@ -119,7 +119,7 @@
                     <TextBlock Text="{DynamicResource lang_User}" HorizontalAlignment="Left" VerticalAlignment="Center"
                             Name="UserButtonText" FontSize="16" Margin="12"/>
                 </StackPanel>
-            </ToggleButton>
+            </ToggleButton>-->
 
             <!--Navigation Bar-->
             <ListBox x:Name="NavigationMenuListBox" Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" Background="Transparent"

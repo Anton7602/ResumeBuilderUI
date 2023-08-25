@@ -1,4 +1,5 @@
 ﻿using ResumeBuilderUI.Models;
+using System.Windows.Media.Imaging;
 
 namespace ResumeBuilderUI.ViewModels
 {

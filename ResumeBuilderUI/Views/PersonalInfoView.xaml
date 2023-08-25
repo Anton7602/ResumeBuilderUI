@@ -12,20 +12,24 @@
         <vm:PersonalInfoViewModel/>
     </UserControl.DataContext>
     <Border CornerRadius="10" Background="{StaticResource PrimaryColorBrush}">
-        <Grid VerticalAlignment="Center" ShowGridLines="True">
+        <Grid VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical"  HorizontalAlignment="Left" Margin="30 0 0 0" Grid.Column="0">
+            <StackPanel Orientation="Vertical"  HorizontalAlignment="Center" Margin="30 0 0 0" Grid.Column="0">
+                <Ellipse Name="AvatarImage" Width="100" Height="100" HorizontalAlignment="Center" Margin="15" MouseRightButtonDown="Ellipse_MouseDown">
+                    <Ellipse.Fill>
+                        <ImageBrush x:Name="AvatarImageBrush"/>
+                    </Ellipse.Fill>
+                </Ellipse>
                 <uc:TextField Caption="{DynamicResource lang_Name}" Hint="{DynamicResource lang_Name_Enter}" 
                               Text="{Binding ActiveProfile.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
                 <uc:TextField Caption="{DynamicResource lang_Title}" Hint="{DynamicResource lang_Title_Enter}" 
                               Text="{Binding ActiveProfile.TitlesList[0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
-            </StackPanel>
-            <uc:TextField TextWrap="Wrap" TextHeight="65" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                <uc:TextField TextWrap="Wrap" TextHeight="65" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"
                           Caption="{DynamicResource lang_Summary}" Hint="{DynamicResource lang_Summary_Enter}"
                           Text="{Binding ActiveProfile.Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>

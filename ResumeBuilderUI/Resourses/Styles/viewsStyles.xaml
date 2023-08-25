@@ -249,10 +249,10 @@
                          Value="True">
                 <Setter Property="ContentTemplate" Value="{StaticResource SettingViewTemplate}"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding ElementName=UserToggleButton, Path=IsChecked}"
+            <!--<DataTrigger Binding="{Binding ElementName=UserToggleButton, Path=IsChecked}"
                          Value="True">
                 <Setter Property="ContentTemplate" Value="{StaticResource UserViewTemplate}"/>
-            </DataTrigger>
+            </DataTrigger>-->
         </Style.Triggers>
     </Style>
 

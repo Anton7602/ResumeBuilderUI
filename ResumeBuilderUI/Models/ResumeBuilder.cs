@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Resources;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using MahApps.Metro.IconPacks;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -155,6 +157,7 @@ namespace ResumeBuilderUI.Models
         {
             QuestPDF.Settings.License = LicenseType.Community;
             CultureInfo.CurrentCulture = App.Language;
+            ResourceManager resourseManager = new ResourceManager(typeof(Properties.Resources));
             var resume = Document.Create(container =>
             {
                 _ = container.Page(page =>
@@ -163,12 +166,12 @@ namespace ResumeBuilderUI.Models
                     page.Size(PageSizes.A4);
                     page.Margin(0, Unit.Centimetre);
                     page.PageColor(Colors.White);
-                    page.DefaultTextStyle(x => x.FontSize(20).FontFamily(Fonts.Calibri));
+                    page.DefaultTextStyle(x => x.FontSize(8).FontFamily(Fonts.Calibri));
 
                     page.Content().Row(row =>
                     {
                         //Left Row
-                        row.ConstantItem(250)
+                        row.ConstantItem(240)
                         .Background("002256")
                         .ExtendVertical()
                         .Padding(10)
@@ -184,13 +187,13 @@ namespace ResumeBuilderUI.Models
                                     columns.RelativeColumn();
                                 });
                                 //Avatar
-                                //table.Cell().Row(1).Column(1).Element(LeftColumnMain).Image(pathToResoursesFolder + "Avatar Circle.png");
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Image(Properties.Resources.Avatar);
                                 //Name and Title
                                 table.Cell().Row(1).Column(2).Element(LeftColumnMain).Text(text =>
                                 {
                                     text.DefaultTextStyle(x => x.FontSize(20).FontColor(textColorCVLight));
-                                    text.Line(Name).ExtraBold();
-                                    text.Line(Title).FontSize(18);
+                                    text.Line(Name).ExtraBold().LineHeight(0.8f);
+                                    text.Line(Title).FontSize(18).LineHeight(0.8f);
                                 });
                             });
                             //Summary
@@ -214,8 +217,8 @@ namespace ResumeBuilderUI.Models
                                     columns.ConstantColumn(100);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Tools"]).FontColor(textColorCVLight).FontSize(16);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Tools"]).FontColor(textColorCVLight).FontSize(16).LineHeight(0.6f);
+                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textColorCVLight);
                             });
                             List<string> skillsNames;
                             foreach (Skillset toolsCategoty in RelevantSkillsets)
@@ -244,16 +247,29 @@ namespace ResumeBuilderUI.Models
                                     columns.ConstantColumn(100);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Languages"]).FontColor(textColorCVLight).FontSize(16);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Languages"]).FontColor(textColorCVLight).FontSize(16).LineHeight(0.6f);
+                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textColorCVLight);
                             });
                             foreach (Language language in LanguagesList)
                             {
                                 column.Item().Text(text =>
                                 {
                                     text.DefaultTextStyle(x => x.FontColor(textColorCVLight).FontSize(11));
-                                    //text.Element().PaddingBottom(-6).Height(20).Image(pathToResoursesFolder + language.LanguageName + ".png").FitHeight();
-                                    text.Span("   " + language.LanguageName +" - "+ language.Proficiency);
+                                    try
+                                    {
+                                        foreach (System.Collections.DictionaryEntry entry in resourseManager.GetResourceSet(System.Globalization.CultureInfo.CurrentCulture, true, true))
+                                        {
+                                            if (entry.Key.ToString().ToLower().Equals(language.LanguageName.ToLower()))
+                                            {
+                                                text.Element().PaddingBottom(-6).Height(20).Image((byte[])entry.Value).FitHeight();
+                                            }
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        text.Span(language.LanguageName + " ");
+                                    }
+                                    text.Span("   " + App.Current.Resources["lang_Language_"+language.LanguageName]+" - "+ language.Proficiency).LineHeight(0.6f);
                                 });
                                 column.Item().Text("").FontSize(10);
                             }
@@ -265,8 +281,8 @@ namespace ResumeBuilderUI.Models
                                     columns.ConstantColumn(75);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Contacts"]).FontColor(textColorCVLight).FontSize(16);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Contacts"]).FontColor(textColorCVLight).FontSize(16).LineHeight(0.6f);
+                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textColorCVLight);
                             });
                             foreach (Contact contactOption in ContactsList)
                             {
@@ -275,7 +291,13 @@ namespace ResumeBuilderUI.Models
                                     text.DefaultTextStyle(x => x.FontColor(textColorCVLight).FontSize(11));
                                     try
                                     {
-                                        //text.Element().PaddingBottom(-6).Height(20).Image(pathToResoursesFolder + contactOption.ContactType + ".png").FitHeight();
+                                        foreach (System.Collections.DictionaryEntry entry in resourseManager.GetResourceSet(System.Globalization.CultureInfo.CurrentCulture, true, true))
+                                        {
+                                            if (entry.Key.ToString().ToLower().Equals(contactOption.ContactType.ToLower()))
+                                            {
+                                                text.Element().PaddingBottom(-6).Height(18).Image((byte[])entry.Value).FitHeight();
+                                            }
+                                        }
                                     }
                                     catch (Exception ex)
                                     {
@@ -299,31 +321,33 @@ namespace ResumeBuilderUI.Models
                                     columns.ConstantColumn(135);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Experience"]).FontColor(textCVAccentColor).FontSize(16);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(20).LineHorizontal(1).LineColor(textCVAccentColor);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Experience"]).FontColor(textCVAccentColor).FontSize(16).LineHeight(0.6f);
+                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textCVAccentColor);
                             });
                             //Experiences
                             foreach (string employer in GetEmployersList(EmploymentsList))
                             {
-                                column.Item().AlignRight().PaddingHorizontal(10).Text(employer).FontColor(textCVAccentColor).FontSize(13);
+                                column.Item().AlignRight().PaddingHorizontal(10).Text(employer).FontColor(textCVAccentColor).FontSize(13).LineHeight(0.8f);
                                 column.Item().AlignRight().PaddingHorizontal(10)
                                 .Text(GetEmployerStartDate(EmploymentsList, employer).ToString("Y") + " - " + GetEmployerEndDate(EmploymentsList, employer).ToString("Y"))
-                                .FontColor("282828").FontSize(9);
+                                .FontColor("282828").FontSize(8).LineHeight(0.6f);
                                 foreach (Employment position in EmploymentsList)
                                 {
                                     if (position.Employer == employer)
                                     {
-                                        column.Item().AlignLeft().PaddingHorizontal(5).Text(position.Title).FontColor(textCVAccentColor).FontSize(12);
+                                        column.Item().AlignLeft().PaddingHorizontal(5).Text(position.Title).FontColor(textCVAccentColor).FontSize(12).LineHeight(0.8f);
                                         column.Item().AlignLeft().PaddingHorizontal(5)
                                         .Text(position.StartDate.ToString("Y") + " - " + position.EndDate.ToString("Y"))
-                                        .FontColor("282828").FontSize(9);
+                                        .FontColor("282828").FontSize(9).LineHeight(0.6f);
+                                        column.Item().AlignLeft().PaddingHorizontal(5).Text("").FontSize(4);
                                         foreach (Experience experience in position.ExperiencesList)
                                         {
                                             if (RelevantSkills.Contains(new Skill(experience.Tag)) || (experience.Tag.Equals("Core")))
                                             {
-                                                column.Item().AlignLeft().PaddingHorizontal(15).Text("• " + experience.Description).FontSize(10).FontColor("000000");
+                                                column.Item().AlignLeft().PaddingHorizontal(15).Text("• " + experience.Description).FontSize(10).FontColor("000000").LineHeight(1f);
                                             }
                                         }
+                                        column.Item().AlignLeft().PaddingHorizontal(5).Text("").FontSize(4);
                                     }
                                 }
                             }
@@ -336,19 +360,19 @@ namespace ResumeBuilderUI.Models
                                     columns.ConstantColumn(110);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Education"]).FontColor(textCVAccentColor).FontSize(16);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(20).LineHorizontal(1).LineColor(textCVAccentColor);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Education"]).FontColor(textCVAccentColor).FontSize(16).LineHeight(0.6f);
+                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textCVAccentColor);
                             });
                             foreach(Education education in GetEducationsList(EducationsList))
                             {
-                                column.Item().AlignRight().PaddingHorizontal(10).Text(education.Institution).FontColor(textCVAccentColor).FontSize(13);
-                                column.Item().AlignRight().PaddingHorizontal(10).Text(education.StartDate.ToString("Y", App.Language) + " - " + 
-                                    education.EndDate.ToString("Y", App.Language)).FontColor("282828").FontSize(9);
+                                column.Item().AlignRight().PaddingHorizontal(10).Text(education.Institution).FontColor(textCVAccentColor).FontSize(13).LineHeight(0.8f);
+                                column.Item().AlignRight().PaddingHorizontal(10).Text(education.StartDate.ToString("Y", App.Language) + " - " +
+                                    education.EndDate.ToString("Y", App.Language)).FontColor("282828").FontSize(9).LineHeight(0.6f);
                                 column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
                                 {
                                     text.DefaultTextStyle(x => x.FontSize(12).FontColor(textCVAccentColor));
                                     text.Span(education.Degree).ExtraBold();
-                                    text.Span(" - "+ education.Program);
+                                    text.Span(" - " + education.Program);
                                 });
                                 column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
                                 {
@@ -359,8 +383,8 @@ namespace ResumeBuilderUI.Models
                                         text.Span(" - Diploma with Honours").FontColor("FF0000");
                                     }
                                 });
-                                column.Item().AlignLeft().PaddingHorizontal(5).Text(education.Description).FontColor("000000").FontSize(11);
-                                column.Item().Text("").FontSize(10);
+                                column.Item().AlignLeft().PaddingHorizontal(5).Text(education.Description).FontColor("000000").FontSize(10);
+                                column.Item().Text("").FontSize(2);
                             }
                             // Professional Affiliations
                             column.Item().Table(table =>
@@ -370,12 +394,12 @@ namespace ResumeBuilderUI.Models
                                     columns.ConstantColumn(190);
                                     columns.RelativeColumn();
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Affiliations"]).FontColor(textCVAccentColor).FontSize(16);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(20).LineHorizontal(1).LineColor(textCVAccentColor);
+                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Affiliations"]).FontColor(textCVAccentColor).FontSize(16).LineHeight(0.6f);
+                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textCVAccentColor);
                             });
                             foreach (ProffessionalAffiliation affiliation in AffiliationsList)
                             {
-                                column.Item().PaddingHorizontal(5).Text(affiliation.ToString()).FontSize(10).FontColor("000000");
+                                column.Item().PaddingHorizontal(5).Text(affiliation.ToString()).FontSize(10).FontColor("000000").LineHeight(1f);
                             }
                         });
                     });
