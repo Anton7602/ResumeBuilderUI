@@ -14,6 +14,12 @@
                 <ListBox Name="SkillHolderListBox"  ItemContainerStyle="{StaticResource SkillItemContainerStyle}" BorderThickness="0"
                          Width="{Binding ElementName=SkillWidthRegulatorBorder, Path=ActualWidth}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          Background="#F6F6F6">
+                    <!--Inner ListBox Scrollviewer Remover-->
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter/>
+                        </ControlTemplate>
+                    </ListBox.Template>
                     <!--Listbox border parameters-->
                     <ListBox.Resources>
                         <Style TargetType="Border">

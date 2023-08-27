@@ -22,6 +22,11 @@
                                       AcceptCommand="{Binding SubmitNewEmploymentCommand}" Background="Transparent" Margin="0 4 0 0"/>
                     <ListBox Name="EmploymentListBox" ItemsSource="{Binding ActiveProfile.EmploymentsList}" BorderThickness="0" HorizontalAlignment="Center"
                              Background="Transparent" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <ItemsPresenter/>
+                            </ControlTemplate>
+                        </ListBox.Template>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                     <uc:EmploymentHolder EmploymentSource="{Binding}" HorizontalAlignment="Center" ActiveMode="ShowMode"

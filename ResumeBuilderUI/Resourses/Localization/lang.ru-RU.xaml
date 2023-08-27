@@ -18,6 +18,10 @@
     <v:String x:Key="lang_Language_Russian">Русский</v:String>
     <v:String x:Key="lang_PersonalInfo">Персональные данные</v:String>
     <v:String x:Key="lang_Skills">Навыки</v:String>
+    <v:String x:Key="lang_Skills_Tooltip_None">Навык не представлен в выбранных опытах работы</v:String>
+    <v:String x:Key="lang_Skills_Tooltip_Singular">Навык представлен в 1 выбранном опыте работы</v:String>
+    <v:String x:Key="lang_Skills_Tooltip_Multiple_Start">Навык представлен в</v:String>
+    <v:String x:Key="lang_Skills_Tooltip_Multiple_End">выбранных опытах работы</v:String>
     <v:String x:Key="lang_Experience">Опыт работы</v:String>
     <v:String x:Key="lang_Experience_Tag">Метка</v:String>
     <v:String x:Key="lang_Experience_Tag_Enter">Укажите метку навыка</v:String>

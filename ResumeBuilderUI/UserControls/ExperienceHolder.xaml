@@ -25,7 +25,7 @@
         <!--Description-->
         <!--Show-->
         <TextBlock Name="DescriptionTextBlock" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Description}" 
-                   Grid.Column="1" FontSize="13"/>
+                   Grid.Column="1" FontSize="13" TextWrapping="Wrap"/>
         <!--Edit-->
         <uc:TextField x:Name="DescriptionTextField" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Description, Mode=TwoWay}"
                           Grid.Column="1" Margin="5" Visibility="Collapsed" Background="Transparent"

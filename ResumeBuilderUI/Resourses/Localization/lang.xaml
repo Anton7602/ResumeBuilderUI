@@ -18,6 +18,10 @@
     <v:String x:Key="lang_Language_Russian">Russian</v:String>
     <v:String x:Key="lang_PersonalInfo">Personal Info</v:String>
     <v:String x:Key="lang_Skills">Skills</v:String>
+    <v:String x:Key="lang_Skills_Tooltip_None">Skill isn't present in any of the selected employments</v:String>
+    <v:String x:Key="lang_Skills_Tooltip_Singular">Skill is present in 1 selected employment:</v:String>
+    <v:String x:Key="lang_Skills_Tooltip_Multiple_Start">Skill is present in</v:String>
+    <v:String x:Key="lang_Skills_Tooltip_Multiple_End">selected employments:</v:String>
     <v:String x:Key="lang_Experience">Work Experience</v:String>
     <v:String x:Key="lang_Experience_Tag">Tag</v:String>
     <v:String x:Key="lang_Experience_Tag_Enter">Enter experience tag</v:String>

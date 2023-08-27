@@ -7,6 +7,7 @@ using MahApps.Metro.IconPacks;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System.Linq;
 
 namespace ResumeBuilderUI.Models
 {
@@ -224,7 +225,7 @@ namespace ResumeBuilderUI.Models
                             foreach (Skillset toolsCategoty in RelevantSkillsets)
                             {
                                 skillsNames = new List<string>();
-                                foreach(Skill skill in toolsCategoty.SkillsList)
+                                foreach(Skill skill in toolsCategoty.SkillsList.Reverse())
                                 {
                                     skillsNames.Add(skill.SkillName);
                                 }

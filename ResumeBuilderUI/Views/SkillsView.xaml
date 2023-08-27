@@ -26,6 +26,12 @@
                     <!--ListBox for skillsets-->
                     <ListBox ItemsSource="{Binding ActiveProfile.SkillsetsList}" BorderThickness="0" HorizontalAlignment="Center"
                              ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}" Name="SkillsetListBox" Background="{StaticResource PrimaryColorBrush}">
+                        <!--Inner ListBox Scrollviewer Remover-->
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <ItemsPresenter/>
+                            </ControlTemplate>
+                        </ListBox.Template>
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel HorizontalAlignment="Center"/>

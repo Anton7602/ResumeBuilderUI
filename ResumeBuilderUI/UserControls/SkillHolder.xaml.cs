@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ResumeBuilderUI.UserControls
 {
@@ -44,19 +45,10 @@ namespace ResumeBuilderUI.UserControls
         }
         private static void OnSkillsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ToggleButton tempToggleButton;
-            Binding binding;
             (d as SkillHolder).SkillsSource.CollectionChanged += (d as SkillHolder).SkillsList_CollectionChanged;
             foreach(Skill skill in (d as SkillHolder).SkillsSource)
             {
-                binding = new Binding();
-                binding.Source = skill;
-                binding.Path = new PropertyPath("IsSelected");
-                tempToggleButton = new ToggleButton();
-                tempToggleButton.Content= skill.SkillName;
-                tempToggleButton.Style = App.Current.Resources["ListElementsStyle"] as Style;
-                tempToggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
-                (d as SkillHolder).ElementsToggleButtons.Add(tempToggleButton);
+                (d as SkillHolder).ElementsToggleButtons.Add((d as SkillHolder).GenerateSkillToggleButton(skill));
             }
             (d as SkillHolder).collectionContainer.Collection = (d as SkillHolder).ElementsToggleButtons;
         }
@@ -68,18 +60,9 @@ namespace ResumeBuilderUI.UserControls
         {
             if ((sender as ObservableCollection<Skill>).Equals(SkillsSource))
             {
-                ToggleButton tempToggleButton;
-                Binding binding;
                 foreach (Skill skill in e.NewItems)
                 {
-                    binding = new Binding();
-                    binding.Source = skill;
-                    binding.Path = new PropertyPath("IsSelected");
-                    tempToggleButton = new ToggleButton();
-                    tempToggleButton.Content = skill.SkillName;
-                    tempToggleButton.Style = App.Current.Resources["ListElementsStyle"] as Style;
-                    tempToggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
-                    ElementsToggleButtons.Insert(0, tempToggleButton);
+                    ElementsToggleButtons.Insert(0, GenerateSkillToggleButton(skill));
                 }
                 collectionContainer.Collection = ElementsToggleButtons;
             }
@@ -95,6 +78,49 @@ namespace ResumeBuilderUI.UserControls
         private static void OnAcceptCommandChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             (d as SkillHolder).AddNewSkillButton.AcceptCommand = (d as SkillHolder).AcceptCommand;
+        }
+        #endregion
+
+        #region Private Methods
+        private ToggleButton GenerateSkillToggleButton(Skill skill)
+        {
+            ToggleButton tempToggleButton = new ToggleButton();
+            Binding binding = new Binding();
+            binding.Source = skill;
+            binding.Path = new PropertyPath("IsSelected");
+            tempToggleButton.Content = skill.SkillName;
+            tempToggleButton.Style = App.Current.Resources["ListElementsStyle"] as Style;
+            tempToggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
+            tempToggleButton.Foreground = Brushes.Red;
+            //Generating Tooltip
+            string tooltip = string.Empty;
+            int counter = 0;
+            foreach (Employment employment in App.ActiveProfile.EmploymentsList)
+            {
+                foreach (Experience experience in employment.ExperiencesList)
+                {
+                    if (skill.SkillName.Equals(experience.Tag) && employment.IsSelected)
+                    {
+                        tempToggleButton.Foreground = App.Current.Resources["PrimaryTextColor"] as Brush;
+                        tooltip += employment.Employer + " " + employment.Title + "\n";
+                        counter++;
+                    }
+                }
+            }
+            switch(counter)
+            {
+                case 0:
+                    tempToggleButton.ToolTip = App.Current.Resources["lang_Skills_Tooltip_None"] as string;
+                    break;
+                case 1:
+                    tempToggleButton.ToolTip = (App.Current.Resources["lang_Skills_Tooltip_Singular"] as string) + "\n" + tooltip;
+                    break;
+                default:
+                    tempToggleButton.ToolTip = (App.Current.Resources["lang_Skills_Tooltip_Multiple_Start"] as string) + " " + counter+ " " +
+                        (App.Current.Resources["lang_Skills_Tooltip_Multiple_End"] as string) + "\n" + tooltip;
+                    break;
+            }
+            return tempToggleButton;
         }
         #endregion
     }

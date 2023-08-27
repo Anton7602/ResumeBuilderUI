@@ -54,6 +54,11 @@
                 <ListBox Name="ExperiencesListBox"  ItemsSource="{Binding ElementName=EmploymentHolderControl, Path=EmploymentSource.ExperiencesList}" 
                          ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}"  BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          Visibility="{Binding ElementName=ExperiencesToggleButton, Path=IsChecked, Converter={StaticResource boolToVisibility}}" Margin="0 10">
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter/>
+                        </ControlTemplate>
+                    </ListBox.Template>
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel HorizontalAlignment="Left"/>
