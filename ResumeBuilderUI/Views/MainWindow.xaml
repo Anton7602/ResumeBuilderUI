@@ -20,8 +20,8 @@
         <!--Defenition of NavBar elements-->
         <x:Array x:Key="NavigationMenuItems" Type="v:String">
             <v:String>PersonalInfo</v:String>
-            <v:String>Skills</v:String>
             <v:String>Experience</v:String>
+            <v:String>Skills</v:String>
             <v:String>Education</v:String>
             <v:String>Contacts</v:String>
             <v:String>Affiliations</v:String>
