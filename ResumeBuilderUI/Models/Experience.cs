@@ -10,7 +10,7 @@ namespace ResumeBuilderUI.Models
     public class Experience: ResumeElementBase
     {
         #region Fields and Properties
-        public enum Priorities {low, medium, high }
+        public enum Priorities {Low, Medium, High }
         private string _tag = string.Empty;
         public string Tag
         {
@@ -31,7 +31,16 @@ namespace ResumeBuilderUI.Models
                 OnPropertyChanged(nameof(Description));
             }
         }
-        public Priorities Priority { get; set; }
+        private Priorities _priority = Priorities.Low;
+        public Priorities Priority
+        {
+            get { return _priority; }
+            set
+            {
+                _priority = value;
+                OnPropertyChanged(nameof(Priority));
+            }
+        }
         #endregion
 
         #region Constructors
@@ -39,7 +48,7 @@ namespace ResumeBuilderUI.Models
         {
             Tag= string.Empty;
             Description= string.Empty;
-            Priority = Priorities.low;
+            Priority = Priorities.Low;
         }
 
         public Experience(string experienceTag, string experienceDescription, Priorities experiencePriority)
@@ -53,7 +62,7 @@ namespace ResumeBuilderUI.Models
         {
             Tag = experienceTag;
             Description = experienceDescription;
-            Priority = Priorities.low;
+            Priority = Priorities.Low;
         }
 
         public Experience(Experience experience)

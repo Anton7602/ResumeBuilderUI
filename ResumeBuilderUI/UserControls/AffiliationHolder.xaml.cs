@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace ResumeBuilderUI.UserControls
@@ -98,6 +99,11 @@ namespace ResumeBuilderUI.UserControls
         private void AffiliationHolderToggle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             ActiveMode = ActiveMode.Equals(ViewMode.ShowMode) ? ViewMode.EditMode : ViewMode.ShowMode;
+        }
+
+        private void AffiliationHolderToggle_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            App.ActiveProfile.AffiliationsList.Remove((sender as AffiliationHolder).AffiliationSource);
         }
     }
 }

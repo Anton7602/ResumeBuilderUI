@@ -34,14 +34,20 @@ namespace ResumeBuilderUI.Views
             }
 
             DirectoryInfo d = new DirectoryInfo(@"profiles");
-            FileInfo[] filesArray = d.GetFiles("*.cvp");
-            List<string> profileNames = new List<string>();
-            foreach (FileInfo file in filesArray)
+            if (d.Exists)
             {
-                profileNames.Add(file.ToString().Substring(file.ToString().LastIndexOf(@"\") + 1));
+                FileInfo[] filesArray = d.GetFiles("*.cvp");
+                List<string> profileNames = new List<string>();
+                foreach (FileInfo file in filesArray)
+                {
+                    profileNames.Add(file.ToString().Substring(file.ToString().LastIndexOf(@"\") + 1));
+                }
+                ProfileSelectionCombobox.ItemsSource = profileNames;
             }
-            ProfileSelectionCombobox.ItemsSource = profileNames;
-
+            else
+            {
+                Directory.CreateDirectory(d.ToString());
+            }
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)

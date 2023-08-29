@@ -60,11 +60,31 @@ namespace ResumeBuilderUI.UserControls
         {
             if ((sender as ObservableCollection<Skill>).Equals(SkillsSource))
             {
-                foreach (Skill skill in e.NewItems)
+                if (e.NewItems != null)
                 {
-                    ElementsToggleButtons.Insert(0, GenerateSkillToggleButton(skill));
+                    foreach (Skill skill in e.NewItems)
+                    {
+                        ElementsToggleButtons.Insert(0, GenerateSkillToggleButton(skill));
+                    }
+                    collectionContainer.Collection = ElementsToggleButtons;
                 }
-                collectionContainer.Collection = ElementsToggleButtons;
+                if (e.OldItems != null )
+                {
+                    foreach (Skill skill in e.OldItems)
+                    {
+                        ToggleButton toggleButtonToRemove = new ToggleButton();
+                        foreach (ToggleButton toggleButton in ElementsToggleButtons)
+                        {
+                            if(toggleButton.Content.Equals(skill.SkillName))
+                            {
+                                toggleButtonToRemove = toggleButton;
+                                break;
+                            }
+                        }
+                        ElementsToggleButtons.Remove(toggleButtonToRemove);
+                    }
+                    collectionContainer.Collection = ElementsToggleButtons;
+                }
             }
         }
         //AcceptCommand - Property to bind a ViewModel command, that triggers upon pressing accept button of a holder
@@ -92,6 +112,7 @@ namespace ResumeBuilderUI.UserControls
             tempToggleButton.Style = App.Current.Resources["ListElementsStyle"] as Style;
             tempToggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
             tempToggleButton.Foreground = Brushes.Red;
+            tempToggleButton.MouseDoubleClick += ToggleButton_MouseDoubleClick;
             //Generating Tooltip
             string tooltip = string.Empty;
             int counter = 0;
@@ -121,6 +142,27 @@ namespace ResumeBuilderUI.UserControls
                     break;
             }
             return tempToggleButton;
+        }
+
+        private void ToggleButton_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Skill skillToRemove = new Skill(string.Empty);
+            foreach (Skillset skillset in App.ActiveProfile.SkillsetsList)
+            {
+                foreach (Skill skill in skillset.SkillsList)
+                {
+                    if (skill.SkillName.Equals((sender as ToggleButton).Content))
+                    {
+                        skillToRemove = skill;
+                        break;
+                    }
+                }
+                if (!skillToRemove.SkillName.Equals(string.Empty))
+                {
+                    skillset.SkillsList.Remove(skillToRemove);
+                    break;
+                }
+            }
         }
         #endregion
     }

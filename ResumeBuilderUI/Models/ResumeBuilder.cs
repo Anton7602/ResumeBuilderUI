@@ -8,6 +8,9 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using System.Linq;
+using QuestPDF.Drawing.Exceptions;
+using System.Net.Http.Headers;
+using System.Collections.ObjectModel;
 
 namespace ResumeBuilderUI.Models
 {
@@ -28,6 +31,7 @@ namespace ResumeBuilderUI.Models
         public List<Skill> RelevantSkills { get; set; }
         public List<Language> LanguagesList { get; private set; }
         public List<Employment> EmploymentsList { get; set; }
+        public List<Experience> ExperiencesList { get; set; }
         public List<Education> EducationsList { get; set; }
         public List<Contact> ContactsList { get; set; }
         public List<ProffessionalAffiliation> AffiliationsList { get; set; }
@@ -47,6 +51,7 @@ namespace ResumeBuilderUI.Models
             EmploymentsList = employmentsList;
             EducationsList = educationList;
             ContactsList = contactsList;
+            ExperiencesList = FormSortedListOfRelevantExperiences();
         }
         static IContainer LeftColumnMain(IContainer container)
         {
@@ -67,6 +72,37 @@ namespace ResumeBuilderUI.Models
         {
             educations = Education.Sort(educations);
             return educations;
+        }
+
+        private List<Skillset> GetToolsList(List<Skillset> tools)
+        {
+            Dictionary<Skillset, int> toSortDictionary = new Dictionary<Skillset, int>();
+            List<Skillset> toShowSkillsets = new List<Skillset>();
+            int counter;
+            foreach (Skillset skillset in tools)
+            {
+                counter = 0;
+                foreach(Skill skill in skillset.SkillsList)
+                {
+                    if(skill.IsSelected)
+                    {
+                        counter++;
+                    }
+                }
+                toSortDictionary.Add(skillset, counter);
+            }
+            var sortedDictionary = toSortDictionary.OrderByDescending(x => x.Value);
+            counter = 0;
+            foreach(var skillsetDicitionaryEntry in sortedDictionary)
+            {
+                if(counter<4)
+                {
+                    toShowSkillsets.Add(skillsetDicitionaryEntry.Key);
+                }
+                counter++;
+            }
+            toShowSkillsets = toShowSkillsets.OrderByDescending(x => x.SkillsList.Count).ToList();
+            return toShowSkillsets;
         }
 
         private List<string> GetEmployersList(List<Employment> employments)
@@ -109,6 +145,62 @@ namespace ResumeBuilderUI.Models
             return endDate;
         }
 
+        private List<Experience> FormSortedListOfRelevantExperiences()
+        {
+            List<Employment> employmentsWithRelevantExperiences = new List<Employment>();
+            List<Experience> relevantExperiences = new List<Experience>();
+            int counter = 0;
+            foreach(Employment employment in EmploymentsList)
+            {
+                employmentsWithRelevantExperiences.Add(new Employment(employment));
+                employmentsWithRelevantExperiences.Last().ExperiencesList.Clear();
+                foreach (Experience experience in employment.ExperiencesList)
+                {
+                    foreach (Skill relevantSkill in RelevantSkills)
+                    {
+                        if (experience.Tag.Equals(relevantSkill.SkillName))
+                        {
+                            employmentsWithRelevantExperiences.Last().ExperiencesList.Add(experience);
+                            counter++;
+                        }
+                    }
+                }
+                List<Experience> sortedExperiences = employmentsWithRelevantExperiences.Last().ExperiencesList.OrderByDescending(x => (int)x.Priority).ToList();
+                employmentsWithRelevantExperiences.Last().ExperiencesList.Clear();
+                foreach(Experience experience in sortedExperiences)
+                {
+                    employmentsWithRelevantExperiences.Last().ExperiencesList.Add(experience);
+                }
+            }
+            int pointer = 0;
+            for(int i=0; i<=counter; i++)
+            {
+                if (employmentsWithRelevantExperiences[pointer].ExperiencesList.Count>0)
+                {
+                    relevantExperiences.Add(employmentsWithRelevantExperiences[pointer].ExperiencesList.First());
+                    employmentsWithRelevantExperiences[pointer].ExperiencesList.RemoveAt(0);
+                }
+                pointer++;
+                if (pointer>employmentsWithRelevantExperiences.Count-1)
+                {
+                    pointer = 0;
+                }
+            }
+            if (relevantExperiences.Count<10)
+            {
+                foreach (Employment employment in EmploymentsList)
+                {
+                    foreach (Experience experience in employment.ExperiencesList)
+                    {
+                        if (experience.Tag.Equals("Core"))
+                        {
+                            relevantExperiences.Add(experience);
+                        }
+                    }
+                }
+            }
+            return relevantExperiences;
+        }
         //Adds to a RelevantExperience of each employment Experiences that are unique to theese employments
         private List<Experience> FindUniqueRelevantExperience(Employment employment)
         {
@@ -156,257 +248,273 @@ namespace ResumeBuilderUI.Models
 
         public void BuildResume(string pathToOutputGeneratedResume)
         {
+            bool isExeedingOnePage;
             QuestPDF.Settings.License = LicenseType.Community;
             CultureInfo.CurrentCulture = App.Language;
             ResourceManager resourseManager = new ResourceManager(typeof(Properties.Resources));
-            var resume = Document.Create(container =>
+            do
             {
-                _ = container.Page(page =>
+                isExeedingOnePage = false;
+                var resume = Document.Create(container =>
                 {
-                    //Page Settings
-                    page.Size(PageSizes.A4);
-                    page.Margin(0, Unit.Centimetre);
-                    page.PageColor(Colors.White);
-                    page.DefaultTextStyle(x => x.FontSize(8).FontFamily(Fonts.Calibri));
-
-                    page.Content().Row(row =>
+                    _ = container.Page(page =>
                     {
-                        //Left Row
-                        row.ConstantItem(240)
-                        .Background("002256")
-                        .ExtendVertical()
-                        .Padding(10)
-                        .ShowOnce()
-                        .Column(column =>
+                        //Page Settings
+                        page.Size(PageSizes.A4);
+                        page.Margin(0, Unit.Centimetre);
+                        page.PageColor(Colors.White);
+                        page.DefaultTextStyle(x => x.FontSize(8).FontFamily(Fonts.Calibri));
+
+                        page.Content().Row(row =>
                         {
-                            //Avatar, Name and Title
-                            column.Item().Table(table =>
+                            //Left Row
+                            row.ConstantItem(240)
+                            .Background("002256")
+                            .ExtendVertical()
+                            .Padding(10)
+                            .ShowOnce()
+                            .Column(column =>
                             {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.RelativeColumn();
-                                    columns.RelativeColumn();
-                                });
-                                //Avatar
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Image(Properties.Resources.Avatar);
-                                //Name and Title
-                                table.Cell().Row(1).Column(2).Element(LeftColumnMain).Text(text =>
-                                {
-                                    text.DefaultTextStyle(x => x.FontSize(20).FontColor(textColorCVLight));
-                                    text.Line(Name).ExtraBold().LineHeight(0.8f);
-                                    text.Line(Title).FontSize(18).LineHeight(0.8f);
-                                });
-                            });
-                            //Summary
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.ConstantColumn(100);
-                                    columns.RelativeColumn();
-                                });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Summary"]).FontColor(textColorCVLight).FontSize(16);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
-                            });
-                            column.Item().Text(Summary)
-                            .FontColor(textColorCVLight).FontSize(11).Light();
-                            //Tools
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.ConstantColumn(100);
-                                    columns.RelativeColumn();
-                                });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Tools"]).FontColor(textColorCVLight).FontSize(16).LineHeight(0.6f);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textColorCVLight);
-                            });
-                            List<string> skillsNames;
-                            foreach (Skillset toolsCategoty in RelevantSkillsets)
-                            {
-                                skillsNames = new List<string>();
-                                foreach(Skill skill in toolsCategoty.SkillsList.Reverse())
-                                {
-                                    skillsNames.Add(skill.SkillName);
-                                }
+                                //Avatar, Name and Title----------------------------------------------------------------------------------------------------------------------------------------------------
                                 column.Item().Table(table =>
                                 {
                                     table.ColumnsDefinition(columns =>
                                     {
                                         columns.RelativeColumn();
+                                        columns.RelativeColumn();
                                     });
-                                    table.Cell().Row(1).Column(1).Element(ToolsBody).AlignCenter().Text(toolsCategoty.MainSkill).FontSize(14).FontColor(textColorCVLight).ExtraBold();
-                                    table.Cell().Row(2).Column(1).Element(ToolsBody).AlignLeft().Text(String.Join(", ",skillsNames)).FontSize(11).FontColor(textColorCVLight);
-                                });
-                                column.Item().Text("").FontSize(5);
-                            }
-                            //Languages
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.ConstantColumn(100);
-                                    columns.RelativeColumn();
-                                });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Languages"]).FontColor(textColorCVLight).FontSize(16).LineHeight(0.6f);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textColorCVLight);
-                            });
-                            foreach (Language language in LanguagesList)
-                            {
-                                column.Item().Text(text =>
-                                {
-                                    text.DefaultTextStyle(x => x.FontColor(textColorCVLight).FontSize(11));
-                                    try
+                                    //Avatar
+                                    table.Cell().Row(1).Column(1).Element(LeftColumnMain).Image(Properties.Resources.Avatar);
+                                    //Name and Title
+                                    table.Cell().Row(1).Column(2).Element(LeftColumnMain).Text(text =>
                                     {
-                                        foreach (System.Collections.DictionaryEntry entry in resourseManager.GetResourceSet(System.Globalization.CultureInfo.CurrentCulture, true, true))
+                                        text.DefaultTextStyle(x => x.FontSize(20).FontColor(textColorCVLight));
+                                        text.Line(Name).ExtraBold().LineHeight(0.8f);
+                                        text.Line(Title).FontSize(18).LineHeight(0.8f);
+                                    });
+                                });
+                                //Summary---------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                column.Item().Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.ConstantColumn(100);
+                                        columns.RelativeColumn();
+                                    });
+                                    table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Summary"]).FontColor(textColorCVLight).FontSize(16);
+                                    table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(15).LineHorizontal(1).LineColor(textColorCVLight);
+                                });
+                                column.Item().Text(Summary)
+                                .FontColor(textColorCVLight).FontSize(11).Light();
+                                //Tools-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                column.Item().Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.ConstantColumn(100);
+                                        columns.RelativeColumn();
+                                    });
+                                    table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Tools"]).FontColor(textColorCVLight).FontSize(16).LineHeight(0.6f);
+                                    table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textColorCVLight);
+                                });
+                                List<string> skillsNames;
+                                foreach (Skillset toolsCategoty in GetToolsList(RelevantSkillsets))
+                                {
+                                    skillsNames = new List<string>();
+                                    foreach (Skill skill in toolsCategoty.SkillsList.Reverse())
+                                    {
+                                        skillsNames.Add(skill.SkillName);
+                                    }
+                                    column.Item().Table(table =>
+                                    {
+                                        table.ColumnsDefinition(columns =>
                                         {
-                                            if (entry.Key.ToString().ToLower().Equals(language.LanguageName.ToLower()))
+                                            columns.RelativeColumn();
+                                        });
+                                        table.Cell().Row(1).Column(1).Element(ToolsBody).AlignCenter().Text(toolsCategoty.MainSkill).FontSize(14).FontColor(textColorCVLight).ExtraBold();
+                                        table.Cell().Row(2).Column(1).Element(ToolsBody).AlignLeft().PaddingHorizontal(4).Text(String.Join(", ", skillsNames)).FontSize(11).FontColor(textColorCVLight);
+                                    });
+                                    column.Item().Text("").FontSize(5);
+                                }
+                                //Languages--------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                column.Item().Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.ConstantColumn(100);
+                                        columns.RelativeColumn();
+                                    });
+                                    table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Languages"]).FontColor(textColorCVLight).FontSize(16).LineHeight(0.6f);
+                                    table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textColorCVLight);
+                                });
+                                foreach (Language language in LanguagesList)
+                                {
+                                    column.Item().Text(text =>
+                                    {
+                                        text.DefaultTextStyle(x => x.FontColor(textColorCVLight).FontSize(11));
+                                        try
+                                        {
+                                            foreach (System.Collections.DictionaryEntry entry in resourseManager.GetResourceSet(System.Globalization.CultureInfo.CurrentCulture, true, true))
                                             {
-                                                text.Element().PaddingBottom(-6).Height(20).Image((byte[])entry.Value).FitHeight();
+                                                if (entry.Key.ToString().ToLower().Equals(language.LanguageName.ToLower()))
+                                                {
+                                                    text.Element().PaddingBottom(-6).Height(20).Image((byte[])entry.Value).FitHeight();
+                                                }
                                             }
                                         }
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        text.Span(language.LanguageName + " ");
-                                    }
-                                    text.Span("   " + App.Current.Resources["lang_Language_"+language.LanguageName]+" - "+ language.Proficiency).LineHeight(0.6f);
-                                });
-                                column.Item().Text("").FontSize(10);
-                            }
-                            //Contacts
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.ConstantColumn(75);
-                                    columns.RelativeColumn();
-                                });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Contacts"]).FontColor(textColorCVLight).FontSize(16).LineHeight(0.6f);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textColorCVLight);
-                            });
-                            foreach (Contact contactOption in ContactsList)
-                            {
-                                column.Item().Text(text =>
-                                {
-                                    text.DefaultTextStyle(x => x.FontColor(textColorCVLight).FontSize(11));
-                                    try
-                                    {
-                                        foreach (System.Collections.DictionaryEntry entry in resourseManager.GetResourceSet(System.Globalization.CultureInfo.CurrentCulture, true, true))
+                                        catch (Exception ex)
                                         {
-                                            if (entry.Key.ToString().ToLower().Equals(contactOption.ContactType.ToLower()))
+                                            text.Span(language.LanguageName + " ");
+                                        }
+                                        text.Span("   " + App.Current.Resources["lang_Language_" + language.LanguageName] + " - " + language.Proficiency).LineHeight(0.6f);
+                                    });
+                                    column.Item().Text("").FontSize(10);
+                                }
+                                //Contacts-------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                column.Item().Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.ConstantColumn(75);
+                                        columns.RelativeColumn();
+                                    });
+                                    table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Contacts"]).FontColor(textColorCVLight).FontSize(16).LineHeight(0.6f);
+                                    table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textColorCVLight);
+                                });
+                                foreach (Contact contactOption in ContactsList)
+                                {
+                                    column.Item().Text(text =>
+                                    {
+                                        text.DefaultTextStyle(x => x.FontColor(textColorCVLight).FontSize(11));
+                                        try
+                                        {
+                                            foreach (System.Collections.DictionaryEntry entry in resourseManager.GetResourceSet(System.Globalization.CultureInfo.CurrentCulture, true, true))
                                             {
-                                                text.Element().PaddingBottom(-6).Height(18).Image((byte[])entry.Value).FitHeight();
+                                                if (entry.Key.ToString().ToLower().Equals(contactOption.ContactType.ToLower()))
+                                                {
+                                                    text.Element().PaddingBottom(-6).Height(16).Image((byte[])entry.Value).FitHeight();
+                                                }
                                             }
                                         }
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        text.Span(contactOption + " ");
-                                    }
-                                    text.Span("   " + contactOption.ContactDescription);
-                                });
-                                column.Item().Text("").FontSize(5);
-                            }
-                        });
-                        //Right Row
-                        row.RelativeItem()
-                        .Padding(0)
-                        //Work Experience
-                        .Column(column =>
-                        {
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.ConstantColumn(135);
-                                    columns.RelativeColumn();
-                                });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Experience"]).FontColor(textCVAccentColor).FontSize(16).LineHeight(0.6f);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textCVAccentColor);
-                            });
-                            //Experiences
-                            foreach (string employer in GetEmployersList(EmploymentsList))
-                            {
-                                column.Item().AlignRight().PaddingHorizontal(10).Text(employer).FontColor(textCVAccentColor).FontSize(13).LineHeight(0.8f);
-                                column.Item().AlignRight().PaddingHorizontal(10)
-                                .Text(GetEmployerStartDate(EmploymentsList, employer).ToString("Y") + " - " + GetEmployerEndDate(EmploymentsList, employer).ToString("Y"))
-                                .FontColor("282828").FontSize(8).LineHeight(0.6f);
-                                foreach (Employment position in EmploymentsList)
-                                {
-                                    if (position.Employer == employer)
-                                    {
-                                        column.Item().AlignLeft().PaddingHorizontal(5).Text(position.Title).FontColor(textCVAccentColor).FontSize(12).LineHeight(0.8f);
-                                        column.Item().AlignLeft().PaddingHorizontal(5)
-                                        .Text(position.StartDate.ToString("Y") + " - " + position.EndDate.ToString("Y"))
-                                        .FontColor("282828").FontSize(9).LineHeight(0.6f);
-                                        column.Item().AlignLeft().PaddingHorizontal(5).Text("").FontSize(4);
-                                        foreach (Experience experience in position.ExperiencesList)
+                                        catch (Exception ex)
                                         {
-                                            if (RelevantSkills.Contains(new Skill(experience.Tag)) || (experience.Tag.Equals("Core")))
-                                            {
-                                                column.Item().AlignLeft().PaddingHorizontal(15).Text("• " + experience.Description).FontSize(10).FontColor("000000").LineHeight(1f);
-                                            }
+                                            text.Span(contactOption + " ");
                                         }
-                                        column.Item().AlignLeft().PaddingHorizontal(5).Text("").FontSize(4);
+                                        text.Span("   " + contactOption.ContactDescription);
+                                    });
+                                    column.Item().Text("").FontSize(5);
+                                }
+                            });
+                            //Right Row
+                            row.RelativeItem()
+                            .Padding(0)
+                            .ShowEntire()
+                            //Work Experience-------------------------------------------------------------------------------------------------------------------------------------------------------
+                            .Column(column =>
+                            {
+                                column.Item().Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.ConstantColumn(135);
+                                        columns.RelativeColumn();
+                                    });
+                                    table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Experience"]).FontColor(textCVAccentColor).FontSize(16).LineHeight(0.6f);
+                                    table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textCVAccentColor);
+                                });
+                                //Experiences
+                                foreach (string employer in GetEmployersList(EmploymentsList))
+                                {
+                                    column.Item().AlignRight().PaddingHorizontal(10).Text(employer).FontColor(textCVAccentColor).FontSize(13).LineHeight(0.8f);
+                                    column.Item().AlignRight().PaddingHorizontal(10)
+                                    .Text(GetEmployerStartDate(EmploymentsList, employer).ToString("Y") + " - " + GetEmployerEndDate(EmploymentsList, employer).ToString("Y"))
+                                    .FontColor("282828").FontSize(8).LineHeight(0.8f);
+                                    foreach (Employment position in EmploymentsList)
+                                    {
+                                        if (position.Employer == employer)
+                                        {
+                                            column.Item().AlignLeft().PaddingHorizontal(5).Text(position.Title).FontColor(textCVAccentColor).FontSize(12).LineHeight(0.8f);
+                                            column.Item().AlignLeft().PaddingHorizontal(5)
+                                            .Text(position.StartDate.ToString("Y") + " - " + position.EndDate.ToString("Y"))
+                                            .FontColor("282828").FontSize(9).LineHeight(0.6f);
+                                            column.Item().AlignLeft().PaddingHorizontal(5).Text("").FontSize(4);
+                                            foreach (Experience experience in position.ExperiencesList)
+                                            {
+                                                if (ExperiencesList.Contains(experience))
+                                                {
+                                                    column.Item().AlignLeft().PaddingHorizontal(15).Text("• " + experience.Description).FontSize(10).FontColor("000000").LineHeight(1f);
+                                                }
+                                            }
+                                            column.Item().AlignLeft().PaddingHorizontal(5).Text("").FontSize(4);
+                                        }
                                     }
                                 }
-                            }
-
-                            //Education
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
+                                //Education-------------------------------------------------------------------------------------------------------------------------------------------------------
+                                column.Item().Table(table =>
                                 {
-                                    columns.ConstantColumn(110);
-                                    columns.RelativeColumn();
-                                });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Education"]).FontColor(textCVAccentColor).FontSize(16).LineHeight(0.6f);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textCVAccentColor);
-                            });
-                            foreach(Education education in GetEducationsList(EducationsList))
-                            {
-                                column.Item().AlignRight().PaddingHorizontal(10).Text(education.Institution).FontColor(textCVAccentColor).FontSize(13).LineHeight(0.8f);
-                                column.Item().AlignRight().PaddingHorizontal(10).Text(education.StartDate.ToString("Y", App.Language) + " - " +
-                                    education.EndDate.ToString("Y", App.Language)).FontColor("282828").FontSize(9).LineHeight(0.6f);
-                                column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
-                                {
-                                    text.DefaultTextStyle(x => x.FontSize(12).FontColor(textCVAccentColor));
-                                    text.Span(education.Degree).ExtraBold();
-                                    text.Span(" - " + education.Program);
-                                });
-                                column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
-                                {
-                                    text.DefaultTextStyle(x => x.FontSize(9).FontColor("282828"));
-                                    text.Span(education.StartDate.ToString("Y", App.Language) + " - " + education.EndDate.ToString("Y", App.Language));
-                                    if(education.WithHonors)
+                                    table.ColumnsDefinition(columns =>
                                     {
-                                        text.Span(" - Diploma with Honours").FontColor("FF0000");
-                                    }
+                                        columns.ConstantColumn(110);
+                                        columns.RelativeColumn();
+                                    });
+                                    table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Education"]).FontColor(textCVAccentColor).FontSize(16).LineHeight(0.6f);
+                                    table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textCVAccentColor);
                                 });
-                                column.Item().AlignLeft().PaddingHorizontal(5).Text(education.Description).FontColor("000000").FontSize(10);
-                                column.Item().Text("").FontSize(2);
-                            }
-                            // Professional Affiliations
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
+                                foreach (Education education in GetEducationsList(EducationsList))
                                 {
-                                    columns.ConstantColumn(190);
-                                    columns.RelativeColumn();
+                                    column.Item().AlignRight().PaddingHorizontal(10).Text(education.Institution).FontColor(textCVAccentColor).FontSize(13).LineHeight(0.8f);
+                                    column.Item().AlignRight().PaddingHorizontal(10).Text(education.StartDate.ToString("Y", App.Language) + " - " +
+                                        education.EndDate.ToString("Y", App.Language)).FontColor("282828").FontSize(9).LineHeight(0.8f);
+                                    column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
+                                    {
+                                        text.DefaultTextStyle(x => x.FontSize(12).FontColor(textCVAccentColor));
+                                        text.Span(education.Degree).ExtraBold();
+                                        text.Span(" - " + education.Program);
+                                    });
+                                    column.Item().AlignLeft().PaddingHorizontal(5).Text(text =>
+                                    {
+                                        text.DefaultTextStyle(x => x.FontSize(9).FontColor("282828"));
+                                        text.Span(education.StartDate.ToString("Y", App.Language) + " - " + education.EndDate.ToString("Y", App.Language));
+                                        if (education.WithHonors)
+                                        {
+                                            text.Span(" - Diploma with Honours").FontColor("FF0000");
+                                        }
+                                    });
+                                    column.Item().AlignLeft().PaddingHorizontal(5).Text(education.Description).FontColor("000000").FontSize(10);
+                                    column.Item().Text("").FontSize(2);
+                                }
+                                // Professional Affiliations------------------------------------------------------------------------------------------------------------------------------------
+                                column.Item().Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.ConstantColumn(190);
+                                        columns.RelativeColumn();
+                                    });
+                                    table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Affiliations"]).FontColor(textCVAccentColor).FontSize(16).LineHeight(0.6f);
+                                    table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textCVAccentColor);
                                 });
-                                table.Cell().Row(1).Column(1).Element(LeftColumnMain).Text((string)App.Current.Resources["lang_Affiliations"]).FontColor(textCVAccentColor).FontSize(16).LineHeight(0.6f);
-                                table.Cell().Row(1).Column(2).AlignMiddle().PaddingVertical(12).LineHorizontal(1).LineColor(textCVAccentColor);
+                                foreach (ProffessionalAffiliation affiliation in AffiliationsList)
+                                {
+                                    column.Item().PaddingHorizontal(5).Text(affiliation.ToString()).FontSize(10).FontColor("000000").LineHeight(1f);
+                                }
                             });
-                            foreach (ProffessionalAffiliation affiliation in AffiliationsList)
-                            {
-                                column.Item().PaddingHorizontal(5).Text(affiliation.ToString()).FontSize(10).FontColor("000000").LineHeight(1f);
-                            }
                         });
                     });
                 });
-            });
-            resume.GeneratePdf(pathToOutputGeneratedResume);
+                try
+                {
+                    resume.GeneratePdf(pathToOutputGeneratedResume);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is DocumentLayoutException)
+                    {
+                        isExeedingOnePage = true;
+                        ExperiencesList.RemoveAt(ExperiencesList.Count - 1);
+                    }
+                }
+            } while (isExeedingOnePage);
             new Process { StartInfo = new ProcessStartInfo(pathToOutputGeneratedResume) { UseShellExecute = true } }.Start();
             //resume.ShowInPreviewer();
         }

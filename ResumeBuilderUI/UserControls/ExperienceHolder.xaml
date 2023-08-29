@@ -6,8 +6,12 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ResumeBuilderUI.UserControls"
-             mc:Ignorable="d" Name="ExperienceHolderControl">
+             mc:Ignorable="d" Name="ExperienceHolderControl" MouseDoubleClick="UserControl_MouseDoubleClick">
     <Grid Width="{Binding ElementName=ExperienceHolderControl, Path=ActualWidth}" MouseRightButtonDown="Grid_MouseRightButtonDown">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="6*"/>
@@ -17,7 +21,7 @@
         <!--Tag-->
         <!--Show-->
         <TextBlock Name="TagTextBlock" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Tag}"
-                        FontSize="13" FontWeight="SemiBold" Grid.Column="0"/>
+                        FontSize="13" FontWeight="SemiBold" Grid.Column="0" Grid.Row="0"/>
         <!--Edit-->
         <uc:TextField x:Name="TagTextField" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Tag, Mode=TwoWay}"
                           Grid.Row="0" Margin="5" Visibility="Collapsed" Grid.Column="0" Background="Transparent"
@@ -25,13 +29,17 @@
         <!--Description-->
         <!--Show-->
         <TextBlock Name="DescriptionTextBlock" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Description}" 
-                   Grid.Column="1" FontSize="13" TextWrapping="Wrap"/>
+                   Grid.Column="1" Grid.Row="0" FontSize="13" TextWrapping="Wrap"/>
         <!--Edit-->
         <uc:TextField x:Name="DescriptionTextField" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Description, Mode=TwoWay}"
-                          Grid.Column="1" Margin="5" Visibility="Collapsed" Background="Transparent"
+                          Grid.Column="1" Grid.Row="0" Margin="5" Visibility="Collapsed" Background="Transparent"
                           Hint="{StaticResource lang_Experience_Description_Enter}" Caption="{StaticResource lang_Experience_Description}"/>
-
-
+        <!--Priority-->
+        <!--Show-->
+        <TextBlock x:Name="PriorityTextBlock" Text="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Priority}" Grid.Column="2" Grid.Row="0" Visibility="Visible" HorizontalAlignment="Center"/>
+        <!--Edit-->
+        <ComboBox x:Name="PriorityComboBox" ItemsSource="{Binding ElementName=ExperienceHolderControl, Path=Priorities}" SelectedItem="{Binding ElementName=ExperienceHolderControl, Path=ExperienceSource.Priority}"
+                  Grid.Column="0" Grid.Row="1" Visibility="Collapsed"/>
         <!--Buttons-->
         <!--Edit-->
         <!--Accept Button-->

@@ -22,6 +22,8 @@ namespace ResumeBuilderUI.UserControls
     /// </summary>
     public partial class ExperienceHolder : UserControl
     {
+        private readonly Experience.Priorities[] _priorities = { Experience.Priorities.Low, Experience.Priorities.Medium, Experience.Priorities.High };
+        public Experience.Priorities[] Priorities { get { return _priorities; } }
 
         #region Constructors
         public ExperienceHolder()
@@ -29,8 +31,6 @@ namespace ResumeBuilderUI.UserControls
             InitializeComponent();
         }
         #endregion
-
-
 
         #region UserControl Properies
         //ExperienceSource - Property for binding a Experience, shown in ExperienceHolder
@@ -72,16 +72,20 @@ namespace ResumeBuilderUI.UserControls
                 case ViewMode.ShowMode:
                     TagTextBlock.Visibility = Visibility.Visible;
                     DescriptionTextBlock.Visibility = Visibility.Visible;
+                    PriorityTextBlock.Visibility = Visibility.Visible;
                     TagTextField.Visibility = Visibility.Collapsed;
                     DescriptionTextField.Visibility = Visibility.Collapsed;
+                    PriorityComboBox.Visibility = Visibility.Collapsed;
                     AcceptChangesButton.Visibility = Visibility.Collapsed;
                     CancelChangesButton.Visibility = Visibility.Collapsed;
                     break;
                 case ViewMode.EditMode:
                     TagTextBlock.Visibility = Visibility.Collapsed;
                     DescriptionTextBlock.Visibility = Visibility.Collapsed;
+                    PriorityTextBlock.Visibility = Visibility.Collapsed;
                     TagTextField.Visibility = Visibility.Visible;
                     DescriptionTextField.Visibility = Visibility.Visible;
+                    PriorityComboBox.Visibility = Visibility.Visible;
                     AcceptChangesButton.Visibility = Visibility.Visible;
                     CancelChangesButton.Visibility = Visibility.Visible;
                     break;
@@ -98,6 +102,28 @@ namespace ResumeBuilderUI.UserControls
         private void Grid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             ActiveMode = ActiveMode.Equals(ViewMode.ShowMode) ? ViewMode.EditMode : ViewMode.ShowMode;
+        }
+
+        private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Experience experienceToRemove = new Experience();
+            Employment employmetToRemoveFrom = new Employment();
+            foreach(Employment employment in App.ActiveProfile.EmploymentsList)
+            {
+                foreach(Experience experience in employment.ExperiencesList)
+                {
+                    if(experience.Equals(ExperienceSource))
+                    {
+                        experienceToRemove = experience;
+                        employmetToRemoveFrom = employment;
+                        break;
+                    }
+                }
+            }
+            if (!experienceToRemove.Tag.Equals(string.Empty))
+            {
+                employmetToRemoveFrom.ExperiencesList.Remove(experienceToRemove);
+            }
         }
     }
 }

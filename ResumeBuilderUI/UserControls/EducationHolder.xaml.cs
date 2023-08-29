@@ -98,5 +98,10 @@ namespace ResumeBuilderUI.UserControls
         {
             ActiveMode = ActiveMode.Equals(ViewMode.ShowMode) ? ViewMode.EditMode : ViewMode.ShowMode;
         }
+
+        private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            App.ActiveProfile.EducationsList.Remove(EducationSource);
+        }
     }
 }
