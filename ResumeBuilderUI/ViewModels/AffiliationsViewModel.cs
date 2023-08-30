@@ -1,6 +1,7 @@
 ﻿using ResumeBuilderUI.Models;
 using ResumeBuilderUI.UserControls;
 using System;
+using System.Linq;
 
 namespace ResumeBuilderUI.ViewModels
 {
@@ -41,6 +42,7 @@ namespace ResumeBuilderUI.ViewModels
         {
             EditNewAffiliationCommand = new RelayCommand<object>(EditNewAffiliation);
             SubmitNewAffiliationCommand = new RelayCommand<object>(SubmitNewAffiliation);
+            App.ActiveProfile.AffiliationsList = ProffessionalAffiliation.Sort(ActiveProfile.AffiliationsList);
         }
         #endregion
 
