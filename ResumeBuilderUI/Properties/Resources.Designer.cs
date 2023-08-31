@@ -63,19 +63,9 @@ namespace ResumeBuilderUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] Avatar {
+        public static byte[] AvatarDefault {
             get {
-                object obj = ResourceManager.GetObject("Avatar", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] Avatar2 {
-            get {
-                object obj = ResourceManager.GetObject("Avatar2", resourceCulture);
+                object obj = ResourceManager.GetObject("AvatarDefault", resourceCulture);
                 return ((byte[])(obj));
             }
         }

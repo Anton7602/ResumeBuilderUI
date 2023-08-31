@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace ResumeBuilderUI.Models
 {
@@ -12,7 +13,6 @@ namespace ResumeBuilderUI.Models
     {
         #region Fields and Properties
         public long ID { get; set; }
-        public string? AvatarPath { get; set; }
         public string? Name { get; set; }
         public List<string> TitlesList { get; set; }
         public string Summary { get; set; }
@@ -22,6 +22,7 @@ namespace ResumeBuilderUI.Models
         public ObservableCollection<ProffessionalAffiliation> AffiliationsList { get; set; }
         public ObservableCollection<Language> LanguagesList { get; set; }
         public ObservableCollection<Contact> ContactsList { get; set; }
+        public string AvatarImagePath { get; set; }
         #endregion
 
         #region Constructors
@@ -40,6 +41,7 @@ namespace ResumeBuilderUI.Models
             SkillsetsList = new ObservableCollection<Skillset>();
             ContactsList = new ObservableCollection<Contact>();
             LanguagesList = new ObservableCollection<Language>();
+            AvatarImagePath  = string.Empty;
         }
 
         /// <summary>

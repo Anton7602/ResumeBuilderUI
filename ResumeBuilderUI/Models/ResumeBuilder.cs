@@ -27,6 +27,7 @@ namespace ResumeBuilderUI.Models
         const string textCVAccentColor = "002256";
         const string pathToResoursesFolder = "D:\\Programming\\VisualStudioProjects\\ResumeBuilderUI\\ResumeBuilderUI\\bin\\Debug\\net6.0-windows\\resources\\";
 
+        public string PathToAvatar { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
         public string Summary { get; set; }
@@ -39,11 +40,12 @@ namespace ResumeBuilderUI.Models
         public List<Contact> ContactsList { get; set; }
         public List<ProffessionalAffiliation> AffiliationsList { get; set; }
 
-        public ResumeBuilder(string name,
+        public ResumeBuilder(string pathToAvatar, string name,
             string title, string summary, List<Language> languagesList,
             List<ProffessionalAffiliation> affiliationsList, List<Skill> relevantskills,
             List<Skillset> relevantSkillsets, List<Employment> employmentsList, List<Education> educationList, List<Contact> contactsList)
         {
+            PathToAvatar = pathToAvatar;
             Name = name;
             Title = title;
             Summary = summary;
@@ -246,7 +248,8 @@ namespace ResumeBuilderUI.Models
                                         columns.RelativeColumn();
                                     });
                                     //Avatar
-                                    table.Cell().Row(1).Column(1).Element(LeftColumnMain).Image(Properties.Resources.Avatar2);
+                                    //table.Cell().Row(1).Column(1).Element(LeftColumnMain).Image(Properties.Resources.Avatar2);
+                                    table.Cell().Row(1).Column(1).Element(LeftColumnMain).Image(PathToAvatar);
                                     //Name and Title
                                     table.Cell().Row(1).Column(2).Element(LeftColumnMain).Text(text =>
                                     {

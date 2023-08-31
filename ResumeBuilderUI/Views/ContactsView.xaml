@@ -24,8 +24,8 @@
                                       Visibility="{Binding EditedContact.IsSelected, Converter={StaticResource boolToVisibility}}"
                                       AcceptCommand="{Binding SubmitNewContactCommand}" Background="Transparent" Margin="0 4 0 0"/>
 
-                <ListBox Name="ContactListBox" ItemsSource="{Binding ActiveProfile.ContactsList}" BorderThickness="0" 
-                         HorizontalAlignment="Center" Background="{StaticResource PrimaryColorBrush}" ItemContainerStyle="{StaticResource SkillsetItemContainerStyle}">
+                <ListBox Name="ContactListBox" ItemsSource="{Binding ActiveProfile.ContactsList}" BorderThickness="0" AllowDrop="True"
+                         HorizontalAlignment="Center" Background="{StaticResource PrimaryColorBrush}" ItemContainerStyle="{StaticResource DraggableItemContainerStyle}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <uc:ContactHolder ContactSource="{Binding}" HorizontalAlignment="Center" ActiveMode="ShowMode"

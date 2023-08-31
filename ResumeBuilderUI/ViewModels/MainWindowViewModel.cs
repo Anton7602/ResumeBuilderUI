@@ -102,7 +102,7 @@ namespace ResumeBuilderUI.ViewModels
         private void BuildCV(object commandParameter)
         {
             ActiveProfile= App.ActiveProfile;
-            ResumeBuilder CVbuilder = new ResumeBuilder(ActiveProfile.Name, ActiveProfile.TitlesList.First(), ActiveProfile.Summary,
+            ResumeBuilder CVbuilder = new ResumeBuilder(ActiveProfile.AvatarImagePath, ActiveProfile.Name, ActiveProfile.TitlesList.First(), ActiveProfile.Summary,
                 GetSelectedLanguagesList(), GetSelectedAffiliationsList(), GetSelectedSkillsList(), GetSelectedSkillsetsList(), 
                 GetSelectedEmploymentsList(), GetSelectedEducationsList(), GetSelectedContactList());
             CVbuilder.BuildResume("output\\CV " + CVbuilder.Name + " - " + CVbuilder.Title + ".pdf");

@@ -92,9 +92,8 @@ namespace ResumeBuilderUI.UserControls
 
         private void CancelChangesButton_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
-        #endregion
 
         private void AffiliationHolderToggle_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -105,5 +104,6 @@ namespace ResumeBuilderUI.UserControls
         {
             App.ActiveProfile.AffiliationsList.Remove((sender as AffiliationHolder).AffiliationSource);
         }
+        #endregion
     }
 }

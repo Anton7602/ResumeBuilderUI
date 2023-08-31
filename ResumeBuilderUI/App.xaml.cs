@@ -71,6 +71,14 @@ namespace ResumeBuilderUI
         {
             InitializeComponent();
             App.LanguageChanged += App_LanguageChanged;
+            if (!Directory.Exists(@"profiles"))
+            {
+                Directory.CreateDirectory(@"profiles");
+            }
+            if (!Directory.Exists(@"output"))
+            {
+                Directory.CreateDirectory(@"output");
+            }
         }
     }
 }
