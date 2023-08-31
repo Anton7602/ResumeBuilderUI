@@ -66,11 +66,14 @@ namespace ResumeBuilderUI.Views
                 {
                     string profileJsonLine = profileReader.ReadToEnd();
                     App.ActiveProfile = JsonSerializer.Deserialize<ApplicantProfile>(profileJsonLine);
+                    string currentSelection = NavigationMenuListBox.SelectedItem.ToString();
+                    NavigationMenuListBox.SelectedItem = "Contacts";
+                    NavigationMenuListBox.SelectedItem = currentSelection;
                 }
             }
             catch (Exception ex)
             {
-
+                ProfileSelectionCombobox.SelectedItem = e.RemovedItems;
             }
         }
     }

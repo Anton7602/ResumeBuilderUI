@@ -145,7 +145,7 @@
             </Button>
 
             <!--Content Window Control-->
-            <ContentControl Grid.Column="1" Grid.Row="1" Style="{StaticResource NavigationContentStyle}"/>
+            <ContentControl Name="MainWindowContentControl" Grid.Column="1" Grid.Row="1" Style="{StaticResource NavigationContentStyle}"/>
         </Grid>
     </Border>
 </Window>
