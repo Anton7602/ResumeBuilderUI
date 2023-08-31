@@ -15,7 +15,7 @@ namespace ResumeBuilderUI.Views
         public PersonalInfoView()
         {
             InitializeComponent();
-            using (MemoryStream memoryStream = new MemoryStream(Properties.Resources.Avatar))
+            using (MemoryStream memoryStream = new MemoryStream(Properties.Resources.Avatar2))
             {
                 BitmapImage bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();

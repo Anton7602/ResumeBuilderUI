@@ -121,25 +121,85 @@
   <data name="Avatar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resourses\Images\Avatar.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Avatar2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Images\Avatar2.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Behance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Behance.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Discord" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Discord.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Dribbble" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Dribbble.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="EMail" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resourses\Icons\Contacts\EMail.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="English" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resourses\Icons\Languages\English.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Facebook" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Facebook.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Github" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resourses\Icons\Contacts\Github.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GitLab" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\GitLab.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="GrabCAD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resourses\Icons\Contacts\GrabCAD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Instagram" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Instagram.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="LinkedIN" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resourses\Icons\Contacts\LinkedIN.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Location" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Location.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Location_Change" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Location Change.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Ok" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Ok.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Phone" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resourses\Icons\Contacts\Phone.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Reddit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Reddit.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Russian" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resourses\Icons\Languages\Russian.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Skype" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Skype.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Slack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Slack.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="StackOverflow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\StackOverflow.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Steam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Steam.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Telegram" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Telegram.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Tumblr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Tumblr.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Twitter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Twitter.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="VK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\VK.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Whatsapp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resourses\Icons\Contacts\Whatsapp.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

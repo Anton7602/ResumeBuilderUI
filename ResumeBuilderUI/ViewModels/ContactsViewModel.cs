@@ -1,5 +1,6 @@
 ﻿using ResumeBuilderUI.Models;
 using System;
+using System.Linq;
 
 namespace ResumeBuilderUI.ViewModels
 {

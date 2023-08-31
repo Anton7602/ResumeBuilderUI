@@ -105,7 +105,7 @@ namespace ResumeBuilderUI.ViewModels
             ResumeBuilder CVbuilder = new ResumeBuilder(ActiveProfile.Name, ActiveProfile.TitlesList.First(), ActiveProfile.Summary,
                 GetSelectedLanguagesList(), GetSelectedAffiliationsList(), GetSelectedSkillsList(), GetSelectedSkillsetsList(), 
                 GetSelectedEmploymentsList(), GetSelectedEducationsList(), GetSelectedContactList());
-            CVbuilder.BuildResume("CV " + CVbuilder.Name + " - " + CVbuilder.Title + ".pdf");
+            CVbuilder.BuildResume("output\\CV " + CVbuilder.Name + " - " + CVbuilder.Title + ".pdf");
         }
 
         private List<Skillset> GetSelectedSkillsetsList()
@@ -165,10 +165,6 @@ namespace ResumeBuilderUI.ViewModels
             List<Skill> activeSkillsList = new List<Skill>();
             foreach(Skillset skillset in ActiveProfile.SkillsetsList)
             {
-                if(skillset.IsSelected)
-                {
-                    activeSkillsList.Add(new Skill(skillset.MainSkill));
-                }
                 foreach(Skill skill in skillset.SkillsList)
                 {
                     if(skill.IsSelected)

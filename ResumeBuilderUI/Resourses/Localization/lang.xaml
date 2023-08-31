@@ -42,6 +42,7 @@
     <v:String x:Key="lang_Education_EndDate">End Date</v:String>
     <v:String x:Key="lang_Education_EndDate_Enter">To:</v:String>
     <v:String x:Key="lang_Education_WithHonors">Honors</v:String>
+    <v:String x:Key="lang_Education_WithHonors_Show">Diploma with Honors</v:String>
     <v:String x:Key="lang_Education_WithHonors_Enter">Is a degree with honors?</v:String>
     <v:String x:Key="lang_Education_Program">Program</v:String>
     <v:String x:Key="lang_Education_Program_Enter">Enter educational program</v:String>

@@ -73,6 +73,46 @@ namespace ResumeBuilderUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] Avatar2 {
+            get {
+                object obj = ResourceManager.GetObject("Avatar2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Behance {
+            get {
+                object obj = ResourceManager.GetObject("Behance", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Discord {
+            get {
+                object obj = ResourceManager.GetObject("Discord", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Dribbble {
+            get {
+                object obj = ResourceManager.GetObject("Dribbble", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] EMail {
             get {
                 object obj = ResourceManager.GetObject("EMail", resourceCulture);
@@ -93,9 +133,29 @@ namespace ResumeBuilderUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] Facebook {
+            get {
+                object obj = ResourceManager.GetObject("Facebook", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] Github {
             get {
                 object obj = ResourceManager.GetObject("Github", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] GitLab {
+            get {
+                object obj = ResourceManager.GetObject("GitLab", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -113,9 +173,49 @@ namespace ResumeBuilderUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] Instagram {
+            get {
+                object obj = ResourceManager.GetObject("Instagram", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] LinkedIN {
             get {
                 object obj = ResourceManager.GetObject("LinkedIN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Location {
+            get {
+                object obj = ResourceManager.GetObject("Location", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Location_Change {
+            get {
+                object obj = ResourceManager.GetObject("Location_Change", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Ok {
+            get {
+                object obj = ResourceManager.GetObject("Ok", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -133,9 +233,109 @@ namespace ResumeBuilderUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] Reddit {
+            get {
+                object obj = ResourceManager.GetObject("Reddit", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] Russian {
             get {
                 object obj = ResourceManager.GetObject("Russian", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Skype {
+            get {
+                object obj = ResourceManager.GetObject("Skype", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Slack {
+            get {
+                object obj = ResourceManager.GetObject("Slack", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] StackOverflow {
+            get {
+                object obj = ResourceManager.GetObject("StackOverflow", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Steam {
+            get {
+                object obj = ResourceManager.GetObject("Steam", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Telegram {
+            get {
+                object obj = ResourceManager.GetObject("Telegram", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Tumblr {
+            get {
+                object obj = ResourceManager.GetObject("Tumblr", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Twitter {
+            get {
+                object obj = ResourceManager.GetObject("Twitter", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] VK {
+            get {
+                object obj = ResourceManager.GetObject("VK", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Whatsapp {
+            get {
+                object obj = ResourceManager.GetObject("Whatsapp", resourceCulture);
                 return ((byte[])(obj));
             }
         }

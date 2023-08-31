@@ -9,14 +9,14 @@
     <v:String x:Key="lang_Profile_Open">Открыть</v:String>
     <v:String x:Key="lang_Profile_Save">Сохранить</v:String>
     <v:String x:Key="lang_Language">Язык</v:String>
-    <v:String x:Key="lang_Languages">Языкы</v:String>
+    <v:String x:Key="lang_Languages">Языки</v:String>
     <v:String x:Key="lang_Language_LanguageName">Язык</v:String>
     <v:String x:Key="lang_Language_LanguageName_Enter">Введите язык</v:String>
     <v:String x:Key="lang_Language_LanguageProficiency">Уровень владения</v:String>
     <v:String x:Key="lang_Language_LanguageProficiency_Enter">Введите уровень владения</v:String>
     <v:String x:Key="lang_Language_English">Английский</v:String>
     <v:String x:Key="lang_Language_Russian">Русский</v:String>
-    <v:String x:Key="lang_PersonalInfo">Персональные данные</v:String>
+    <v:String x:Key="lang_PersonalInfo">Личные данные</v:String>
     <v:String x:Key="lang_Skills">Навыки</v:String>
     <v:String x:Key="lang_Skills_Tooltip_None">Навык не представлен в выбранных опытах работы</v:String>
     <v:String x:Key="lang_Skills_Tooltip_Singular">Навык представлен в 1 выбранном опыте работы</v:String>
@@ -42,6 +42,7 @@
     <v:String x:Key="lang_Education_EndDate">Дата окончания</v:String>
     <v:String x:Key="lang_Education_EndDate_Enter">По:</v:String>
     <v:String x:Key="lang_Education_WithHonors">С отличием</v:String>
+    <v:String x:Key="lang_Education_WithHonors_Show">Диплом с отличием</v:String>
     <v:String x:Key="lang_Education_WithHonors_Enter">Степень получена с отличием?</v:String>
     <v:String x:Key="lang_Education_Program">Программа</v:String>
     <v:String x:Key="lang_Education_Program_Enter">Введите образовательную программу</v:String>
@@ -52,7 +53,7 @@
     <v:String x:Key="lang_Contact_ContactType_Enter">Введите способ связи</v:String>
     <v:String x:Key="lang_Contact_ContactDescription">Контактные Данные</v:String>
     <v:String x:Key="lang_Contact_ContactDescription_Enter">Введите контактные данные</v:String>
-    <v:String x:Key="lang_Affiliations">Профессиональные связи</v:String>
+    <v:String x:Key="lang_Affiliations">Дипломы и Сертификаты</v:String>
     <v:String x:Key="lang_Affiliation_Company">Связанная компания</v:String>
     <v:String x:Key="lang_Affiliation_Company_Enter">Введите имя компании</v:String>
     <v:String x:Key="lang_Affiliation_Description">Описание</v:String>
